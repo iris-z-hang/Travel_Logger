@@ -19,5 +19,5 @@ application that has some functionality of GIS applications, but with a more cas
 - As a user, I want to view the list of unvisited locations
 - As a user, I want to view the list of visited locations
 - As a user, I want to remove a location from my city
-- As a user, I want to see how many locations I have visited and not yet visited
+- As a user, I want the number of locations that I have visited and not yet visited
 - As a user, I want to see how far I have travelled in this city
