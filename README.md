@@ -11,3 +11,13 @@ This project is interesting to me because from my previous university degree, I 
 Information Systems* (GIS). In my GIS classes, we created maps using applications such as ArcGIS Pro and ENVI. I spent a lot
 of time inputting coordinates and locations in geodatabases. I think it would be useful and fun to develop an
 application that has some functionality of GIS applications, but with a more casual, user-oriented purpose.
+
+### User Stories
+
+- As a user, I want to be able to add an unvisited location to my city
+- As a user, I want to be able to add a visited location to my city
+- As a user, I want to view the list of unvisited locations
+- As a user, I want to view the list of visited locations
+- As a user, I want to remove a location from my city
+- As a user, I want to see how many locations I have visited and not yet visited
+- As a user, I want to see how far I have travelled in this city
