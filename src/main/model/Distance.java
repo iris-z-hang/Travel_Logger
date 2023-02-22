@@ -5,8 +5,8 @@ public class Distance extends Location {
     private final double EARTH_RADIUS = 6371;
     private final String UNITS = "KM";
 
-    public Distance(String name, String address, double longitude, double latitude) {
-        super(name, address, longitude, latitude);
+    public Distance(String name, String address, String city, double longitude, double latitude) {
+        super(name, address, city, longitude, latitude);
     }
 
     // EFFECTS: returns the shortest distance between two coordinate points
