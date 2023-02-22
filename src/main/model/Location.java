@@ -9,8 +9,8 @@ public class Location {
     private final double longitude;
     private final double latitude;
 
-    private LinkedList<Location> unvisited;
-    private LinkedList<Location> visited;
+    public LinkedList<Location> unvisited;
+    public LinkedList<Location> visited;
 
     // EFFECTS:
     public Location(String name, String address, double longitude, double latitude) {
@@ -19,27 +19,57 @@ public class Location {
         this.longitude = longitude;
         this.latitude = latitude;
 
-        unvisited = new LinkedList<>();
-        visited = new LinkedList<>();
+        this.unvisited = new LinkedList<>();
+        this.visited = new LinkedList<>();
     }
 
     // MODIFIES: this
-    // EFFECTS: adds unvisited location to unvisited list
+    // EFFECTS: adds location to unvisited list
     public void addUnvisitedLocation(Location location) {
-        unvisited.add(location);
+        this.unvisited.add(location);
+
     }
 
     // MODIFIES: this
-    // EFFECTS: adds visited location to visited list
+    // EFFECTS: adds location to visited list
     public void addVisitedLocation(Location location) {
-        visited.add(location);
+        this.visited.add(location);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes location from unvisited list
+    public void removeUnvisitedLocation(Location location) {
+        this.unvisited.remove(location);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes visited location from visited list
+    public void removeVisitedLocation(Location location) {
+        this.visited.remove(location);
+    }
+
+    // REQUIRES: location is in visited list
+    // MODIFIES: this
+    // EFFECTS: removes location from visited list and adds location to unvisited list
+    public void moveVisitedToUnvisited(Location location) {
+        this.visited.remove(location);
+        this.unvisited.add(location);
+    }
+
+    // REQUIRES: location is in unvisited list
+    // MODIFIES: this
+    // EFFECTS: removes location from unvisited list and adds location to visited list
+    public void moveUnvisitedToVisited(Location location) {
+        this.unvisited.remove(location);
+        this.visited.add(location);
+
     }
 
 
     // getters
     // EFFECTS: returns the full location including name, address, coordinates
     public String getLocation() {
-        return name + ": " + address + "," + longitude + latitude;
+        return name + ": " + address + ", " + longitude + " " + latitude;
     }
 
     //EFFECTS: returns name of location
@@ -75,5 +105,10 @@ public class Location {
     // EFFECTS: returns next unvisited location
     public Location getNextUnvisitedLocation() {
         return unvisited.getFirst();
+    }
+
+    // EFFECTS: returns last visited location
+    public Location getLasVisitedLocation() {
+        return visited.getLast();
     }
 }
