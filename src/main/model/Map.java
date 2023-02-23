@@ -88,12 +88,16 @@ public class Map {
 
     // EFFECTS: prints list of unvisited locations
     public void printUnvisitedLocations() {
-            System.out.println(unvisited.toString());
+        for (Location location : unvisited) {
+            System.out.println(location.getName());
+        }
     }
 
     // EFFECTS: returns list of visited locations
     public void printVisitedLocations() {
-            System.out.println(visited.toString());
+        for (Location location : visited) {
+            System.out.println(location.getName());
+        }
     }
 
     // EFFECTS: returns next unvisited location
@@ -104,6 +108,32 @@ public class Map {
     // EFFECTS: returns last visited location
     public Location getLasVisitedLocation() {
         return visited.getLast();
+    }
+
+    public Location findLocationByNameUnvisited(String name) {
+        Location foundLocation = null;
+        for (Location location : unvisited) {
+            if (location.getName().equals(name)) {
+                foundLocation = location;
+            }
+            else {
+                System.out.println("Not found.");
+            }
+        }
+        return foundLocation;
+    }
+
+    public Location findLocationByNameVisited(String name) {
+        Location foundLocation = null;
+        for (Location location : visited) {
+            if (location.getName().equals(name)) {
+                foundLocation = location;
+            }
+            else {
+                System.out.println("Not found.");
+            }
+        }
+        return foundLocation;
     }
 
     public double distanceTwoPoints(Location location1, Location location2) {
