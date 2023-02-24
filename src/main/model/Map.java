@@ -89,6 +89,7 @@ public class Map {
     // EFFECTS: prints list of unvisited locations
     public void printUnvisitedLocations() {
         for (Location location : unvisited) {
+            // TODO: DO THIS ACTION IN UI NOT HERE
             System.out.println(location.getName());
         }
     }
@@ -96,6 +97,7 @@ public class Map {
     // EFFECTS: returns list of visited locations
     public void printVisitedLocations() {
         for (Location location : visited) {
+            // TODO: DO THIS ACTION IN UI NOT HERE
             System.out.println(location.getName());
         }
     }
@@ -112,11 +114,12 @@ public class Map {
 
     public Location findLocationByNameUnvisited(String name) {
         Location foundLocation = null;
-        for (Location location : unvisited) {
+        for (Location location : this.unvisited) {
             if (location.getName().equals(name)) {
                 foundLocation = location;
             }
             else {
+                // TODO: DO THIS ACTION IN UI NOT HERE
                 System.out.println("Not found.");
             }
         }
@@ -125,11 +128,12 @@ public class Map {
 
     public Location findLocationByNameVisited(String name) {
         Location foundLocation = null;
-        for (Location location : visited) {
+        for (Location location : this.visited) {
             if (location.getName().equals(name)) {
                 foundLocation = location;
             }
             else {
+                // TODO: DO THIS ACTION IN UI NOT HERE
                 System.out.println("Not found.");
             }
         }
