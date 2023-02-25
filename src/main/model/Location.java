@@ -3,6 +3,7 @@ package model;
 import java.util.LinkedList;
 
 public class Location extends Map{
+    // LOCATION CLASS DESCRIPTION
 
     private final String name;
     private final String address;
@@ -20,10 +21,19 @@ public class Location extends Map{
     }
 
     // getters
-    // EFFECTS: returns the full location including name, address, coordinates
-    public String getLocation() {
-        return name + ": " + address + ", " + latitude + " " + longitude;
-    }
+//    // EFFECTS: returns the full location including name, address, coordinates
+//    public String getInformation(String name) {
+//        String info = "";
+//
+//        for (Location location: unvisited) {
+//            String locationName = location.getName();
+//            if (locationName.equals(name)) {
+//                info = name + ": " + address + ", " + latitude + " " + longitude;
+//                break;
+//            }
+//        }
+//        return info;
+//    }
 
     //EFFECTS: returns name of location
     public String getName() {

@@ -36,6 +36,11 @@ public class MapTest {
     }
 
     @Test
+    public void constructorTest() {
+
+    }
+
+    @Test
     public void findLocationByNameUnvisited() {
 
     }
