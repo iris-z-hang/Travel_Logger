@@ -27,7 +27,7 @@ public class Location extends Map{
 
     //EFFECTS: returns name of location
     public String getName() {
-        return this.name;
+        return name;
     }
 
     // EFFECTS: returns location address

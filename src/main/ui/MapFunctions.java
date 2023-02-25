@@ -172,18 +172,19 @@ public class MapFunctions {
                     break;
 
                 case EXISTING_LOCATIONS_UNVISITED:
-                    // TODO: FIND LOCATIONS BY NAME AND ACQUIRE LONG LAT
+                    // TODO: FIND LOCATIONS BY NAME
                     System.out.println("Enter the name of the first location.");
                     String unvisitedNameOne = getUserInputString();
                     System.out.println("Enter the name of the second location.");
                     String unvisitedNameTwo = getUserInputString();
+
                     travelMap.distanceTwoPoints(travelMap.findLocationByNameUnvisited(unvisitedNameOne),
                             travelMap.findLocationByNameUnvisited(unvisitedNameTwo));
                     System.out.println("Enter " + BACK + " to return to the previous screen.");
                     break;
 
                 case EXISTING_LOCATIONS_VISITED:
-                    // TODO: FIND LOCATIONS BY NAME AND ACQUIRE LONG LAT
+                    // TODO: FIND LOCATIONS BY NAME
                     System.out.println("Enter the name of the first location.");
                     String visitedNameOne = getUserInputString();
                     System.out.println("Enter the name of the second location.");
