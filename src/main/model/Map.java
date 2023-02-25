@@ -6,20 +6,20 @@ import java.util.List;
 
 public class Map {
     public boolean tripFinished;
-    protected String city;
+    protected static String city;
 
-    public LinkedList<Location> unvisited;
-    public LinkedList<Location> visited;
+    public ArrayList<Location> unvisited;
+    public ArrayList<Location> visited;
 
     private final double EARTH_RADIUS = 6371;
     private final String UNITS = "KM";
 
     public Map(String city) {
-        this.city = city;
+        Map.city = city;
         tripFinished = false;
 
-        this.unvisited = new LinkedList<>();
-        this.visited = new LinkedList<>();
+        unvisited = new ArrayList<>();
+        visited = new ArrayList<>();
     }
 
     public void setTripFinished(boolean tripFinished) {
@@ -29,21 +29,23 @@ public class Map {
     // MODIFIES: this
     // EFFECTS: adds location to unvisited list
     public void addUnvisitedLocation(Location location) {
-        this.unvisited.add(location);
+        unvisited.add(location);
 
     }
 
     // MODIFIES: this
     // EFFECTS: adds location to visited list
     public void addVisitedLocation(Location location) {
-        this.visited.add(location);
+        visited.add(location);
     }
 
     // MODIFIES: this
     // EFFECTS: removes location from unvisited list if exists and returns true, else returns false
     public boolean removeUnvisitedLocation(Location location) {
+        int index = 0;
         if (unvisited.contains(location)) {
-            this.unvisited.remove(location);
+            index = unvisited.indexOf(location);
+            unvisited.remove(index);
             return true;
         }
         return false;
@@ -52,8 +54,10 @@ public class Map {
     // MODIFIES: this
     // EFFECTS: removes visited location from visited list if exists and returns true, else returns false
     public boolean removeVisitedLocation(Location location) {
-        if (unvisited.contains(location)) {
-            this.visited.remove(location);
+        int index = 0;
+        if (visited.contains(location)) {
+            index = visited.indexOf(location);
+            visited.remove(index);
             return true;
         }
         return false;
@@ -63,26 +67,26 @@ public class Map {
     // MODIFIES: this
     // EFFECTS: removes location from visited list and adds location to unvisited list
     public void moveVisitedToUnvisited(Location location) {
-        this.visited.remove(location);
-        this.unvisited.add(location);
+        visited.remove(location);
+        unvisited.add(location);
     }
 
     // REQUIRES: location is in unvisited list
     // MODIFIES: this
     // EFFECTS: removes location from unvisited list and adds location to visited list
     public void moveUnvisitedToVisited(Location location) {
-        this.unvisited.remove(location);
-        this.visited.add(location);
+        unvisited.remove(location);
+        visited.add(location);
 
     }
 
     // EFFECTS: returns list of unvisited locations
-    public LinkedList<Location> getUnvisitedLocations() {
+    public ArrayList<Location> getUnvisitedLocations() {
         return unvisited;
     }
 
     // EFFECTS: returns list of visited locations
-    public LinkedList<Location> getVisitedLocations() {
+    public ArrayList<Location> getVisitedLocations() {
         return visited;
     }
 
@@ -102,25 +106,14 @@ public class Map {
         }
     }
 
-    // EFFECTS: returns next unvisited location
-    public Location getNextUnvisitedLocation() {
-        return unvisited.getFirst();
-    }
-
-    // EFFECTS: returns last visited location
-    public Location getLasVisitedLocation() {
-        return visited.getLast();
-    }
-
     public Location findLocationByNameUnvisited(String name) {
         Location foundLocation = null;
-        for (Location location : this.unvisited) {
+        for (Location location : unvisited) {
             if (location.getName().equals(name)) {
                 foundLocation = location;
             }
             else {
-                // TODO: DO THIS ACTION IN UI NOT HERE
-                System.out.println("Not found.");
+                System.out.println("Location not found.");
             }
         }
         return foundLocation;
@@ -128,7 +121,7 @@ public class Map {
 
     public Location findLocationByNameVisited(String name) {
         Location foundLocation = null;
-        for (Location location : this.visited) {
+        for (Location location : visited) {
             if (location.getName().equals(name)) {
                 foundLocation = location;
             }
@@ -141,10 +134,10 @@ public class Map {
     }
 
     public double distanceTwoPoints(Location location1, Location location2) {
-        double longitude1 = location1.getLongitude();
         double latitude1 = location1.getLatitude();
-        double longitude2 = location2.getLongitude();
+        double longitude1 = location1.getLongitude();
         double latitude2 = location2.getLatitude();
+        double longitude2 = location2.getLongitude();
 
         double latDistance = Math.toRadians(latitude2 - latitude1);
         double longDistance = Math.toRadians(longitude2 - longitude1);

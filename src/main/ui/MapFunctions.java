@@ -47,12 +47,12 @@ public class MapFunctions {
         System.out.println("Hello, welcome to Travel Logger.");
         System.out.println("Please input the name of the city you are visiting.");
         this.cityName = userInput.nextLine();
-        System.out.println("Creating new map for " + cityName);
+        System.out.println("Creating new map for " + cityName + "\n");
 
     }
 
     public void printInstructions() {
-        System.out.println("What action would you like to perform?");
+        System.out.println("What action would you like to perform?\n");
         System.out.println("Enter " + ADD_LOCATION_TO_UNVISITED + " to add a new location to unvisited places.");
         System.out.println("Enter " + ADD_LOCATION_TO_VISITED + " to add a new location to visited places.");
         System.out.println("Enter " + REMOVE_LOCATION_FROM_UNVISITED + " to remove a location from unvisited places.");
@@ -81,22 +81,24 @@ public class MapFunctions {
                     break;
 
                 case REMOVE_LOCATION_FROM_UNVISITED:
-                    if (travelMap.removeUnvisitedLocation(userInputNewLocation())) {
-                        travelMap.removeUnvisitedLocation(userInputNewLocation());
-                        System.out.println("Location removed from unvisited list: " + userInputNewLocation().getName());
+                    System.out.println("Enter the name of the location you want removed.");
+                    String removeNameU = getUserInputString();
+                    if (travelMap.removeUnvisitedLocation(travelMap.findLocationByNameUnvisited(removeNameU))) {
+                        travelMap.removeUnvisitedLocation(travelMap.findLocationByNameUnvisited(removeNameU));
+                        System.out.println(removeNameU + " successfully removed.");
                     } else {
                         System.out.println("Location not found.");
-                        System.out.println("Enter " + BACK + " to return to the previous screen.");
                     }
                     break;
 
                 case REMOVE_LOCATION_FROM_VISITED:
-                    if (travelMap.removeVisitedLocation(userInputNewLocation())) {
-                        travelMap.removeVisitedLocation(userInputNewLocation());
-                        System.out.println("Location removed from visited list: " + userInputNewLocation().getName());
+                    System.out.println("Enter the name of the location you want removed.");
+                    String removeNameV = getUserInputString();
+                    if (travelMap.removeVisitedLocation(travelMap.findLocationByNameVisited(removeNameV))) {
+                        travelMap.removeVisitedLocation(travelMap.findLocationByNameVisited(removeNameV));
+                        System.out.println(removeNameV + " successfully removed.");
                     } else {
                         System.out.println("Location not found.");
-                        System.out.println("Enter " + BACK + " to return to the previous screen.");
                     }
                     break;
 
@@ -123,7 +125,9 @@ public class MapFunctions {
 
                 case QUIT:
                     System.out.println("Goodbye.");
+                    travelMap.setTripFinished(true);
                     userInput.close();
+                    break;
 
                 default:
                     System.out.println("Invalid command.");
@@ -150,17 +154,17 @@ public class MapFunctions {
         if (str.length() > 0) {
             switch (str) {
                 case NEW_LOCATIONS:
-                    System.out.println("Enter the longitude for the first location.");
-                    double longOne = Double.parseDouble(getUserInputString());
                     System.out.println("Enter the latitude for the first location.");
                     double latOne = Double.parseDouble(getUserInputString());
-                    Location tempOne = new Location("NULL", "NULL", "NULL", longOne, latOne);
+                    System.out.println("Enter the longitude for the first location.");
+                    double longOne = Double.parseDouble(getUserInputString());
+                    Location tempOne = new Location("NULL", "NULL", latOne, longOne);
 
-                    System.out.println("Enter the longitude for the second location.");
-                    double longTwo = Double.parseDouble(getUserInputString());
                     System.out.println("Enter the latitude for the second location.");
                     double latTwo = Double.parseDouble(getUserInputString());
-                    Location tempTwo = new Location("NULL", "NULL", "NULL", longTwo, latTwo);
+                    System.out.println("Enter the longitude for the second location.");
+                    double longTwo = Double.parseDouble(getUserInputString());
+                    Location tempTwo = new Location("NULL", "NULL", latTwo, longTwo);
 
                     System.out.println("The distance between these two locations is: " +
                             travelMap.distanceTwoPoints(tempOne, tempTwo) + "KM");
@@ -201,29 +205,12 @@ public class MapFunctions {
         String locationName = getUserInputString();
         System.out.println("Please input the address of the location.");
         String locationAddress = getUserInputString();
-        System.out.println("Please input the city name of the location.");
-        String locationCity = getUserInputString();
-        System.out.println("Please input the longitude of the location.");
-        double locationLong = Double.parseDouble(getUserInputString());
         System.out.println("Please input the latitude of the location.");
         double locationLat = Double.parseDouble(getUserInputString());
-
-        return new Location(locationName, locationAddress, locationCity, locationLat, locationLong);
-    }
-
-    private Location userInputNewLocationSecond() {
-        System.out.println("Please input the name of the location.");
-        String locationName = getUserInputString();
-        System.out.println("Please input the address of the location.");
-        String locationAddress = getUserInputString();
-        System.out.println("Please input the city name of the location.");
-        String locationCity = getUserInputString();
         System.out.println("Please input the longitude of the location.");
         double locationLong = Double.parseDouble(getUserInputString());
-        System.out.println("Please input the latitude of the location.");
-        double locationLat = Double.parseDouble(getUserInputString());
 
-        return new Location(locationName, locationAddress, locationCity, locationLat, locationLong);
+        return new Location(locationName, locationAddress, locationLat, locationLong);
     }
 
 

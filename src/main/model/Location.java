@@ -6,30 +6,28 @@ public class Location extends Map{
 
     private final String name;
     private final String address;
-    protected final String city;
     private final double longitude;
     private final double latitude;
 
     // EFFECTS:
-    public Location(String name, String address, String city, double longitude, double latitude) {
-        super(city);
+    public Location(String name, String address, double latitude, double longitude) {
+        super(Map.city);
         this.name = name;
         this.address = address;
-        this.city = city;
-        this.longitude = longitude;
         this.latitude = latitude;
+        this.longitude = longitude;
 
     }
 
     // getters
     // EFFECTS: returns the full location including name, address, coordinates
     public String getLocation() {
-        return name + ": " + address + ", " + longitude + " " + latitude;
+        return name + ": " + address + ", " + latitude + " " + longitude;
     }
 
     //EFFECTS: returns name of location
     public String getName() {
-        return name;
+        return this.name;
     }
 
     // EFFECTS: returns location address
@@ -37,9 +35,9 @@ public class Location extends Map{
         return address;
     }
 
-    // EFFECTS: returns city name
-    public String getCity() {
-        return city;
+    // EFFECTS: returns latitude of location
+    public double getLatitude() {
+        return latitude;
     }
 
     // EFFECTS: returns longitude of location
@@ -47,9 +45,5 @@ public class Location extends Map{
         return longitude;
     }
 
-    // EFFECTS: returns latitude of location
-    public double getLatitude() {
-        return latitude;
-    }
 
 }
