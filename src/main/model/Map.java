@@ -107,37 +107,29 @@ public class Map {
     }
 
     public Location findLocationByNameUnvisited(String name) {
-//        int index = 0;
-//        for (Location location : unvisited) {
-//            if (location.getName().equals(name)) {
-//                index = unvisited.indexOf(location);
-//            }
-//        }
-//        return unvisited.get(index);
-
         int index = 0;
-        for (int i = 0; i < unvisited.size(); i++) {
-            if (unvisited.get(i).getName().equals(name)) {
-                index = i;
+        for (Location location : unvisited) {
+            String locationName = location.getName();
+
+            if (locationName.equals(name)) {
+                index = unvisited.indexOf(location);
                 break;
             }
         }
-        System.out.println("Location not found."); // TODO: remove after fixing bug
-        return unvisited.get(index); 
+        return unvisited.get(index);
     }
 
     public Location findLocationByNameVisited(String name) {
-        Location foundLocation = null;
+        int index = 0;
         for (Location location : visited) {
-            if (location.getName().equals(name)) {
-                foundLocation = location;
-            }
-            else {
-                // TODO: DO THIS ACTION IN UI NOT HERE
-                System.out.println("Not found.");
+            String locationName = location.getName();
+
+            if (locationName.equals(name)) {
+                index = visited.indexOf(location);
+                break;
             }
         }
-        return foundLocation;
+        return visited.get(index);
     }
 
     public double distanceTwoPoints(Location location1, Location location2) {

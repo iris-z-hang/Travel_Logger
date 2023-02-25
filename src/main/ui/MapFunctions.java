@@ -103,12 +103,14 @@ public class MapFunctions {
                     break;
 
                 case CHECK_UNVISITED:
+                    // TODO: add something to get info about location
                     System.out.println("Here are the locations on your unvisited list: ");
                     travelMap.printUnvisitedLocations();
                     System.out.println("Enter " + BACK + " to return to the previous screen.");
                     break;
 
                 case CHECK_VISITED:
+                    // TODO: add something to get info about location
                     System.out.println("Here are the locations on your visited list: ");
                     travelMap.printVisitedLocations();
                     System.out.println("Enter " + BACK + " to return to the previous screen.");
@@ -172,19 +174,19 @@ public class MapFunctions {
                     break;
 
                 case EXISTING_LOCATIONS_UNVISITED:
-                    // TODO: FIND LOCATIONS BY NAME
                     System.out.println("Enter the name of the first location.");
                     String unvisitedNameOne = getUserInputString();
+                    Location locationOne = travelMap.findLocationByNameUnvisited(unvisitedNameOne);
+
                     System.out.println("Enter the name of the second location.");
                     String unvisitedNameTwo = getUserInputString();
+                    Location locationTwo = travelMap.findLocationByNameUnvisited(unvisitedNameTwo);
 
-                    travelMap.distanceTwoPoints(travelMap.findLocationByNameUnvisited(unvisitedNameOne),
-                            travelMap.findLocationByNameUnvisited(unvisitedNameTwo));
+                    System.out.println(travelMap.distanceTwoPoints(locationOne, locationTwo));
                     System.out.println("Enter " + BACK + " to return to the previous screen.");
                     break;
 
                 case EXISTING_LOCATIONS_VISITED:
-                    // TODO: FIND LOCATIONS BY NAME
                     System.out.println("Enter the name of the first location.");
                     String visitedNameOne = getUserInputString();
                     System.out.println("Enter the name of the second location.");
