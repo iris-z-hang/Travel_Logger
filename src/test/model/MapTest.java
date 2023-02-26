@@ -62,16 +62,18 @@ public class MapTest {
     @Test
     public void removeUnvisitedLocationTest() {
         assertEquals(1, testMap.getSizeUnvisited());
-        testMap.removeUnvisitedLocation(testLocation1);
+        assertTrue(testMap.removeUnvisitedLocation(testLocation1));
         assertEquals(0, testMap.getSizeUnvisited());
+        assertFalse(testMap.removeUnvisitedLocation(testLocation3));
 
     }
 
     @Test
     public void removeVisitedLocationTest() {
         assertEquals(1, testMap.getSizeVisited());
-        testMap.removeVisitedLocation(testLocation1);
+        assertTrue(testMap.removeVisitedLocation(testLocation1));
         assertEquals(0, testMap.getSizeVisited());
+        assertFalse(testMap.removeVisitedLocation(testLocation3));
     }
 
     @Test
@@ -79,17 +81,18 @@ public class MapTest {
         assertEquals(1, testMap.getSizeUnvisited());
         assertEquals(1, testMap.getSizeVisited());
 
-        testMap.moveVisitedToUnvisited(testLocation1.getName());
+        assertTrue(testMap.moveVisitedToUnvisited(testLocation1.getName()));
 
         assertEquals(2, testMap.getSizeUnvisited());
         assertEquals(0, testMap.getSizeVisited());
 
         testMap.addVisitedLocation(testLocation3);
-        testMap.moveVisitedToUnvisited(testLocation3.getName());
+        assertTrue(testMap.moveVisitedToUnvisited(testLocation3.getName()));
 
         assertEquals(3, testMap.getSizeUnvisited());
         assertEquals(0, testMap.getSizeVisited());
 
+        assertFalse(testMap.moveVisitedToUnvisited(testLocation3.getName()));
 
     }
 
@@ -98,16 +101,18 @@ public class MapTest {
         assertEquals(1, testMap.getSizeUnvisited());
         assertEquals(1, testMap.getSizeVisited());
 
-        testMap.moveUnvisitedToVisited(testLocation1.getName());
+        assertTrue(testMap.moveUnvisitedToVisited(testLocation1.getName()));
 
         assertEquals(0, testMap.getSizeUnvisited());
         assertEquals(2, testMap.getSizeVisited());
 
         testMap.addUnvisitedLocation(testLocation3);
-        testMap.moveUnvisitedToVisited(testLocation3.getName());
+        assertTrue(testMap.moveUnvisitedToVisited(testLocation3.getName()));
 
         assertEquals(0, testMap.getSizeUnvisited());
         assertEquals(3, testMap.getSizeVisited());
+
+        assertFalse(testMap.moveUnvisitedToVisited(testLocation3.getName()));
 
     }
 
@@ -116,6 +121,7 @@ public class MapTest {
         assertEquals(testLocation1, testMap.findLocationByNameUnvisited(testLocation1.getName()));
         testMap.addUnvisitedLocation(testLocation2);
         assertEquals(testLocation2, testMap.findLocationByNameUnvisited(testLocation2.getName()));
+        assertEquals(testLocation1, testMap.findLocationByNameUnvisited(testLocation3.getName()));
 
     }
 
@@ -124,6 +130,7 @@ public class MapTest {
         assertEquals(testLocation1, testMap.findLocationByNameVisited(testLocation1.getName()));
         testMap.addVisitedLocation(testLocation2);
         assertEquals(testLocation2, testMap.findLocationByNameVisited(testLocation2.getName()));
+        assertEquals(testLocation1, testMap.findLocationByNameVisited(testLocation3.getName()));
 
     }
 
