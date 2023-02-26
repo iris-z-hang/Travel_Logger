@@ -1,14 +1,14 @@
 package ui;
 
 import model.Map;
+import model.VisitedUnvisitedLists;
 
 public class Main {
 
-    static String cityName;
-
     public static void main(String[] args) {
-        Map travelMap = new Map(cityName);
-        MapFunctions mapFunc = new MapFunctions(travelMap);
+        String cityName = "cityName";
+        Map map = new Map(cityName);
+        MapFunctions mapFunc = new MapFunctions(map);
         mapFunc.printIntro();
         mapFunc.handleUserInput();
 

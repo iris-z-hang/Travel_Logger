@@ -1,7 +1,7 @@
 package model;
 
 // represents a place or location that someone would visit
-public class Location extends Map {
+public class Location extends VisitedUnvisitedLists {
 
     private final String name;
     private final String address;
@@ -10,7 +10,6 @@ public class Location extends Map {
 
     // EFFECTS: constructs new location with name, address, latitude, and longitude
     public Location(String name, String address, double latitude, double longitude) {
-        super(Map.city);
         this.name = name;
         this.address = address;
         this.latitude = latitude;

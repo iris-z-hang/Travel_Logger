@@ -4,14 +4,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 // unit tests for Map class
-public class MapTest {
+public class VisitedUnvisitedListsTest {
 
-    private ListFunctions testMap;
+
+    private Map testMap;
     private Location testLocation1;
     private Location testLocation2;
     private Location testLocation3;
@@ -21,7 +21,7 @@ public class MapTest {
 
     @BeforeEach
     public void setup() {
-        testMap = new Map("testCity");
+        testMap = new Map("Toronto");
 
         testLocation1 = new Location("Royal Ontario Museum", "100 Queens Park",
                 43.667709, -79.394775);
@@ -39,9 +39,20 @@ public class MapTest {
 
     @Test
     public void constructorTest() {
-        assertEquals("testCity", testMap.getCity());
+        assertEquals("Toronto", testMap.getCity());
     }
 
+    @Test
+    public void setTripFinishedTest() {
+        assertFalse(testMap.getTripFinished());
+        testMap.setTripFinished(true);
+        assertTrue(testMap.getTripFinished());
+    }
+
+    @Test
+    public void distanceTwoPointsTest() {
+        assertEquals(1.5544, testMap.distanceTwoPoints(testLocation1, testLocation2));
+    }
 
     @Test
     public void addUnvisitedLocationTest() {
@@ -60,19 +71,13 @@ public class MapTest {
         assertEquals(testLocation2, testMap.getLocations(visitedTest).get(1));
     }
 
-    @Test
-    public void setTripFinishedTest() {
-        assertFalse(testMap.getTripFinished());
-        testMap.setTripFinished(true);
-        assertTrue(testMap.getTripFinished());
-    }
 
     @Test
     public void removeUnvisitedLocationTest() {
-        assertEquals(1, testMap.getSizeUnvisited());
-        assertTrue(testMap.removeUnvisitedLocation(testLocation1));
-        assertEquals(0, testMap.getSizeUnvisited());
-        assertFalse(testMap.removeUnvisitedLocation(testLocation3));
+        assertEquals(1, testMap.getSize(unvisitedTest));
+        assertTrue(testMap.removeLocation(unvisitedTest, testLocation1));
+        assertEquals(0, testMap.getSize(unvisitedTest));
+        assertFalse(testMap.removeLocation(unvisitedTest, testLocation3));
 
     }
 
@@ -144,7 +149,7 @@ public class MapTest {
 
     @Test
     public void getInformationUnvisitedTestEmpty() {
-        ListFunctions testMap2 = new Map("Hamilton");
+        Map testMap2 = new VisitedUnvisitedLists();
         ArrayList<Location> unvisitedTest2 = new ArrayList<>();
 
         assertEquals("", testMap2.getInformation(unvisitedTest2, testLocation1.getName()));
@@ -152,7 +157,7 @@ public class MapTest {
 
     @Test
     public void getInformationVisitedTestEmpty() {
-        ListFunctions testMap2 = new Map("Hamilton");
+        Map testMap2 = new VisitedUnvisitedLists();
         ArrayList<Location> visitedTest2 = new ArrayList<>();
 
         assertEquals("", testMap2.getInformation(visitedTest2, testLocation1.getName()));
@@ -164,7 +169,7 @@ public class MapTest {
         assertEquals("Name: " + testLocation1.getName() + ", Address: " + testLocation1.getAddress()
                         + ", Latitude: " + testLocation1.getLatitude() + " , Longitude: "
                         + testLocation1.getLongitude(),
-        testMap.getInformation(unvisitedTest, testLocation1.getName()));
+                testMap.getInformation(unvisitedTest, testLocation1.getName()));
 
         testMap.addLocation(unvisitedTest, testLocation2);
 
@@ -189,13 +194,6 @@ public class MapTest {
                         + ", Latitude: " + testLocation2.getLatitude() + " , Longitude: "
                         + testLocation2.getLongitude(),
                 testMap.getInformation(visitedTest, testLocation2.getName()));
-    }
-
-    @Test
-    public void distanceTwoPointsTest() {
-        testMap.addLocation(unvisitedTest, testLocation2);
-        assertEquals(1.5544, testMap.distanceTwoPoints(testLocation1, testLocation2));
-
     }
 
 }
