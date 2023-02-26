@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 // represents a map of a city that contains locations
-public class Map {
+public class Map extends ListFunctions {
     private boolean tripFinished;
     protected static String city;
 
@@ -19,14 +19,15 @@ public class Map {
         visited = new ArrayList<>();
     }
 
+
     // EFFECTS: returns the size of the unvisited list
     public int getSizeUnvisited() {
-        return unvisited.size();
+        return getSize(unvisited);
     }
 
     // EFFECTS: returns the size of the visited list
     public int getSizeVisited() {
-        return visited.size();
+        return getSize(visited);
     }
 
     // EFFECTS: returns the size of the visited list
@@ -43,144 +44,78 @@ public class Map {
     // MODIFIES: this
     // EFFECTS: adds location to unvisited list, the same location can be added multiple times
     public void addUnvisitedLocation(Location location) {
-        unvisited.add(location);
-
+        addLocation(unvisited, location);
     }
 
     // MODIFIES: this
     // EFFECTS: adds location to visited list, the same location can be added multiple times
     public void addVisitedLocation(Location location) {
-        visited.add(location);
+        addLocation(unvisited, location);
     }
 
     // MODIFIES: this
     // EFFECTS: removes location from unvisited list if exists and returns true, else returns false
     public boolean removeUnvisitedLocation(Location location) {
-        int index = 0;
-        if (unvisited.contains(location)) {
-            index = unvisited.indexOf(location);
-            unvisited.remove(index);
-            return true;
-        }
-        return false;
+        return removeLocation(unvisited, location);
     }
 
     // MODIFIES: this
     // EFFECTS: removes visited location from visited list if exists and returns true, else returns false
     public boolean removeVisitedLocation(Location location) {
-        int index = 0;
-        if (visited.contains(location)) {
-            index = visited.indexOf(location);
-            visited.remove(index);
-            return true;
-        }
-        return false;
+        return removeLocation(visited, location);
     }
 
     // MODIFIES: this
     // EFFECTS: removes location from visited list and adds location to unvisited list
     //          returns true if successful (location present in visited list) else false
     public boolean moveVisitedToUnvisited(String name) {
-        for (Location location : visited) {
-            String locationName = location.getName();
-            if (locationName.equals(name)) {
-                unvisited.add(location);
-                visited.remove(location);
-                return true;
-            }
-        }
-        return false;
+        return moveLocation(visited, unvisited, name);
     }
 
     // MODIFIES: this
     // EFFECTS: removes location from unvisited list and adds location to visited list
     //          returns true if successful (location present in unvisited list) else false
     public boolean moveUnvisitedToVisited(String name) {
-        for (Location location : unvisited) {
-            String locationName = location.getName();
-            if (locationName.equals(name)) {
-                visited.add(location);
-                unvisited.remove(location);
-                return true;
-            }
-        }
-        return false;
+        return moveLocation(unvisited, visited, name);
     }
 
     // EFFECTS: returns the city
-    public String getCity() {
-        return city;
-    }
+//    public String getCity() {
+//        return city;
+//    }
 
     // EFFECTS: returns list of unvisited locations
     public ArrayList<Location> getUnvisitedLocations() {
-        return unvisited;
+        return getLocations(unvisited);
+        // return unvisited;
     }
 
     // EFFECTS: returns list of visited locations
     public ArrayList<Location> getVisitedLocations() {
-        return visited;
+        return getLocations(visited);
+        // return visited;
     }
-
 
     // REQUIRES: there is a location that matches name on unvisited list
     // EFFECTS: returns the unvisited location with name that matches the parameter name
     public Location findLocationByNameUnvisited(String name) {
-        int index = 0;
-        for (Location location : unvisited) {
-            String locationName = location.getName();
-
-            if (locationName.equals(name)) {
-                index = unvisited.indexOf(location);
-                break;
-            }
-        }
-        return unvisited.get(index);
+        return findLocationByName(unvisited, name);
     }
 
     // REQUIRES: there is a location that matches name on visited list
     // EFFECTS: returns the visited location with name that matches the parameter name
     public Location findLocationByNameVisited(String name) {
-        int index = 0;
-        for (Location location : visited) {
-            String locationName = location.getName();
-
-            if (locationName.equals(name)) {
-                index = visited.indexOf(location);
-                break;
-            }
-        }
-        return visited.get(index);
+        return findLocationByName(visited, name);
     }
 
     // EFFECTS: returns the location information which includes name, address, latitude, and longitude for unvisited
     public String getInformationUnvisited(String name) {
-        String info = "";
-
-        for (Location location: unvisited) {
-            String locationName = location.getName();
-            if (locationName.equals(name)) {
-                info = "Name: " + name + ", Address: " + location.getAddress() + ", Latitude: "
-                        + location.getLatitude() + " , Longitude: " + location.getLongitude();
-                break;
-            }
-        }
-        return info;
+        return getInformation(unvisited, name);
     }
 
     // EFFECTS: returns the location information which includes name, address, latitude, and longitude for visited
     public String getInformationVisited(String name) {
-        String info = "";
-
-        for (Location location: visited) {
-            String locationName = location.getName();
-            if (locationName.equals(name)) {
-                info = "Name: " + name + ", Address: " + location.getAddress() + ", Latitude: "
-                        + location.getLatitude() + " , Longitude: " + location.getLongitude();
-                break;
-            }
-        }
-        return info;
+        return getInformation(visited, name);
     }
 
     // EFFECTS: calculates distance between two locations using their longitude and latitude by the Haversine formula

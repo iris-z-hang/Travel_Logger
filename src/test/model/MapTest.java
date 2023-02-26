@@ -3,15 +3,21 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 // unit tests for Map class
 public class MapTest {
 
-    private Map testMap;
+    private ListFunctions testMap;
     private Location testLocation1;
     private Location testLocation2;
     private Location testLocation3;
+
+    ArrayList<Location> unvisitedTest;
+    ArrayList<Location> visitedTest;
 
     @BeforeEach
     public void setup() {
@@ -24,9 +30,11 @@ public class MapTest {
         testLocation3 = new Location("Casa Loma", "1 Austin Terrace",
                 43.667709, -79.394775);
 
+        unvisitedTest = new ArrayList<>();
+        visitedTest = new ArrayList<>();
 
-        testMap.addUnvisitedLocation(testLocation1);
-        testMap.addVisitedLocation(testLocation1);
+        testMap.addLocation(unvisitedTest, testLocation1);
+        testMap.addLocation(visitedTest, testLocation1);
     }
 
     @Test
@@ -37,19 +45,19 @@ public class MapTest {
 
     @Test
     public void addUnvisitedLocationTest() {
-        assertEquals(1, testMap.getSizeUnvisited());
-        testMap.addUnvisitedLocation(testLocation2);
-        assertEquals(2, testMap.getSizeUnvisited());
-        assertEquals(testLocation2, testMap.getUnvisitedLocations().get(1));
+        assertEquals(1, testMap.getSize(unvisitedTest));
+        testMap.addLocation(unvisitedTest, testLocation2);
+        assertEquals(2, testMap.getSize(unvisitedTest));
+        assertEquals(testLocation2, testMap.getLocations(unvisitedTest).get(1));
 
     }
 
     @Test
     public void addVisitedLocationTest() {
-        assertEquals(1, testMap.getSizeVisited());
-        testMap.addVisitedLocation(testLocation2);
-        assertEquals(2, testMap.getSizeVisited());
-        assertEquals(testLocation2, testMap.getVisitedLocations().get(1));
+        assertEquals(1, testMap.getSize(visitedTest));
+        testMap.addLocation(visitedTest, testLocation2);
+        assertEquals(2, testMap.getSize(visitedTest));
+        assertEquals(testLocation2, testMap.getLocations(visitedTest).get(1));
     }
 
     @Test
@@ -70,80 +78,84 @@ public class MapTest {
 
     @Test
     public void removeVisitedLocationTest() {
-        assertEquals(1, testMap.getSizeVisited());
-        assertTrue(testMap.removeVisitedLocation(testLocation1));
-        assertEquals(0, testMap.getSizeVisited());
-        assertFalse(testMap.removeVisitedLocation(testLocation3));
+        assertEquals(1, testMap.getSize(visitedTest));
+        assertTrue(testMap.removeLocation(visitedTest, testLocation1));
+        assertEquals(0, testMap.getSize(visitedTest));
+        assertFalse(testMap.removeLocation(visitedTest, testLocation3));
     }
 
     @Test
     public void moveVisitedToUnvisitedTest() {
-        assertEquals(1, testMap.getSizeUnvisited());
-        assertEquals(1, testMap.getSizeVisited());
+        assertEquals(1, testMap.getSize(unvisitedTest));
+        assertEquals(1, testMap.getSize(visitedTest));
 
-        assertTrue(testMap.moveVisitedToUnvisited(testLocation1.getName()));
+        assertTrue(testMap.moveLocation(visitedTest, unvisitedTest, testLocation1.getName()));
 
-        assertEquals(2, testMap.getSizeUnvisited());
-        assertEquals(0, testMap.getSizeVisited());
+        assertEquals(2, testMap.getSize(unvisitedTest));
+        assertEquals(0, testMap.getSize(visitedTest));
 
-        testMap.addVisitedLocation(testLocation3);
-        assertTrue(testMap.moveVisitedToUnvisited(testLocation3.getName()));
+        testMap.addLocation(visitedTest, testLocation3);
+        assertTrue(testMap.moveLocation(visitedTest, unvisitedTest, testLocation3.getName()));
 
-        assertEquals(3, testMap.getSizeUnvisited());
-        assertEquals(0, testMap.getSizeVisited());
+        assertEquals(3, testMap.getSize(unvisitedTest));
+        assertEquals(0, testMap.getSize(visitedTest));
 
-        assertFalse(testMap.moveVisitedToUnvisited(testLocation3.getName()));
+        assertFalse(testMap.moveLocation(visitedTest, unvisitedTest, testLocation3.getName()));
 
     }
 
     @Test
     public void moveUnvisitedToVisitedTest() {
-        assertEquals(1, testMap.getSizeUnvisited());
-        assertEquals(1, testMap.getSizeVisited());
+        assertEquals(1, testMap.getSize(unvisitedTest));
+        assertEquals(1, testMap.getSize(visitedTest));
 
-        assertTrue(testMap.moveUnvisitedToVisited(testLocation1.getName()));
+        assertTrue(testMap.moveLocation(unvisitedTest, visitedTest, testLocation1.getName()));
 
-        assertEquals(0, testMap.getSizeUnvisited());
-        assertEquals(2, testMap.getSizeVisited());
+        assertEquals(0, testMap.getSize(unvisitedTest));
+        assertEquals(2, testMap.getSize(visitedTest));
 
-        testMap.addUnvisitedLocation(testLocation3);
-        assertTrue(testMap.moveUnvisitedToVisited(testLocation3.getName()));
+        testMap.addLocation(unvisitedTest, testLocation3);
+        assertTrue(testMap.moveLocation(unvisitedTest, visitedTest, testLocation3.getName()));
 
-        assertEquals(0, testMap.getSizeUnvisited());
-        assertEquals(3, testMap.getSizeVisited());
+        assertEquals(0, testMap.getSize(unvisitedTest));
+        assertEquals(3, testMap.getSize(visitedTest));
 
-        assertFalse(testMap.moveUnvisitedToVisited(testLocation3.getName()));
+        assertFalse(testMap.moveLocation(unvisitedTest, visitedTest, testLocation3.getName()));
 
     }
 
     @Test
     public void findLocationByNameUnvisitedTest() {
-        assertEquals(testLocation1, testMap.findLocationByNameUnvisited(testLocation1.getName()));
-        testMap.addUnvisitedLocation(testLocation2);
-        assertEquals(testLocation2, testMap.findLocationByNameUnvisited(testLocation2.getName()));
-        assertEquals(testLocation1, testMap.findLocationByNameUnvisited(testLocation3.getName()));
+        assertEquals(testLocation1, testMap.findLocationByName(unvisitedTest, testLocation1.getName()));
+        testMap.addLocation(unvisitedTest, testLocation2);
+        assertEquals(testLocation2, testMap.findLocationByName(unvisitedTest, testLocation2.getName()));
+        assertEquals(testLocation1, testMap.findLocationByName(unvisitedTest, testLocation3.getName()));
 
     }
 
     @Test
     public void findLocationByNameVisitedTest() {
-        assertEquals(testLocation1, testMap.findLocationByNameVisited(testLocation1.getName()));
-        testMap.addVisitedLocation(testLocation2);
-        assertEquals(testLocation2, testMap.findLocationByNameVisited(testLocation2.getName()));
-        assertEquals(testLocation1, testMap.findLocationByNameVisited(testLocation3.getName()));
+        assertEquals(testLocation1, testMap.findLocationByName(visitedTest, testLocation1.getName()));
+        testMap.addLocation(visitedTest, testLocation2);
+        assertEquals(testLocation2, testMap.findLocationByName(visitedTest, testLocation2.getName()));
+        assertEquals(testLocation1, testMap.findLocationByName(visitedTest, testLocation3.getName()));
 
     }
 
     @Test
     public void getInformationUnvisitedTestEmpty() {
-        Map testMap2 = new Map("Hamilton");
-        assertEquals("", testMap2.getInformationUnvisited(testLocation1.getName()));
+        ListFunctions testMap2 = new Map("Hamilton");
+        ArrayList<Location> unvisitedTest2 = new ArrayList<>();
+
+        assertEquals("", testMap2.getInformation(unvisitedTest2, testLocation1.getName()));
     }
 
     @Test
     public void getInformationVisitedTestEmpty() {
-        Map testMap2 = new Map("Hamilton");
-        assertEquals("", testMap2.getInformationVisited(testLocation1.getName()));
+        ListFunctions testMap2 = new Map("Hamilton");
+        ArrayList<Location> visitedTest2 = new ArrayList<>();
+
+        assertEquals("", testMap2.getInformation(visitedTest2, testLocation1.getName()));
     }
 
 
@@ -152,14 +164,14 @@ public class MapTest {
         assertEquals("Name: " + testLocation1.getName() + ", Address: " + testLocation1.getAddress()
                         + ", Latitude: " + testLocation1.getLatitude() + " , Longitude: "
                         + testLocation1.getLongitude(),
-        testMap.getInformationUnvisited(testLocation1.getName()));
+        testMap.getInformation(unvisitedTest, testLocation1.getName()));
 
-        testMap.addUnvisitedLocation(testLocation2);
+        testMap.addLocation(unvisitedTest, testLocation2);
 
         assertEquals("Name: " + testLocation2.getName() + ", Address: " + testLocation2.getAddress()
                         + ", Latitude: " + testLocation2.getLatitude() + " , Longitude: "
                         + testLocation2.getLongitude(),
-                testMap.getInformationUnvisited(testLocation2.getName()));
+                testMap.getInformation(unvisitedTest, testLocation2.getName()));
 
 
     }
@@ -169,19 +181,19 @@ public class MapTest {
         assertEquals("Name: " + testLocation1.getName() + ", Address: " + testLocation1.getAddress()
                         + ", Latitude: " + testLocation1.getLatitude() + " , Longitude: "
                         + testLocation1.getLongitude(),
-                testMap.getInformationVisited(testLocation1.getName()));
+                testMap.getInformation(visitedTest, testLocation1.getName()));
 
-        testMap.addVisitedLocation(testLocation2);
+        testMap.addLocation(visitedTest, testLocation2);
 
         assertEquals("Name: " + testLocation2.getName() + ", Address: " + testLocation2.getAddress()
                         + ", Latitude: " + testLocation2.getLatitude() + " , Longitude: "
                         + testLocation2.getLongitude(),
-                testMap.getInformationVisited(testLocation2.getName()));
+                testMap.getInformation(visitedTest, testLocation2.getName()));
     }
 
     @Test
     public void distanceTwoPointsTest() {
-        testMap.addUnvisitedLocation(testLocation2);
+        testMap.addLocation(unvisitedTest, testLocation2);
         assertEquals(1.5544, testMap.distanceTwoPoints(testLocation1, testLocation2));
 
     }
