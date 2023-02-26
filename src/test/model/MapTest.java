@@ -135,6 +135,19 @@ public class MapTest {
     }
 
     @Test
+    public void getInformationUnvisitedTestEmpty() {
+        Map testMap2 = new Map("Hamilton");
+        assertEquals("", testMap2.getInformationUnvisited(testLocation1.getName()));
+    }
+
+    @Test
+    public void getInformationVisitedTestEmpty() {
+        Map testMap2 = new Map("Hamilton");
+        assertEquals("", testMap2.getInformationVisited(testLocation1.getName()));
+    }
+
+
+    @Test
     public void getInformationUnvisitedTest() {
         assertEquals("Name: " + testLocation1.getName() + ", Address: " + testLocation1.getAddress()
                         + ", Latitude: " + testLocation1.getLatitude() + " , Longitude: "
