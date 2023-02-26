@@ -2,8 +2,8 @@ package model;
 
 import java.util.LinkedList;
 
+// represents a place or location that someone would visit
 public class Location extends Map{
-    // LOCATION CLASS DESCRIPTION
 
     private final String name;
     private final String address;

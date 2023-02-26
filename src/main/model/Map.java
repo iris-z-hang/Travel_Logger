@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+// represents a map of a city that contains locations
 public class Map {
     // MAP CLASS DESCRIPTION
     public boolean tripFinished;
@@ -21,10 +22,12 @@ public class Map {
         visited = new ArrayList<>();
     }
 
+    // EFFECTS: returns the size of the unvisited list
     public int getSizeUnvisited() {
         return unvisited.size();
     }
 
+    // EFFECTS: returns the size of the visited list
     public int getSizeVisited() {
         return visited.size();
     }
@@ -191,6 +194,7 @@ public class Map {
     }
 
     // EFFECTS: calculates distance between two locations using their longitude and latitude by the Haversine formula
+    //          rounds answer to four decimal places
     public double distanceTwoPoints(Location location1, Location location2) {
         double latitude1 = location1.getLatitude();
         double longitude1 = location1.getLongitude();
