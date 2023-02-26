@@ -19,7 +19,6 @@ public class MapFunctions {
     private static final String EXISTING_LOCATIONS_UNVISITED = "EXISTING UNVISITED";
     private static final String EXISTING_LOCATIONS_VISITED = "EXISTING VISITED";
 
-    // TODO: implement commands with these
     private static final String EDIT_UNVISITED = "EDIT UNVISITED LIST";
     private static final String EDIT_VISITED = "EDIT VISITED LIST";
     private static final String MOVE_TO_UNVISITED = "MOVE TO UNVISITED";
@@ -82,17 +81,18 @@ public class MapFunctions {
 
                 case CHECK_UNVISITED:
                     parseInputInfoUnvisited(str);
-                    System.out.println("Enter " + BACK + " to return to the previous screen.");
+                    System.out.println("Enter " + BACK + " to return to the original screen.");
                     break;
 
                 case CHECK_VISITED:
                     parseInputInfoVisited(str);
-                    System.out.println("Enter " + BACK + " to return to the previous screen.");
+                    System.out.println("Enter " + BACK + " to return to the original screen.");
                     break;
 
 
                 case FIND_DISTANCE:
                     parseInputFindDistance(str);
+                    System.out.println("Enter " + BACK + " to return to the original screen.");
                     break;
 
                 case BACK:
@@ -107,7 +107,7 @@ public class MapFunctions {
 
                 default:
                     System.out.println("Invalid command.");
-                    System.out.println("Enter " + BACK + " to return to the previous screen.");
+                    System.out.println("Enter " + BACK + " to return to the original screen.");
                     break;
             }
         }
@@ -118,7 +118,7 @@ public class MapFunctions {
         System.out.println("Enter " + REMOVE_LOCATION_FROM_UNVISITED + " to remove a location from unvisited places.");
         System.out.println("Enter " + MOVE_TO_VISITED + " to move a location from unvisited to visited list.");
         System.out.println("Enter " + CHECK_UNVISITED + " to check the list of unvisited locations.");
-        System.out.println("Enter " + BACK + " to return to the previous screen.");
+        System.out.println("Enter " + BACK + " to return to the original screen.");
 
         userInputEditUnvisited();
     }
@@ -131,7 +131,7 @@ public class MapFunctions {
                     System.out.println("Please input the following information about the unvisited location: ");
                     travelMap.addUnvisitedLocation(userInputNewLocation());
                     System.out.println("Location successfully added.");
-                    System.out.println("Enter " + BACK + " to return to the previous screen.");
+                    System.out.println("Enter " + BACK + " to return to the original screen.");
                     break;
 
                 case REMOVE_LOCATION_FROM_UNVISITED:
@@ -143,6 +143,7 @@ public class MapFunctions {
                     } else {
                         System.out.println("Location not found.");
                     }
+                    System.out.println("Enter " + BACK + " to return to the original screen.");
                     break;
 
                 case MOVE_TO_VISITED:
@@ -153,6 +154,7 @@ public class MapFunctions {
                     } else {
                         System.out.println("Location not found.");
                     }
+                    System.out.println("Enter " + BACK + " to return to the original screen.");
                     break;
 
                 default:
@@ -167,7 +169,7 @@ public class MapFunctions {
         System.out.println("Enter " + REMOVE_LOCATION_FROM_VISITED + " to remove a location from visited places.");
         System.out.println("Enter " + MOVE_TO_UNVISITED + " to move a location from visited to unvisited list.");
         System.out.println("Enter " + CHECK_VISITED + " to check the list of visited locations.");
-        System.out.println("Enter " + BACK + " to return to the previous screen.");
+        System.out.println("Enter " + BACK + " to return to the original screen.");
 
         userInputEditVisited();
     }
@@ -180,7 +182,7 @@ public class MapFunctions {
                     System.out.println("Please input the following information about the visited location: ");
                     travelMap.addVisitedLocation(userInputNewLocation());
                     System.out.println("Location successfully added.");
-                    System.out.println("Enter " + BACK + " to return to the previous screen.");
+                    System.out.println("Enter " + BACK + " to return to the original screen.");
                     break;
 
                 case REMOVE_LOCATION_FROM_VISITED:
@@ -224,7 +226,7 @@ public class MapFunctions {
         if (str.length() > 0) {
             switch (str) {
                 case INFO:
-                    System.out.println("Enter the name of the location for more details.");
+                    System.out.println("Enter the name of the location.");
                     String locationName = getUserInputString();
                     System.out.println(travelMap.getInformationUnvisited(locationName));
                     break;
@@ -240,7 +242,7 @@ public class MapFunctions {
     }
 
     private void parseInputInfoVisited(String str) {
-        System.out.println("Here are the locations on your unvisited list: ");
+        System.out.println("Here are the locations on your visited list: ");
         travelMap.printVisitedLocations();
         System.out.println("Enter " + INFO + " to get information about a location");
         userInputInfoVisited();
@@ -252,7 +254,7 @@ public class MapFunctions {
         if (str.length() > 0) {
             switch (str) {
                 case INFO:
-                    System.out.println("Enter the name of the location for more details.");
+                    System.out.println("Enter the name of the location.");
                     String locationName = getUserInputString();
                     System.out.println(travelMap.getInformationVisited(locationName));
                     break;
@@ -273,7 +275,7 @@ public class MapFunctions {
                 "unvisited " + "locations");
         System.out.println("Enter " + EXISTING_LOCATIONS_VISITED + " to find the distance between two existing visited "
                 + "locations");
-        System.out.println("Enter " + BACK + " to return to the previous screen.");
+        System.out.println("Enter " + BACK + " to return to the original screen.");
 
         userInputFindDistance();
     }
@@ -298,7 +300,7 @@ public class MapFunctions {
 
                     System.out.println("The distance between these two locations is: " +
                             travelMap.distanceTwoPoints(tempOne, tempTwo) + "KM");
-                    System.out.println("Enter " + BACK + " to return to the previous screen.");
+                    System.out.println("Enter " + BACK + " to return to the original screen.");
                     break;
 
                 case EXISTING_LOCATIONS_UNVISITED:
@@ -311,7 +313,7 @@ public class MapFunctions {
                     Location locationTwo = travelMap.findLocationByNameUnvisited(unvisitedNameTwo);
 
                     System.out.println(travelMap.distanceTwoPoints(locationOne, locationTwo));
-                    System.out.println("Enter " + BACK + " to return to the previous screen.");
+                    System.out.println("Enter " + BACK + " to return to the original screen.");
                     break;
 
                 case EXISTING_LOCATIONS_VISITED:
@@ -321,7 +323,7 @@ public class MapFunctions {
                     String visitedNameTwo = getUserInputString();
                     travelMap.distanceTwoPoints(travelMap.findLocationByNameVisited(visitedNameOne),
                             travelMap.findLocationByNameVisited(visitedNameTwo));
-                    System.out.println("Enter " + BACK + " to return to the previous screen.");
+                    System.out.println("Enter " + BACK + " to return to the original screen.");
                     break;
 
                 default:

@@ -1,8 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Map {
     // MAP CLASS DESCRIPTION
@@ -21,6 +19,14 @@ public class Map {
 
         unvisited = new ArrayList<>();
         visited = new ArrayList<>();
+    }
+
+    public int getSizeUnvisited() {
+        return unvisited.size();
+    }
+
+    public int getSizeVisited() {
+        return visited.size();
     }
 
     // MODIFIES: this
@@ -96,6 +102,10 @@ public class Map {
             }
         }
         return false;
+    }
+
+    public String getCity() {
+        return city;
     }
 
     // EFFECTS: returns list of unvisited locations
@@ -195,17 +205,9 @@ public class Map {
 
         double haversineFormulaPart2 = 2 * Math.asin(Math.sqrt(haversineFormulaPart1));
 
-        return EARTH_RADIUS * haversineFormulaPart2;
+        return Math.round((EARTH_RADIUS * haversineFormulaPart2) * 10000d) / 10000d;
     }
 
-//    public int distanceManyPoints() {
-//        double totalDistance = 0;
-//
-//        for (Location location : visited) {
-//
-//        }
-//        return 0;
-//    }
 
 
 
