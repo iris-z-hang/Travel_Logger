@@ -1,7 +1,7 @@
 package model;
 
 // represents a place or location that someone would visit
-public class Location extends Map{
+public class Location extends Map {
 
     private final String name;
     private final String address;
