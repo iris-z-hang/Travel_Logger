@@ -19,8 +19,8 @@ public class MapFunctions {
     private static final String EXISTING_LOCATIONS_UNVISITED = "EXISTING UNVISITED";
     private static final String EXISTING_LOCATIONS_VISITED = "EXISTING VISITED";
 
-    private static final String EDIT_UNVISITED = "EDIT UNVISITED";
-    private static final String EDIT_VISITED = "EDIT VISITED";
+    private static final String UNVISITED = "UNVISITED";
+    private static final String VISITED = "VISITED";
     private static final String MOVE_TO_UNVISITED = "MOVE TO UNVISITED";
     private static final String MOVE_TO_VISITED = "MOVE TO VISITED";
     private static final String INFO = "INFO";
@@ -39,7 +39,7 @@ public class MapFunctions {
         printInstructions();
         String str;
 
-        while (!travelMap.tripFinished) {
+        while (!travelMap.getTripFinished()) {
             str = getUserInputString();
             parseInput(str);
         }
@@ -56,60 +56,43 @@ public class MapFunctions {
     public void printInstructions() {
         System.out.println("What action would you like to perform?\n");
 
-        System.out.println("Enter " + CHECK_UNVISITED + " to check the list of unvisited locations.");
-        System.out.println("Enter " + CHECK_VISITED + " to check the list of visited locations.");
-
-        System.out.println("Enter " + EDIT_UNVISITED + " to edit the list of unvisited locations");
-        System.out.println("Enter " + EDIT_VISITED + " to edit the list of visited locations");
+        System.out.println("Enter " + UNVISITED + " to view/edit the list of unvisited locations");
+        System.out.println("Enter " + VISITED + " to view/edit the list of visited locations");
 
         System.out.println("Enter " + FIND_DISTANCE + " to find the distance between two locations.");
         System.out.println("Enter " + QUIT + " to exit this application.");
 
     }
 
-    private void parseInput (String str) {
+    private void parseInput(String str) {
         if (str.length() > 0) {
             switch (str) {
-                case EDIT_UNVISITED:
+                case UNVISITED:
                     parseInputEditUnvisited(str);
                     break;
-
-                case EDIT_VISITED:
+                case VISITED:
                     parseInputEditVisited(str);
                     break;
-
-                case CHECK_UNVISITED:
-                    parseInputInfoUnvisited(str);
-                    System.out.println("Enter " + BACK + " to return to the original screen.");
-                    break;
-
-                case CHECK_VISITED:
-                    parseInputInfoVisited(str);
-                    System.out.println("Enter " + BACK + " to return to the original screen.");
-                    break;
-
-
                 case FIND_DISTANCE:
                     parseInputFindDistance(str);
-                    System.out.println("Enter " + BACK + " to return to the original screen.");
                     break;
-
                 case BACK:
                     printInstructions();
                     break;
-
                 case QUIT:
-                    System.out.println("Goodbye.");
-                    travelMap.setTripFinished(true);
-                    userInput.close();
+                    quit();
                     break;
-
                 default:
                     System.out.println("Invalid command.");
-                    System.out.println("Enter " + BACK + " to return to the original screen.");
                     break;
             }
         }
+    }
+
+    private void quit() {
+        System.out.println("Goodbye.");
+        travelMap.setTripFinished(true);
+        userInput.close();
     }
 
     private void parseInputEditUnvisited(String str) {
@@ -127,31 +110,19 @@ public class MapFunctions {
         if (str.length() > 0) {
             switch (str) {
                 case ADD_LOCATION_TO_UNVISITED:
-                    System.out.println("Please input the following information about the unvisited location: ");
-                    travelMap.addUnvisitedLocation(userInputNewLocation());
-                    System.out.println("Location successfully added.");
-                    System.out.println("Enter " + BACK + " to return to the original screen.");
+                    addLocationToUnvisited();
                     break;
 
                 case REMOVE_LOCATION_FROM_UNVISITED:
-                    System.out.println("Enter the name of the location you want removed.");
-                    String removeNameU = getUserInputString();
-                    if (travelMap.removeUnvisitedLocation(travelMap.findLocationByNameUnvisited(removeNameU))) {
-                        System.out.println(removeNameU + " successfully removed.");
-                    } else {
-                        System.out.println("Location not found.");
-                    }
-                    System.out.println("Enter " + BACK + " to return to the original screen.");
+                    removeLocationFromUnvisited();
                     break;
 
                 case MOVE_TO_VISITED:
-                    System.out.println("Enter the name of the location you want to move.");
-                    String moveNameU = getUserInputString();
-                    if (travelMap.moveUnvisitedToVisited(moveNameU)) {
-                        System.out.println(moveNameU + " successfully moved.");
-                    } else {
-                        System.out.println("Location not found.");
-                    }
+                    moveToVisited();
+                    break;
+
+                case CHECK_UNVISITED:
+                    parseInputInfoUnvisited(str);
                     System.out.println("Enter " + BACK + " to return to the original screen.");
                     break;
 
@@ -160,6 +131,35 @@ public class MapFunctions {
                     break;
             }
         }
+    }
+
+    private void addLocationToUnvisited() {
+        System.out.println("Please input the following information about the unvisited location: ");
+        travelMap.addUnvisitedLocation(userInputNewLocation());
+        System.out.println("Location successfully added.");
+        System.out.println("Enter " + BACK + " to return to the original screen.");
+    }
+
+    private void removeLocationFromUnvisited() {
+        System.out.println("Enter the name of the location you want removed.");
+        String removeNameU = getUserInputString();
+        if (travelMap.removeUnvisitedLocation(travelMap.findLocationByNameUnvisited(removeNameU))) {
+            System.out.println(removeNameU + " successfully removed.");
+        } else {
+            System.out.println("Location not found.");
+        }
+        System.out.println("Enter " + BACK + " to return to the original screen.");
+    }
+
+    private void moveToVisited() {
+        System.out.println("Enter the name of the location you want to move.");
+        String moveNameU = getUserInputString();
+        if (travelMap.moveUnvisitedToVisited(moveNameU)) {
+            System.out.println(moveNameU + " successfully moved.");
+        } else {
+            System.out.println("Location not found.");
+        }
+        System.out.println("Enter " + BACK + " to return to the original screen.");
     }
 
     private void parseInputEditVisited(String str) {
@@ -177,36 +177,53 @@ public class MapFunctions {
         if (str.length() > 0) {
             switch (str) {
                 case ADD_LOCATION_TO_VISITED:
-                    System.out.println("Please input the following information about the visited location: ");
-                    travelMap.addVisitedLocation(userInputNewLocation());
-                    System.out.println("Location successfully added.");
-                    System.out.println("Enter " + BACK + " to return to the original screen.");
+                    addLocationToVisited();
                     break;
 
                 case REMOVE_LOCATION_FROM_VISITED:
-                    System.out.println("Enter the name of the location you want removed.");
-                    String removeNameV = getUserInputString();
-                    if (travelMap.removeVisitedLocation(travelMap.findLocationByNameVisited(removeNameV))) {
-                        System.out.println(removeNameV + " successfully removed.");
-                    } else {
-                        System.out.println("Location not found.");
-                    }
+                    removeLocationFromVisited();
                     break;
 
                 case MOVE_TO_UNVISITED:
-                    System.out.println("Enter the name of the location you want to move.");
-                    String moveNameV = getUserInputString();
-                    if (travelMap.moveVisitedToUnvisited(moveNameV)) {
-                        System.out.println(moveNameV + " successfully moved.");
-                    } else {
-                        System.out.println("Location not found.");
-                    }
+                    moveToUnvisited();
+                    break;
+
+                case CHECK_VISITED:
+                    parseInputInfoVisited(str);
+                    System.out.println("Enter " + BACK + " to return to the original screen.");
                     break;
 
                 default:
                     parseInput(str);
                     break;
             }
+        }
+    }
+
+    private void addLocationToVisited() {
+        System.out.println("Please input the following information about the visited location: ");
+        travelMap.addVisitedLocation(userInputNewLocation());
+        System.out.println("Location successfully added.");
+        System.out.println("Enter " + BACK + " to return to the original screen.");
+    }
+
+    private void removeLocationFromVisited() {
+        System.out.println("Enter the name of the location you want removed.");
+        String removeNameV = getUserInputString();
+        if (travelMap.removeVisitedLocation(travelMap.findLocationByNameVisited(removeNameV))) {
+            System.out.println(removeNameV + " successfully removed.");
+        } else {
+            System.out.println("Location not found.");
+        }
+    }
+
+    private void moveToUnvisited() {
+        System.out.println("Enter the name of the location you want to move.");
+        String moveNameV = getUserInputString();
+        if (travelMap.moveVisitedToUnvisited(moveNameV)) {
+            System.out.println(moveNameV + " successfully moved.");
+        } else {
+            System.out.println("Location not found.");
         }
     }
 
@@ -268,8 +285,8 @@ public class MapFunctions {
 
     private void parseInputFindDistance(String str) {
         System.out.println("Enter " + NEW_LOCATIONS + " to find the distance between two new locations");
-        System.out.println("Enter " + EXISTING_LOCATIONS_UNVISITED + " to find the distance between two existing " +
-                "unvisited " + "locations");
+        System.out.println("Enter " + EXISTING_LOCATIONS_UNVISITED + " to find the distance between two existing "
+                + "unvisited " + "locations");
         System.out.println("Enter " + EXISTING_LOCATIONS_VISITED + " to find the distance between two existing visited "
                 + "locations");
         System.out.println("Enter " + BACK + " to return to the original screen.");
@@ -283,44 +300,15 @@ public class MapFunctions {
         if (str.length() > 0) {
             switch (str) {
                 case NEW_LOCATIONS:
-                    System.out.println("Enter the latitude for the first location.");
-                    double latOne = Double.parseDouble(getUserInputString());
-                    System.out.println("Enter the longitude for the first location.");
-                    double longOne = Double.parseDouble(getUserInputString());
-                    Location tempOne = new Location("NULL", "NULL", latOne, longOne);
-
-                    System.out.println("Enter the latitude for the second location.");
-                    double latTwo = Double.parseDouble(getUserInputString());
-                    System.out.println("Enter the longitude for the second location.");
-                    double longTwo = Double.parseDouble(getUserInputString());
-                    Location tempTwo = new Location("NULL", "NULL", latTwo, longTwo);
-
-                    System.out.println("The distance between these two locations is: " +
-                            travelMap.distanceTwoPoints(tempOne, tempTwo) + "KM");
-                    System.out.println("Enter " + BACK + " to return to the original screen.");
+                    newLocations();
                     break;
 
                 case EXISTING_LOCATIONS_UNVISITED:
-                    System.out.println("Enter the name of the first location.");
-                    String unvisitedNameOne = getUserInputString();
-                    Location locationOne = travelMap.findLocationByNameUnvisited(unvisitedNameOne);
-
-                    System.out.println("Enter the name of the second location.");
-                    String unvisitedNameTwo = getUserInputString();
-                    Location locationTwo = travelMap.findLocationByNameUnvisited(unvisitedNameTwo);
-
-                    System.out.println(travelMap.distanceTwoPoints(locationOne, locationTwo));
-                    System.out.println("Enter " + BACK + " to return to the original screen.");
+                    existingLocationsUnvisited();
                     break;
 
                 case EXISTING_LOCATIONS_VISITED:
-                    System.out.println("Enter the name of the first location.");
-                    String visitedNameOne = getUserInputString();
-                    System.out.println("Enter the name of the second location.");
-                    String visitedNameTwo = getUserInputString();
-                    travelMap.distanceTwoPoints(travelMap.findLocationByNameVisited(visitedNameOne),
-                            travelMap.findLocationByNameVisited(visitedNameTwo));
-                    System.out.println("Enter " + BACK + " to return to the original screen.");
+                    existingLocationsVisited();
                     break;
 
                 default:
@@ -329,6 +317,52 @@ public class MapFunctions {
             }
         }
     }
+
+    private void newLocations() {
+        System.out.println("Enter the latitude for the first location.");
+        double latOne = Double.parseDouble(getUserInputString());
+        System.out.println("Enter the longitude for the first location.");
+        double longOne = Double.parseDouble(getUserInputString());
+        Location tempOne = new Location("NULL", "NULL", latOne, longOne);
+
+        System.out.println("Enter the latitude for the second location.");
+        double latTwo = Double.parseDouble(getUserInputString());
+        System.out.println("Enter the longitude for the second location.");
+        double longTwo = Double.parseDouble(getUserInputString());
+        Location tempTwo = new Location("NULL", "NULL", latTwo, longTwo);
+
+        System.out.println("The distance between these two locations is: "
+                + travelMap.distanceTwoPoints(tempOne, tempTwo) + "KM");
+        System.out.println("Enter " + BACK + " to return to the original screen.");
+    }
+
+    private void existingLocationsUnvisited() {
+        System.out.println("Enter the name of the first location.");
+        String unvisitedNameOne = getUserInputString();
+        Location locationOne = travelMap.findLocationByNameUnvisited(unvisitedNameOne);
+
+        System.out.println("Enter the name of the second location.");
+        String unvisitedNameTwo = getUserInputString();
+        Location locationTwo = travelMap.findLocationByNameUnvisited(unvisitedNameTwo);
+
+        System.out.println(travelMap.distanceTwoPoints(locationOne, locationTwo));
+        System.out.println("Enter " + BACK + " to return to the original screen.");
+    }
+
+    private void existingLocationsVisited() {
+        System.out.println("Enter the name of the first location.");
+        String visitedNameOne = getUserInputString();
+        Location locationOne = travelMap.findLocationByNameVisited(visitedNameOne);
+
+        System.out.println("Enter the name of the second location.");
+        String visitedNameTwo = getUserInputString();
+        Location locationTwo = travelMap.findLocationByNameVisited(visitedNameTwo);
+
+        System.out.println(travelMap.distanceTwoPoints(locationOne, locationTwo));
+        System.out.println("Enter " + BACK + " to return to the original screen.");
+    }
+
+
 
     private Location userInputNewLocation() {
         System.out.println("Please input the name of the location.");

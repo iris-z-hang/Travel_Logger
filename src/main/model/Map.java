@@ -4,14 +4,11 @@ import java.util.ArrayList;
 
 // represents a map of a city that contains locations
 public class Map {
-    public boolean tripFinished;
+    private boolean tripFinished;
     protected static String city;
 
-    public ArrayList<Location> unvisited;
-    public ArrayList<Location> visited;
-
-    private final double EARTH_RADIUS = 6371;
-    private final String UNITS = "KM";
+    private ArrayList<Location> unvisited;
+    private ArrayList<Location> visited;
 
     // constructor for map class with city name and tripFinished set to false
     public Map(String city) {
@@ -30,6 +27,11 @@ public class Map {
     // EFFECTS: returns the size of the visited list
     public int getSizeVisited() {
         return visited.size();
+    }
+
+    // EFFECTS: returns the size of the visited list
+    public boolean getTripFinished() {
+        return tripFinished;
     }
 
     // MODIFIES: this
@@ -169,8 +171,8 @@ public class Map {
         for (Location location: unvisited) {
             String locationName = location.getName();
             if (locationName.equals(name)) {
-                info = "Name: " + name + ", Address: " + location.getAddress() + ", Latitude: " +
-                        location.getLatitude() + " , Longitude: " + location.getLongitude();
+                info = "Name: " + name + ", Address: " + location.getAddress() + ", Latitude: "
+                        + location.getLatitude() + " , Longitude: " + location.getLongitude();
                 break;
             }
         }
@@ -184,8 +186,8 @@ public class Map {
         for (Location location: visited) {
             String locationName = location.getName();
             if (locationName.equals(name)) {
-                info = "Name: " + name + ", Address: " + location.getAddress() + ", Latitude: " +
-                        location.getLatitude() + " , Longitude: " + location.getLongitude();
+                info = "Name: " + name + ", Address: " + location.getAddress() + ", Latitude: "
+                        + location.getLatitude() + " , Longitude: " + location.getLongitude();
                 break;
             }
         }
@@ -208,7 +210,7 @@ public class Map {
 
         double haversineFormulaPart2 = 2 * Math.asin(Math.sqrt(haversineFormulaPart1));
 
-        return Math.round((EARTH_RADIUS * haversineFormulaPart2) * 10000d) / 10000d;
+        return Math.round((6371 * haversineFormulaPart2) * 10000d) / 10000d;
     }
 
 
