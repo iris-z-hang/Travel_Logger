@@ -41,14 +41,14 @@ public class Map {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds location to unvisited list
+    // EFFECTS: adds location to unvisited list, the same location can be added multiple times
     public void addUnvisitedLocation(Location location) {
         unvisited.add(location);
 
     }
 
     // MODIFIES: this
-    // EFFECTS: adds location to visited list
+    // EFFECTS: adds location to visited list, the same location can be added multiple times
     public void addVisitedLocation(Location location) {
         visited.add(location);
     }
@@ -122,19 +122,6 @@ public class Map {
         return visited;
     }
 
-    // EFFECTS: prints list of unvisited locations
-    public void printUnvisitedLocations() {
-        for (Location location : unvisited) {
-            System.out.println(location.getName());
-        }
-    }
-
-    // EFFECTS: returns list of visited locations
-    public void printVisitedLocations() {
-        for (Location location : visited) {
-            System.out.println(location.getName());
-        }
-    }
 
     // REQUIRES: there is a location that matches name on unvisited list
     // EFFECTS: returns the unvisited location with name that matches the parameter name

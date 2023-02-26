@@ -229,7 +229,11 @@ public class MapFunctions {
 
     private void parseInputInfoUnvisited(String str) {
         System.out.println("Here are the locations on your unvisited list: ");
-        travelMap.printUnvisitedLocations();
+
+        for (Location location: travelMap.getUnvisitedLocations()) {
+            System.out.println(location.getName());
+        }
+
         System.out.println("Enter " + INFO + " to get information about a location");
         userInputInfoUnvisited();
     }
@@ -257,7 +261,11 @@ public class MapFunctions {
 
     private void parseInputInfoVisited(String str) {
         System.out.println("Here are the locations on your visited list: ");
-        travelMap.printVisitedLocations();
+
+        for (Location location: travelMap.getVisitedLocations()) {
+            System.out.println(location.getName());
+        }
+
         System.out.println("Enter " + INFO + " to get information about a location");
         userInputInfoVisited();
     }

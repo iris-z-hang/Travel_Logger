@@ -134,16 +134,6 @@ public class MapTest {
 
     }
 
-//    @Test
-//    public void printUnvisitedLocationsTest() {
-//        assertEquals("Royal Ontario Museum", testMap.printUnvisitedLocations());
-//    }
-//
-//    @Test
-//    public void printVisitedLocationsTest() {
-//
-//    }
-
     @Test
     public void getInformationUnvisitedTest() {
         assertEquals("Name: " + testLocation1.getName() + ", Address: " + testLocation1.getAddress()
