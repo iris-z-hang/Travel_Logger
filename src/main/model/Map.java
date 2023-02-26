@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 // represents a map of a city that contains locations
 public class Map {
-    // MAP CLASS DESCRIPTION
     public boolean tripFinished;
     protected static String city;
 
@@ -14,6 +13,7 @@ public class Map {
     private final double EARTH_RADIUS = 6371;
     private final String UNITS = "KM";
 
+    // constructor for map class with city name and tripFinished set to false
     public Map(String city) {
         Map.city = city;
         tripFinished = false;
@@ -75,7 +75,6 @@ public class Map {
         return false;
     }
 
-    // REQUIRES: location is in visited list
     // MODIFIES: this
     // EFFECTS: removes location from visited list and adds location to unvisited list
     //          returns true if successful (location present in visited list) else false
@@ -91,7 +90,6 @@ public class Map {
         return false;
     }
 
-    // REQUIRES: location is in unvisited list
     // MODIFIES: this
     // EFFECTS: removes location from unvisited list and adds location to visited list
     //          returns true if successful (location present in unvisited list) else false
@@ -107,6 +105,7 @@ public class Map {
         return false;
     }
 
+    // EFFECTS: returns the city
     public String getCity() {
         return city;
     }
@@ -135,7 +134,7 @@ public class Map {
         }
     }
 
-    // EFFECTS: returns the unvisited location with name that matches the parameter name else returns nothing
+    // EFFECTS: returns the unvisited location with name that matches the parameter name
     public Location findLocationByNameUnvisited(String name) {
         int index = 0;
         for (Location location : unvisited) {
@@ -149,7 +148,7 @@ public class Map {
         return unvisited.get(index);
     }
 
-    // EFFECTS: returns the visited location with name that matches the parameter name else returns nothing
+    // EFFECTS: returns the visited location with name that matches the parameter name
     public Location findLocationByNameVisited(String name) {
         int index = 0;
         for (Location location : visited) {
@@ -163,7 +162,7 @@ public class Map {
         return visited.get(index);
     }
 
-    // EFFECTS: returns the full location including name, address, coordinates
+    // EFFECTS: returns the location information which includes name, address, latitude, and longitude for unvisited
     public String getInformationUnvisited(String name) {
         String info = "";
 
@@ -178,7 +177,7 @@ public class Map {
         return info;
     }
 
-    // EFFECTS: returns the full location including name, address, coordinates
+    // EFFECTS: returns the location information which includes name, address, latitude, and longitude for visited
     public String getInformationVisited(String name) {
         String info = "";
 
@@ -211,7 +210,6 @@ public class Map {
 
         return Math.round((EARTH_RADIUS * haversineFormulaPart2) * 10000d) / 10000d;
     }
-
 
 
 

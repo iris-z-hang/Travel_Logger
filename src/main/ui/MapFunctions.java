@@ -19,8 +19,8 @@ public class MapFunctions {
     private static final String EXISTING_LOCATIONS_UNVISITED = "EXISTING UNVISITED";
     private static final String EXISTING_LOCATIONS_VISITED = "EXISTING VISITED";
 
-    private static final String EDIT_UNVISITED = "EDIT UNVISITED LIST";
-    private static final String EDIT_VISITED = "EDIT VISITED LIST";
+    private static final String EDIT_UNVISITED = "EDIT UNVISITED";
+    private static final String EDIT_VISITED = "EDIT VISITED";
     private static final String MOVE_TO_UNVISITED = "MOVE TO UNVISITED";
     private static final String MOVE_TO_VISITED = "MOVE TO VISITED";
     private static final String INFO = "INFO";
@@ -33,7 +33,6 @@ public class MapFunctions {
         userInput = new Scanner(System.in);
         travelMap = new Map(cityName);
         travelMap.setTripFinished(false);
-
     }
 
     public void handleUserInput() {
@@ -138,7 +137,6 @@ public class MapFunctions {
                     System.out.println("Enter the name of the location you want removed.");
                     String removeNameU = getUserInputString();
                     if (travelMap.removeUnvisitedLocation(travelMap.findLocationByNameUnvisited(removeNameU))) {
-                        travelMap.removeUnvisitedLocation(travelMap.findLocationByNameUnvisited(removeNameU));
                         System.out.println(removeNameU + " successfully removed.");
                     } else {
                         System.out.println("Location not found.");
@@ -189,7 +187,6 @@ public class MapFunctions {
                     System.out.println("Enter the name of the location you want removed.");
                     String removeNameV = getUserInputString();
                     if (travelMap.removeVisitedLocation(travelMap.findLocationByNameVisited(removeNameV))) {
-                        travelMap.removeVisitedLocation(travelMap.findLocationByNameVisited(removeNameV));
                         System.out.println(removeNameV + " successfully removed.");
                     } else {
                         System.out.println("Location not found.");

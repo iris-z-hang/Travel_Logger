@@ -1,7 +1,5 @@
 package model;
 
-import java.util.LinkedList;
-
 // represents a place or location that someone would visit
 public class Location extends Map{
 
@@ -10,7 +8,7 @@ public class Location extends Map{
     private final double longitude;
     private final double latitude;
 
-    // EFFECTS:
+    // EFFECTS: constructs new location with name, address, latitude, and longitude
     public Location(String name, String address, double latitude, double longitude) {
         super(Map.city);
         this.name = name;
@@ -19,21 +17,6 @@ public class Location extends Map{
         this.longitude = longitude;
 
     }
-
-    // getters
-//    // EFFECTS: returns the full location including name, address, coordinates
-//    public String getInformation(String name) {
-//        String info = "";
-//
-//        for (Location location: unvisited) {
-//            String locationName = location.getName();
-//            if (locationName.equals(name)) {
-//                info = name + ": " + address + ", " + latitude + " " + longitude;
-//                break;
-//            }
-//        }
-//        return info;
-//    }
 
     //EFFECTS: returns name of location
     public String getName() {
