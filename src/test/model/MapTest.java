@@ -11,6 +11,7 @@ public class MapTest {
     private Map testMap;
     private Location testLocation1;
     private Location testLocation2;
+    private Location testLocation3;
 
     @BeforeEach
     public void setup() {
@@ -20,11 +21,9 @@ public class MapTest {
                 43.667709, -79.394775);
         testLocation2 = new Location("Art Gallery of Ontario", "317 Dundas St W.",
                 43.653860, -79.392770);
-//        testLocation3 = new Location("Casa Loma", "1 Austin Terrace",
-//                43.667709, -79.394775);
-//
-//        unvisitedTest = new ArrayList<>();
-//        visitedTest = new ArrayList<>();
+        testLocation3 = new Location("Casa Loma", "1 Austin Terrace",
+                43.667709, -79.394775);
+
 
         testMap.addUnvisitedLocation(testLocation1);
         testMap.addVisitedLocation(testLocation1);
@@ -41,7 +40,7 @@ public class MapTest {
         assertEquals(1, testMap.getSizeUnvisited());
         testMap.addUnvisitedLocation(testLocation2);
         assertEquals(2, testMap.getSizeUnvisited());
-
+        assertEquals(testLocation2, testMap.getUnvisitedLocations().get(1));
 
     }
 
@@ -50,6 +49,14 @@ public class MapTest {
         assertEquals(1, testMap.getSizeVisited());
         testMap.addVisitedLocation(testLocation2);
         assertEquals(2, testMap.getSizeVisited());
+        assertEquals(testLocation2, testMap.getVisitedLocations().get(1));
+    }
+
+    @Test
+    public void setTripFinishedTest() {
+        assertFalse(testMap.getTripFinished());
+        testMap.setTripFinished(true);
+        assertTrue(testMap.getTripFinished());
     }
 
     @Test
@@ -77,6 +84,13 @@ public class MapTest {
         assertEquals(2, testMap.getSizeUnvisited());
         assertEquals(0, testMap.getSizeVisited());
 
+        testMap.addVisitedLocation(testLocation3);
+        testMap.moveVisitedToUnvisited(testLocation3.getName());
+
+        assertEquals(3, testMap.getSizeUnvisited());
+        assertEquals(0, testMap.getSizeVisited());
+
+
     }
 
     @Test
@@ -89,19 +103,39 @@ public class MapTest {
         assertEquals(0, testMap.getSizeUnvisited());
         assertEquals(2, testMap.getSizeVisited());
 
+        testMap.addUnvisitedLocation(testLocation3);
+        testMap.moveUnvisitedToVisited(testLocation3.getName());
+
+        assertEquals(0, testMap.getSizeUnvisited());
+        assertEquals(3, testMap.getSizeVisited());
+
     }
 
     @Test
     public void findLocationByNameUnvisitedTest() {
         assertEquals(testLocation1, testMap.findLocationByNameUnvisited(testLocation1.getName()));
+        testMap.addUnvisitedLocation(testLocation2);
+        assertEquals(testLocation2, testMap.findLocationByNameUnvisited(testLocation2.getName()));
 
     }
 
     @Test
     public void findLocationByNameVisitedTest() {
         assertEquals(testLocation1, testMap.findLocationByNameVisited(testLocation1.getName()));
+        testMap.addVisitedLocation(testLocation2);
+        assertEquals(testLocation2, testMap.findLocationByNameVisited(testLocation2.getName()));
 
     }
+
+//    @Test
+//    public void printUnvisitedLocationsTest() {
+//        assertEquals("Royal Ontario Museum", testMap.printUnvisitedLocations());
+//    }
+//
+//    @Test
+//    public void printVisitedLocationsTest() {
+//
+//    }
 
     @Test
     public void getInformationUnvisitedTest() {
@@ -109,6 +143,14 @@ public class MapTest {
                         + ", Latitude: " + testLocation1.getLatitude() + " , Longitude: "
                         + testLocation1.getLongitude(),
         testMap.getInformationUnvisited(testLocation1.getName()));
+
+        testMap.addUnvisitedLocation(testLocation2);
+
+        assertEquals("Name: " + testLocation2.getName() + ", Address: " + testLocation2.getAddress()
+                        + ", Latitude: " + testLocation2.getLatitude() + " , Longitude: "
+                        + testLocation2.getLongitude(),
+                testMap.getInformationUnvisited(testLocation2.getName()));
+
 
     }
 
@@ -118,6 +160,13 @@ public class MapTest {
                         + ", Latitude: " + testLocation1.getLatitude() + " , Longitude: "
                         + testLocation1.getLongitude(),
                 testMap.getInformationVisited(testLocation1.getName()));
+
+        testMap.addVisitedLocation(testLocation2);
+
+        assertEquals("Name: " + testLocation2.getName() + ", Address: " + testLocation2.getAddress()
+                        + ", Latitude: " + testLocation2.getLatitude() + " , Longitude: "
+                        + testLocation2.getLongitude(),
+                testMap.getInformationVisited(testLocation2.getName()));
     }
 
     @Test

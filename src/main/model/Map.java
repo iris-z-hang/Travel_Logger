@@ -136,6 +136,7 @@ public class Map {
         }
     }
 
+    // REQUIRES: there is a location that matches name on unvisited list
     // EFFECTS: returns the unvisited location with name that matches the parameter name
     public Location findLocationByNameUnvisited(String name) {
         int index = 0;
@@ -150,6 +151,7 @@ public class Map {
         return unvisited.get(index);
     }
 
+    // REQUIRES: there is a location that matches name on visited list
     // EFFECTS: returns the visited location with name that matches the parameter name
     public Location findLocationByNameVisited(String name) {
         int index = 0;
