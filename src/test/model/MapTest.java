@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 // unit tests for Map class
-public class VisitedUnvisitedListsTest {
+public class MapTest {
 
 
     private Map testMap;
