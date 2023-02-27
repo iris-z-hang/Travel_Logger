@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-// unit tests for Location class
 public class LocationTest {
 
     private Location testLocation1;

@@ -14,10 +14,10 @@ application that has some functionality of GIS applications, but with a more cas
 
 ### User Stories
 
-- As a user, I want to be able to add an unvisited location to my city
-- As a user, I want to be able to add a visited location to my city
-- As a user, I want to view the list of unvisited locations
-- As a user, I want to view the list of visited locations
+- As a user, I want to be able to add a location to either my unvisited or visited list
+- As a user, I want to view the list of unvisited and visited locations
 - As a user, I want to be able to move locations from unvisited to visited or vice versa
-- As a user, I want to remove a location from my city
-- As a user, I want to check the distance between two locations
+- As a user, I want to check the distance between two locations on the unvisited/visited lists or not on the lists
+
+The MapFunctions UI class implementation was inspired/aided by the FitLifeGymChain program from 
+https://github.students.cs.ubc.ca/CPSC210/LongFormProblemSolutions/tree/main/FitLifeGymChainComplete

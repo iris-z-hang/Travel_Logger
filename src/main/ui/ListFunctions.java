@@ -4,12 +4,15 @@ import model.Location;
 import java.util.ArrayList;
 import static ui.MapFunctions.*;
 
+// ListFunctions class helps reduce duplications in the MapFunctions class
 public class ListFunctions {
 
     private static final String BACK = "BACK";
     private static final String INFO = "INFO";
 
 
+    // MODIFIES: list (this in subclasses)
+    // EFFECTS: asks the user to input the location they want to add to a list and adds that location to the list
     protected static void addLocation(ArrayList<Location> list) {
         System.out.println("Please input the following information about the location: ");
         travelMap.addLocation(list, userInputNewLocation());
@@ -18,17 +21,23 @@ public class ListFunctions {
     }
 
 
+    // MODIFIES: list (this in subclasses)
+    // EFFECTS: asks the user to input the location they want to remove from the list
+    //          if that location exists, removes location from list, else prints "location not found"
     protected static void removeLocation(ArrayList<Location> list) {
         System.out.println("Enter the name of the location you want removed.");
-        String removeNameU = getUserInputString();
-        if (travelMap.removeLocation(list, travelMap.findLocationByName(list, removeNameU))) {
-            System.out.println(removeNameU + " successfully removed.");
+        String removeName = getUserInputString();
+        if (travelMap.removeLocation(list, travelMap.findLocationByName(list, removeName))) {
+            System.out.println(removeName + " successfully removed.");
         } else {
             System.out.println("Location not found.");
         }
         System.out.println("Enter " + BACK + " to return to the original screen.");
     }
 
+    // MODIFIES: list1 (this in subclasses), list2 (this in subclasses)
+    // EFFECTS: asks the user for name of location to move and moves location from list1 to list2 if found,
+    //          else prints "location not found"
     protected static void move(ArrayList<Location> list1, ArrayList<Location> list2) {
         System.out.println("Enter the name of the location you want to move.");
         String moveNameU = getUserInputString();
@@ -40,6 +49,8 @@ public class ListFunctions {
         System.out.println("Enter " + BACK + " to return to the original screen.");
     }
 
+    // EFFECTS: prints the locations on a list for the user
+    //          gives option for further information on a specified location
     protected static void parseInputInfo(ArrayList<Location> list, String str) {
         System.out.println("Here are the locations: ");
 
@@ -51,6 +62,8 @@ public class ListFunctions {
         userInputInfo(list);
     }
 
+    // EFFECTS: provides further information on a location in a list for the user if they type INFO
+    //          information provided is name, address, latitude, longitude
     protected static void userInputInfo(ArrayList<Location> list) {
         String str = getUserInputString();
 
@@ -72,6 +85,7 @@ public class ListFunctions {
         }
     }
 
+    // EFFECTS: finds the distance between two existing lists using the haversine formula
     protected static void existingLocations(ArrayList<Location> list1, ArrayList<Location> list2) {
         System.out.println("Enter the name of the first location.");
         String nameOne = getUserInputString();

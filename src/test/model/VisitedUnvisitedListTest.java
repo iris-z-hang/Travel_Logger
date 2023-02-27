@@ -32,12 +32,14 @@ public class VisitedUnvisitedListTest {
     public void getSizeUnvisitedTest() {
         list.addUnvisitedLocation(testLocation1);
         assertEquals(2, list.getSizeUnvisited());
+        assertEquals(testLocation1, list.getUnvisitedLocations().get(1));
     }
 
     @Test
     public void getSizeVisitedTest() {
         list.addVisitedLocation(testLocation1);
         assertEquals(2, list.getSizeVisited());
+        assertEquals(testLocation1, list.getVisitedLocations().get(1));
     }
 
     @Test

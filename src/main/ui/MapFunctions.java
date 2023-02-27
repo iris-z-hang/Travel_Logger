@@ -7,6 +7,8 @@ import model.VisitedUnvisitedLists;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// ui class that contains most of the user interaction
+
 public class MapFunctions extends ListFunctions {
     private static final String ADD_LOCATION_TO_VISITED = "ADD V";
     private static final String ADD_LOCATION_TO_UNVISITED = "ADD U";
@@ -20,8 +22,7 @@ public class MapFunctions extends ListFunctions {
     private static final String NEW_LOCATIONS = "NEW";
     private static final String EXISTING_LOCATIONS_UNVISITED = "EXISTING U";
     private static final String EXISTING_LOCATIONS_VISITED = "EXISTING V";
-    private static final String EXISTING_UNVISITED_TO_VISITED = "EXISTING U TO V";
-    private static final String EXISTING_VISITED_TO_UNVISITED = "EXISTING V TO U";
+    private static final String EXISTING_UNVISITED_VISITED = "EXISTING UV";
 
     private static final String UNVISITED = "UNVISITED";
     private static final String VISITED = "VISITED";
@@ -36,6 +37,9 @@ public class MapFunctions extends ListFunctions {
     static ArrayList<Location> unvisited;
     static ArrayList<Location> visited;
 
+
+    // EFFECTS: constructor for MapFunctions class, sets up userInput, travelMap, and sets tripFinished to false
+    //          initializes two arraylists for abstraction
     public MapFunctions() {
         userInput = new Scanner(System.in);
         travelMap = new VisitedUnvisitedLists();
@@ -45,6 +49,7 @@ public class MapFunctions extends ListFunctions {
         visited = new ArrayList<>();
     }
 
+    // EFFECTS: accepts user input while TripFinished is false
     public void handleUserInput() {
         printInstructions();
         String str;
@@ -55,6 +60,7 @@ public class MapFunctions extends ListFunctions {
         }
     }
 
+    // EFFECTS: the introductory lines of the program
     void printIntro() {
         System.out.println("Hello, welcome to Travel Logger.");
         System.out.println("Please input the name of the city you are visiting.");
@@ -63,6 +69,7 @@ public class MapFunctions extends ListFunctions {
 
     }
 
+    // EFFECTS: prints the initial menu of commands
     public static void printInstructions() {
         System.out.println("What action would you like to perform?\n");
 
@@ -74,6 +81,9 @@ public class MapFunctions extends ListFunctions {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: takes user input and performs appropriate actions which are: enter unvisited menu, enter visited menu,
+    //          enter distance menu, return to original screen, and quit the program
     protected static void parseInput(String str) {
         if (str.length() > 0) {
             switch (str) {
@@ -84,7 +94,7 @@ public class MapFunctions extends ListFunctions {
                     parseInputEditVisited(str);
                     break;
                 case FIND_DISTANCE:
-                    parseInputFindDistance(str);
+                    parseInputFindDistance();
                     break;
                 case BACK:
                     printInstructions();
@@ -99,12 +109,15 @@ public class MapFunctions extends ListFunctions {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: quits the program
     private static void quit() {
         System.out.println("Goodbye.");
         travelMap.setTripFinished(true);
         userInput.close();
     }
 
+    // EFFECTS: prints instructions for editing unvisited list and calls for user input and user input results
     private static void parseInputEditUnvisited(String str) {
         System.out.println("Enter " + ADD_LOCATION_TO_UNVISITED + " to add a new location to unvisited places.");
         System.out.println("Enter " + REMOVE_LOCATION_FROM_UNVISITED + " to remove a location from unvisited places.");
@@ -115,25 +128,27 @@ public class MapFunctions extends ListFunctions {
         userInputEditUnvisited();
     }
 
+    // MODIFIES: this
+    // EFFECTS: takes user input for unvisited list and performs appropriate actions which are: add location, remove
+    //          location, move location to visited, check unvisited list
     private static void userInputEditUnvisited() {
         String str = getUserInputString();
         if (str.length() > 0) {
             switch (str) {
                 case ADD_LOCATION_TO_UNVISITED:
-                    addLocationToUnvisited();
+                    addLocation(unvisited);
                     break;
 
                 case REMOVE_LOCATION_FROM_UNVISITED:
-                    removeLocationFromUnvisited();
+                    removeLocation(unvisited);
                     break;
 
                 case MOVE_TO_VISITED:
-                    moveToVisited();
+                    move(unvisited, visited);
                     break;
 
                 case CHECK_UNVISITED:
-                    parseInputInfoUnvisited(str);
-                    System.out.println("Enter " + BACK + " to return to the original screen.");
+                    parseInputInfo(unvisited, str);
                     break;
 
                 default:
@@ -143,18 +158,7 @@ public class MapFunctions extends ListFunctions {
         }
     }
 
-    private static void addLocationToUnvisited() {
-        addLocation(unvisited);
-    }
-
-    private static void removeLocationFromUnvisited() {
-        removeLocation(unvisited);
-    }
-
-    private static void moveToVisited() {
-        move(unvisited, visited);
-    }
-
+    // EFFECTS: prints instructions for editing unvisited list and calls for user input and user input results
     private static void parseInputEditVisited(String str) {
         System.out.println("Enter " + ADD_LOCATION_TO_VISITED + " to add a new location to visited places.");
         System.out.println("Enter " + REMOVE_LOCATION_FROM_VISITED + " to remove a location from visited places.");
@@ -165,25 +169,27 @@ public class MapFunctions extends ListFunctions {
         userInputEditVisited();
     }
 
+    // MODIFIES: this
+    // EFFECTS: takes user input for visited list and performs appropriate actions which are: add location, remove
+    //          location, move location to unvisited, check visited list
     private static void userInputEditVisited() {
         String str = getUserInputString();
         if (str.length() > 0) {
             switch (str) {
                 case ADD_LOCATION_TO_VISITED:
-                    addLocationToVisited();
+                    addLocation(visited);
                     break;
 
                 case REMOVE_LOCATION_FROM_VISITED:
-                    removeLocationFromVisited();
+                    removeLocation(visited);
                     break;
 
                 case MOVE_TO_UNVISITED:
-                    moveToUnvisited();
+                    move(visited, unvisited);
                     break;
 
                 case CHECK_VISITED:
-                    parseInputInfoVisited(str);
-                    System.out.println("Enter " + BACK + " to return to the original screen.");
+                    parseInputInfo(visited, str);
                     break;
 
                 default:
@@ -193,27 +199,8 @@ public class MapFunctions extends ListFunctions {
         }
     }
 
-    private static void addLocationToVisited() {
-        addLocation(visited);
-    }
-
-    private static void removeLocationFromVisited() {
-        removeLocation(visited);
-    }
-
-    private static void moveToUnvisited() {
-        move(visited, unvisited);
-    }
-
-    private static void parseInputInfoUnvisited(String str) {
-        parseInputInfo(unvisited, str);
-    }
-
-    private static void parseInputInfoVisited(String str) {
-        parseInputInfo(visited, str);
-    }
-
-    private static void parseInputFindDistance(String str) {
+    // EFFECTS: prints instructions for distance and calls for user input and user input results
+    private static void parseInputFindDistance() {
         System.out.println("Enter " + NEW_LOCATIONS + " to find the distance between two new locations");
         System.out.println("Enter " + EXISTING_LOCATIONS_UNVISITED + " to find the distance between two existing "
                 + "unvisited " + "locations");
@@ -224,6 +211,9 @@ public class MapFunctions extends ListFunctions {
         userInputFindDistance();
     }
 
+    // EFFECTS: takes user input and performs appropriate actions which are: find distance between two new locations,
+    //          find distance between two unvisited locations, find distance between two visited locations, find
+    //          distance between an unvisited and visited location
     private static void userInputFindDistance() {
         String str = getUserInputString();
         if (str.length() > 0) {
@@ -232,16 +222,13 @@ public class MapFunctions extends ListFunctions {
                     newLocations();
                     break;
                 case EXISTING_LOCATIONS_UNVISITED:
-                    existingLocationsUnvisited();
+                    existingLocations(unvisited, unvisited);
                     break;
                 case EXISTING_LOCATIONS_VISITED:
-                    existingLocationsVisited();
+                    existingLocations(visited, visited);
                     break;
-                case EXISTING_UNVISITED_TO_VISITED:
-                    existingUnvisitedToVisited();
-                    break;
-                case EXISTING_VISITED_TO_UNVISITED:
-                    existingVisitedToUnvisited();
+                case EXISTING_UNVISITED_VISITED:
+                    existingLocations(unvisited, visited);
                     break;
                 default:
                     parseInput(str);
@@ -250,6 +237,7 @@ public class MapFunctions extends ListFunctions {
         }
     }
 
+    // EFFECTS: takes user input for latitude and longitude of two locations and returns the distance between them
     private static void newLocations() {
         System.out.println("Enter the latitude for the first location.");
         double latOne = Double.parseDouble(getUserInputString());
@@ -268,24 +256,7 @@ public class MapFunctions extends ListFunctions {
         System.out.println("Enter " + BACK + " to return to the original screen.");
     }
 
-    private static void existingLocationsUnvisited() {
-        existingLocations(unvisited, unvisited);
-    }
-
-    private static void existingLocationsVisited() {
-        existingLocations(visited, visited);
-    }
-
-    private static void existingUnvisitedToVisited() {
-        existingLocations(unvisited, visited);
-    }
-
-    private static void existingVisitedToUnvisited() {
-        existingLocations(visited, unvisited);
-    }
-
-
-
+    // EFFECTS: takes user input for name, address, latitude, longitude, to create a new Location class
     protected static Location userInputNewLocation() {
         System.out.println("Please input the name of the location.");
         String locationName = getUserInputString();
@@ -299,7 +270,7 @@ public class MapFunctions extends ListFunctions {
         return new Location(locationName, locationAddress, locationLat, locationLong);
     }
 
-
+    // EFFECTS: takes in user input
     protected static String getUserInputString() {
         String str = "";
         if (userInput.hasNext()) {
@@ -310,5 +281,3 @@ public class MapFunctions extends ListFunctions {
 
 
 }
-
-// REFERENCE: FITLIFEGYM FROM BASICS EDX

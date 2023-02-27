@@ -8,13 +8,13 @@ public class Map {
     private boolean tripFinished;
     protected static String city;
 
-    // EFFECTS: constructor for the class Map
+    // EFFECTS: constructor for the class Map with city name and tripFinished set to false
     public Map(String city) {
         Map.city = city;
         tripFinished = false;
     }
 
-    // EFFECTS: returns the size of the visited list
+    // EFFECTS: returns tripFinished
     public boolean getTripFinished() {
         return tripFinished;
     }
@@ -30,7 +30,7 @@ public class Map {
         return city;
     }
 
-    // EFFECTS: returns the size location list
+    // EFFECTS: returns the size of the location list
     public int getSize(ArrayList<Location> list) {
         return list.size();
     }
@@ -40,7 +40,7 @@ public class Map {
         return list;
     }
 
-    // MODIFIES: list
+    // MODIFIES: list (this in subclasses)
     // EFFECTS: adds location to list in parameter
     //          can add the same location multiple times
     public void addLocation(ArrayList<Location> list, Location location) {
@@ -49,8 +49,8 @@ public class Map {
     }
 
     // REQUIRES: list must not be empty
-    // MODIFIES: list
-    // EFFECTS: removes a location from the list
+    // MODIFIES: list (this in subclasses)
+    // EFFECTS: removes a location from the list if location is present and returns true, else returns false
     public boolean removeLocation(ArrayList<Location> list, Location location) {
         int index = 0;
         if (list.contains(location)) {
@@ -61,8 +61,8 @@ public class Map {
         return false;
     }
 
-    // REQUIRES: locations specified must be on the list
-    // MODIFIES: list1, list2
+    // REQUIRES: locations to move must be on their list
+    // MODIFIES: list1 (this in subclasses), list2 (this in subclasses)
     // EFFECTS: moves a location from one list to another
     public boolean moveLocation(ArrayList<Location> list1, ArrayList<Location> list2, String name) {
         for (Location location : list1) {
@@ -77,7 +77,7 @@ public class Map {
     }
 
     // REQUIRES: there is a location that matches name on unvisited list
-    // EFFECTS: returns the unvisited location with name that matches the parameter name
+    // EFFECTS: returns the location with name that matches the parameter name
     public Location findLocationByName(ArrayList<Location> list, String name) {
         int index = 0;
         for (Location location : list) {
@@ -91,7 +91,7 @@ public class Map {
         return list.get(index);
     }
 
-    // EFFECTS: returns the location information which includes name, address, latitude, and longitude for unvisited
+    // EFFECTS: returns the location information which includes name, address, latitude, and longitude
     public String getInformation(ArrayList<Location> list, String name) {
         String info = "";
 
@@ -108,6 +108,8 @@ public class Map {
 
     // EFFECTS: calculates distance between two locations using their longitude and latitude by the Haversine formula
     //          rounds answer to four decimal places
+    // The implementation for this method came from:
+    // https://www.geeksforgeeks.org/haversine-formula-to-find-distance-between-two-points-on-a-sphere/
     public double distanceTwoPoints(Location location1, Location location2) {
         double latitude1 = location1.getLatitude();
         double longitude1 = location1.getLongitude();

@@ -2,13 +2,13 @@ package model;
 
 import java.util.ArrayList;
 
-// abstract class that represents common behaviours between unvisited and visited lists
+// abstract class that represents common behaviours between unvisited and visited lists of locations
 public class VisitedUnvisitedLists extends Map {
 
     private ArrayList<Location> unvisited;
     private ArrayList<Location> visited;
 
-    // EFFECTS: constructor for map class with city name and tripFinished set to false
+    // EFFECTS: constructor for VisitedUnvisitedLists class with setup for unvisited and visited arrayLists
     public VisitedUnvisitedLists() {
         super(Map.city);
         unvisited = new ArrayList<>();
@@ -68,13 +68,11 @@ public class VisitedUnvisitedLists extends Map {
     // EFFECTS: returns list of unvisited locations
     public ArrayList<Location> getUnvisitedLocations() {
         return getLocations(unvisited);
-        // return unvisited;
     }
 
     // EFFECTS: returns list of visited locations
     public ArrayList<Location> getVisitedLocations() {
         return getLocations(visited);
-        // return visited;
     }
 
     // REQUIRES: there is a location that matches name on unvisited list
@@ -99,9 +97,5 @@ public class VisitedUnvisitedLists extends Map {
         return getInformation(visited, name);
     }
 
-
-
-
-// https://www.geeksforgeeks.org/haversine-formula-to-find-distance-between-two-points-on-a-sphere/
 
 }
