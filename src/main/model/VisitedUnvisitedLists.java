@@ -2,13 +2,13 @@ package model;
 
 import java.util.ArrayList;
 
-// represents a map of a city that contains locations
+// abstract class that represents common behaviours between unvisited and visited lists
 public class VisitedUnvisitedLists extends Map {
 
     private ArrayList<Location> unvisited;
     private ArrayList<Location> visited;
 
-    // constructor for map class with city name and tripFinished set to false
+    // EFFECTS: constructor for map class with city name and tripFinished set to false
     public VisitedUnvisitedLists() {
         super(Map.city);
         unvisited = new ArrayList<>();
@@ -35,7 +35,7 @@ public class VisitedUnvisitedLists extends Map {
     // MODIFIES: this
     // EFFECTS: adds location to visited list, the same location can be added multiple times
     public void addVisitedLocation(Location location) {
-        addLocation(unvisited, location);
+        addLocation(visited, location);
     }
 
     // MODIFIES: this

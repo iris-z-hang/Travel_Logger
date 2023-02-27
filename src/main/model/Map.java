@@ -2,11 +2,13 @@ package model;
 
 import java.util.ArrayList;
 
+// represents a map of a city that contains locations
 public class Map {
 
     private boolean tripFinished;
     protected static String city;
 
+    // EFFECTS: constructor for the class Map
     public Map(String city) {
         Map.city = city;
         tripFinished = false;
@@ -23,24 +25,32 @@ public class Map {
         this.tripFinished = tripFinished;
     }
 
+    // EFFECTS: returns the city
     public String getCity() {
         return city;
     }
 
+    // EFFECTS: returns the size location list
     public int getSize(ArrayList<Location> list) {
         return list.size();
     }
 
-    // EFFECTS: returns list of unvisited locations
+    // EFFECTS: returns the list
     public ArrayList<Location> getLocations(ArrayList<Location> list) {
         return list;
     }
 
+    // MODIFIES: list
+    // EFFECTS: adds location to list in parameter
+    //          can add the same location multiple times
     public void addLocation(ArrayList<Location> list, Location location) {
         list.add(location);
 
     }
 
+    // REQUIRES: list must not be empty
+    // MODIFIES: list
+    // EFFECTS: removes a location from the list
     public boolean removeLocation(ArrayList<Location> list, Location location) {
         int index = 0;
         if (list.contains(location)) {
@@ -51,6 +61,9 @@ public class Map {
         return false;
     }
 
+    // REQUIRES: locations specified must be on the list
+    // MODIFIES: list1, list2
+    // EFFECTS: moves a location from one list to another
     public boolean moveLocation(ArrayList<Location> list1, ArrayList<Location> list2, String name) {
         for (Location location : list1) {
             String locationName = location.getName();
