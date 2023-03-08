@@ -23,8 +23,15 @@ public class ReaderHelper {
         return parseMap(jsonObject, list);
     }
 
+    // MODIFIES: this
+    // EFFECTS: writes JSON representation of workroom to file
+    public static void write(Map map, ArrayList<Location> list) {
+        JSONObject json = map.toJson(list);
+        JsonWriter.saveToFile(json.toString(4));
+    }
+
     // EFFECTS: reads source file as string and returns it
-    public String readFile(String source) throws IOException {
+    public static String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
         try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
