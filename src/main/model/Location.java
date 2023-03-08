@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // represents a place or location that someone would visit
-public class Location extends VisitedUnvisitedLists {
+public class Location extends VisitedUnvisitedLists implements Writable {
 
     private final String name;
     private final String address;
@@ -37,5 +40,17 @@ public class Location extends VisitedUnvisitedLists {
         return longitude;
     }
 
+    public String toString() {
+        return name + ": " + address + ", " + latitude + ", " + longitude;
+    }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("address", address);
+        json.put("latitude", latitude);
+        json.put("longitude", longitude);
+        return json;
+    }
 }

@@ -34,8 +34,8 @@ public class MapFunctions extends ListFunctions {
     protected String cityName;
     static Scanner userInput;
 
-    static ArrayList<Location> unvisited;
-    static ArrayList<Location> visited;
+    public static ArrayList<Location> unvisited;
+    public static ArrayList<Location> visited;
 
 
     // EFFECTS: constructor for MapFunctions class, sets up userInput, travelMap, and sets tripFinished to false

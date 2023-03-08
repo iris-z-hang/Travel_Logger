@@ -2,8 +2,12 @@ package model;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 // represents a map of a city that contains locations
-public class Map {
+public class Map implements Writable {
 
     private boolean tripFinished;
     protected static String city;
@@ -125,6 +129,30 @@ public class Map {
         double haversineFormulaPart2 = 2 * Math.asin(Math.sqrt(haversineFormulaPart1));
 
         return Math.round((6371 * haversineFormulaPart2) * 10000d) / 10000d;
+    }
+
+
+    @Override
+    public JSONObject toJson() {
+        return null;
+    }
+
+    @Override
+    public JSONObject toJson(ArrayList<Location> list) {
+        JSONObject json = new JSONObject();
+        json.put("city", city);
+        json.put("list", locationsToJson(list));
+        return json;
+    }
+
+    protected JSONArray locationsToJson(ArrayList<Location> list) {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Location location : list ) {
+            jsonArray.put(location.toJson());
+        }
+
+        return jsonArray;
     }
 
 }

@@ -1,12 +1,16 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // abstract class that represents common behaviours between unvisited and visited lists of locations
-public class VisitedUnvisitedLists extends Map {
+public class VisitedUnvisitedLists extends Map implements Writable {
 
-    private ArrayList<Location> unvisited;
-    private ArrayList<Location> visited;
+    public static ArrayList<Location> unvisited;
+    public static ArrayList<Location> visited;
 
     // EFFECTS: constructor for VisitedUnvisitedLists class with setup for unvisited and visited arrayLists
     public VisitedUnvisitedLists() {
@@ -95,6 +99,23 @@ public class VisitedUnvisitedLists extends Map {
     // EFFECTS: returns the location information which includes name, address, latitude, and longitude for visited
     public String getInformationVisited(String name) {
         return getInformation(visited, name);
+    }
+
+
+    public void unvisitedJSON() {
+        toJson(unvisited);
+    }
+
+    public void visitedJSON() {
+        toJson(visited);
+    }
+
+    public void unvisitedToJson() {
+        locationsToJson(unvisited);
+    }
+
+    public void visitedToJson() {
+        locationsToJson(visited);
     }
 
 

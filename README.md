@@ -19,5 +19,11 @@ application that has some functionality of GIS applications, but with a more cas
 - As a user, I want to be able to move locations from unvisited to visited or vice versa
 - As a user, I want to check the distance between two locations on the unvisited/visited lists or not on the lists
 
-The MapFunctions UI class implementation was inspired/aided by the FitLifeGymChain program from 
+- As a user, I want to be able to save my visited/unvisited list to file (if I so choose)
+- As a user, I want to be able to load my visited/unvisited list from file (if I so choose)
+
+The MapFunctions UI class implementation was inspired/aided by the FitLifeGymChain program found at 
 https://github.students.cs.ubc.ca/CPSC210/LongFormProblemSolutions/tree/main/FitLifeGymChainComplete
+
+The data persistence package was based on the JsonSerializationDemo found at
+https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
