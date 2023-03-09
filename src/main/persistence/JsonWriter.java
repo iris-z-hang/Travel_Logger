@@ -23,7 +23,7 @@ public class JsonWriter {
 
     // MODIFIES: this
     // EFFECTS: opens writer; throws FileNotFoundException if destination file cannot be opened for writing
-    public void open() throws FileNotFoundException {
+    public static void open() throws FileNotFoundException {
         writer = new PrintWriter(new File(destination));
     }
 
@@ -36,7 +36,7 @@ public class JsonWriter {
 
     // MODIFIES: this
     // EFFECTS: writes JSON representation of workroom to file
-    public void write(Map map) {
+    public static void write(Map map) {
         JSONObject json = map.toJson();
         saveToFile(json.toString(4));
     }

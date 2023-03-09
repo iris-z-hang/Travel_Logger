@@ -1,5 +1,16 @@
 {
-    "city": "VANCOUVER",
-    "unvisited": [],
+    "city": "V",
+    "list2": [{
+        "address": "23",
+        "latitude": 4,
+        "name": "ONE",
+        "longitude": 5
+    }],
+    "unvisited": [{
+        "address": "34",
+        "latitude": 6,
+        "name": "TWO",
+        "longitude": 3
+    }],
     "tripFinished": false
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
+import ui.MapFunctions;
 
 // represents a map of a city that contains locations
 public class Map implements Writable {
@@ -17,7 +18,8 @@ public class Map implements Writable {
 
     // EFFECTS: constructor for the class Map with city name and tripFinished set to false
     public Map(String city) {
-        Map.city = city;
+//        Map.city = city;
+        this.city = city;
         tripFinished = false;
 
         unvisited = new ArrayList<>();
@@ -148,25 +150,25 @@ public class Map implements Writable {
         json.put("tripFinished", tripFinished);
         json.put("city", city);
         json.put("unvisited", list_unv());
-//        json.put("list2", list_vis());
+        json.put("list2", list_vis());
         return json;
     }
 
     private JSONArray list_unv(){
         JSONArray jsonArray = new JSONArray();
-        for (Location unvis: unvisited){
+        for (Location unvis: MapFunctions.unvisited){
             jsonArray.put(unvis.toJson());
         }
         return jsonArray;
     }
 
-//    private JSONArray list_vis(){
-//        JSONArray jsonArray = new JSONArray();
-//        for (Location vis: visited){
-//            jsonArray.put(vis.toJson());
-//        }
-//        return jsonArray;
-//    }
+    private JSONArray list_vis(){
+        JSONArray jsonArray = new JSONArray();
+        for (Location vis: MapFunctions.visited){
+            jsonArray.put(vis.toJson());
+        }
+        return jsonArray;
+    }
 
 //    @Override
 //    public JSONObject toJson(ArrayList<Location> list) {

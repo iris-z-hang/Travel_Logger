@@ -135,7 +135,7 @@ public class MapFunctions extends ListFunctions {
         }
     }
 
-    protected void saveMap() {
+    public static void saveMap() {
         try {
             JsonWriter.open();
             JsonWriter.write(travelMap);
@@ -146,7 +146,7 @@ public class MapFunctions extends ListFunctions {
         }
     }
 
-    protected static void loadMap() {
+    public static void loadMap() {
         try {
             travelMap = JsonReader.read();
             System.out.println("Loaded " + travelMap.getCity() + " map" + " from" + JSON_STORE);
