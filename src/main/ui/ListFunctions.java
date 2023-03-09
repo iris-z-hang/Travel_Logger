@@ -2,16 +2,10 @@ package ui;
 
 import model.Location;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 import static ui.MapFunctions.*;
 
 import model.Map;
-import persistence.JsonReader;
-import persistence.JsonWriter;
-import persistence.ReaderHelper;
 
 // ListFunctions class helps reduce duplications in the MapFunctions class
 public class ListFunctions {
@@ -107,29 +101,6 @@ public class ListFunctions {
         System.out.println(travelMap.distanceTwoPoints(locationOne, locationTwo));
         System.out.println("Enter " + BACK + " to return to the original screen.");
     }
-
-//    protected static void saveMap() {
-//        try {
-//            JsonWriter.open();
-//            JsonWriter.write(travelMap);
-//            JsonWriter.close();
-//            System.out.println("Saved " + travelMap.getCity() + " map" + " to" + JSON_STORE);
-//        } catch (FileNotFoundException e) {
-//            System.out.println("Unable to write to file: " + JSON_STORE);
-//        }
-//    }
-//
-//    protected static void loadMap() {
-//        try {
-//            travelMap = JsonReader.read();
-//            System.out.println("Loaded " + travelMap.getCity() + " map" + " from" + JSON_STORE);
-//        } catch (IOException e) {
-//            System.out.println("Unable to read from file: " + JSON_STORE);
-//        }
-//
-//    }
-
-
 
 
 }

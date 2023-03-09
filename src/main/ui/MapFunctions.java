@@ -2,7 +2,6 @@ package ui;
 
 import model.Location;
 import model.Map;
-import model.VisitedUnvisitedLists;
 
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -41,7 +40,7 @@ public class MapFunctions extends ListFunctions {
     private static final String LOAD = "LOAD";
 
     protected static Map travelMap;
-    protected String cityName;
+    public static String cityName;
     static Scanner userInput;
 
     public static ArrayList<Location> unvisited;
@@ -135,6 +134,7 @@ public class MapFunctions extends ListFunctions {
         }
     }
 
+    // EFFECTS: saves current map to JSON file
     public static void saveMap() {
         try {
             JsonWriter.open();
@@ -146,10 +146,12 @@ public class MapFunctions extends ListFunctions {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads saved JSON file to current map
     public static void loadMap() {
         try {
             travelMap = JsonReader.read();
-            System.out.println("Loaded " + travelMap.getCity() + " map" + " from" + JSON_STORE);
+            System.out.println("Loaded previous map from" + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
@@ -283,48 +285,6 @@ public class MapFunctions extends ListFunctions {
             }
         }
     }
-
-//    private static void parseSave() {
-//        System.out.println("Enter " + SAVE_UNVISITED + " to save your unvisited list");
-//        System.out.println("Enter " + SAVE_VISITED + " to save your visited list");
-//
-//        userInputSave();
-//    }
-//
-//    private static void userInputSave() {
-//        String str = getUserInputString();
-//        if (str.length() > 0) {
-//            switch (str) {
-//                case SAVE_UNVISITED:
-//                    saveMap(unvisited);
-//                    break; // TODO:
-//                case SAVE_VISITED:
-//                    saveMap(visited);
-//                    break; // TODO:
-//            }
-//        }
-//    }
-
-//    private static void parseLoad() {
-//        System.out.println("Enter " + LOAD_UNVISITED + " to load your unvisited list");
-//        System.out.println("Enter " + LOAD_VISITED + " to load your visited list");
-//
-//        userInputLoad();
-//    }
-
-//    private static void userInputLoad() {
-//        String str = getUserInputString();
-//        if (str.length() > 0) {
-//            switch (str) {
-//                case LOAD_UNVISITED:
-//                    loadMap(unvisited);
-//                    break; // TODO:
-//                case LOAD_VISITED:
-//                    loadMap(visited);
-//                    break; // TODO:
-//            }
-//        }
-//    }
 
 
     // EFFECTS: takes user input for latitude and longitude of two locations and returns the distance between them

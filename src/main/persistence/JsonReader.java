@@ -10,8 +10,10 @@ import java.util.stream.Stream;
 import model.Location;
 import model.Map;
 import org.json.*;
+import ui.MapFunctions;
 
 import static ui.MapFunctions.unvisited;
+import static ui.MapFunctions.visited;
 
 //import static ui.MapFunctions.unvisited;
 
@@ -44,30 +46,30 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+
     public static Map parseMap(JSONObject jsonObject) {
         JSONArray name = jsonObject.getJSONArray("unvisited");
-        Map map = new Map("unvisited");
+        JSONArray name2 = jsonObject.getJSONArray("visited");
+        Map map = new Map(MapFunctions.cityName);
 
         addLocationsJSON(map, jsonObject);
         return map;
     }
 
-    public static ArrayList<Object> toArrayList(JSONArray jArray) {
-        ArrayList<Object> locationList = new ArrayList<Object>();
-        if (jArray != null) {
-            for (Object location : jArray) {
-                locationList.add(location);
-            }
-        }
-        return locationList;
-    }
-
     public static void addLocationsJSON(Map map, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("unvisited");
+        JSONArray jsonArray2 = jsonObject.getJSONArray("visited");
+
         for (Object json : jsonArray) {
             JSONObject nextLocation = (JSONObject) json;
             addLocationJSON(map, nextLocation);
         }
+
+        for (Object json : jsonArray2) {
+            JSONObject nextLocation = (JSONObject) json;
+            addLocationJSON2(map, nextLocation);
+        }
+
     }
 
     public static void addLocationJSON(Map map, JSONObject jsonObject) {
@@ -78,6 +80,16 @@ public class JsonReader {
 
         Location location = new Location(name, address, latitude, longitude);
         map.addLocation(unvisited, location);
+    }
+
+    public static void addLocationJSON2(Map map, JSONObject jsonObject) {
+        String name = jsonObject.getString("name");
+        String address = jsonObject.getString("address");
+        double latitude = jsonObject.getDouble("latitude");
+        double longitude = jsonObject.getDouble("longitude");
+
+        Location location = new Location(name, address, latitude, longitude);
+        map.addLocation(visited, location);
     }
 
 

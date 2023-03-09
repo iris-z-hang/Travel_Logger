@@ -1,11 +1,38 @@
 {
-    "city": "V",
-    "list2": [],
-    "unvisited": [{
-        "address": "1",
-        "latitude": 2,
-        "name": "ONE",
-        "longitude": 3
-    }],
+    "city": "TORONTO",
+    "visited": [
+        {
+            "address": "1",
+            "latitude": 2,
+            "name": "VI1",
+            "longitude": 3
+        },
+        {
+            "address": "3",
+            "latitude": 2,
+            "name": "V2",
+            "longitude": 1
+        },
+        {
+            "address": "4",
+            "latitude": 3,
+            "name": "V3",
+            "longitude": 2
+        }
+    ],
+    "unvisited": [
+        {
+            "address": "5",
+            "latitude": 6,
+            "name": "UN1",
+            "longitude": 7
+        },
+        {
+            "address": "2",
+            "latitude": 3,
+            "name": "UN2",
+            "longitude": 1
+        }
+    ],
     "tripFinished": false
 }
