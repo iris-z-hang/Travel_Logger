@@ -8,6 +8,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import static ui.MapFunctions.*;
 
+import model.Map;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import persistence.ReaderHelper;
@@ -23,7 +24,7 @@ public class ListFunctions {
     // EFFECTS: asks the user to input the location they want to add to a list and adds that location to the list
     protected static void addLocation(ArrayList<Location> list) {
         System.out.println("Please input the following information about the location: ");
-        travelMap.addLocation(list, userInputNewLocation());
+        Map.addLocation(list, userInputNewLocation());
         System.out.println("Location successfully added.");
         System.out.println("Enter " + BACK + " to return to the original screen.");
     }
@@ -107,26 +108,26 @@ public class ListFunctions {
         System.out.println("Enter " + BACK + " to return to the original screen.");
     }
 
-    protected static void saveMap(ArrayList<Location> list) {
-        try {
-            JsonWriter.open();
-            ReaderHelper.write(travelMap, list);
-            JsonWriter.close();
-            System.out.println("Saved " + "list" + " to" + JSON_STORE);
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STORE);
-        }
-    }
-
-    protected static void loadMap(ArrayList<Location> list) {
-        try {
-            travelMap = ReaderHelper.read(list);
-            System.out.println("Loaded " + " list" + " from" + JSON_STORE);
-        } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
-        }
-
-    }
+//    protected static void saveMap() {
+//        try {
+//            JsonWriter.open();
+//            JsonWriter.write(travelMap);
+//            JsonWriter.close();
+//            System.out.println("Saved " + travelMap.getCity() + " map" + " to" + JSON_STORE);
+//        } catch (FileNotFoundException e) {
+//            System.out.println("Unable to write to file: " + JSON_STORE);
+//        }
+//    }
+//
+//    protected static void loadMap() {
+//        try {
+//            travelMap = JsonReader.read();
+//            System.out.println("Loaded " + travelMap.getCity() + " map" + " from" + JSON_STORE);
+//        } catch (IOException e) {
+//            System.out.println("Unable to read from file: " + JSON_STORE);
+//        }
+//
+//    }
 
 
 

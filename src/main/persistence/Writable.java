@@ -10,5 +10,5 @@ import java.util.ArrayList;
 public interface Writable {
     JSONObject toJson();
 
-    JSONObject toJson(ArrayList<Location> list);
+    //JSONObject toJson(ArrayList<Location> list);
 }

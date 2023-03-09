@@ -2,21 +2,25 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import persistence.JsonWriter;
 import persistence.Writable;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 // abstract class that represents common behaviours between unvisited and visited lists of locations
-public class VisitedUnvisitedLists extends Map implements Writable {
+public class VisitedUnvisitedLists extends Map {
 
-    public static ArrayList<Location> unvisited;
-    public static ArrayList<Location> visited;
-
+//    public static ArrayList<Location> unvisited;
+//    public static ArrayList<Location> visited;
+    Map my_map;
     // EFFECTS: constructor for VisitedUnvisitedLists class with setup for unvisited and visited arrayLists
     public VisitedUnvisitedLists() {
+//        super(this.getCity());
         super(Map.city);
-        unvisited = new ArrayList<>();
-        visited = new ArrayList<>();
+//        this.my_map = new Map(city);
+//        unvisited = new ArrayList<>();
+//        visited = new ArrayList<>();
     }
 
     // EFFECTS: returns the size of the unvisited list
@@ -102,21 +106,41 @@ public class VisitedUnvisitedLists extends Map implements Writable {
     }
 
 
-    public void unvisitedJSON() {
-        toJson(unvisited);
-    }
+//    public void unvisitedJSON() {
+//        toJson(unvisited);
+//    }
+//
+//    public void visitedJSON() {
+//        toJson(visited);
+//    }
 
-    public void visitedJSON() {
-        toJson(visited);
-    }
-
-    public void unvisitedToJson() {
-        locationsToJson(unvisited);
-    }
-
-    public void visitedToJson() {
-        locationsToJson(visited);
-    }
+//    public void unvisitedToJson() {
+//        locationsToJson(unvisited);
+//    }
+//
+//    public void visitedToJson() {
+//        locationsToJson(visited);
+//    }
 
 
+//    @Override
+//    public JSONObject toJson() {
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("unvisited", list_a());
+//        jsonObject.put("visited", list_b());
+//        return jsonObject;
+//    }
+//
+//
+//
+//    public  String save_all(){
+//        try {
+//            JsonWriter.open();
+//            JsonWriter.write(VisitedUnvisitedLists);
+//            JsonWriter.close();
+//
+//        } catch (FileNotFoundException e){
+//           return "file not find";
+//        }
+//    }
 }

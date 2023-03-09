@@ -12,10 +12,16 @@ public class Map implements Writable {
     private boolean tripFinished;
     protected static String city;
 
+    public static ArrayList<Location> unvisited;
+    public static ArrayList<Location> visited;
+
     // EFFECTS: constructor for the class Map with city name and tripFinished set to false
     public Map(String city) {
         Map.city = city;
         tripFinished = false;
+
+        unvisited = new ArrayList<>();
+        visited = new ArrayList<>();
     }
 
     // EFFECTS: returns tripFinished
@@ -34,6 +40,11 @@ public class Map implements Writable {
         return city;
     }
 
+    // EFFECTS: changes the name of the city
+    public void setCityName(String name) {
+        city = name;
+    }
+
     // EFFECTS: returns the size of the location list
     public int getSize(ArrayList<Location> list) {
         return list.size();
@@ -47,7 +58,7 @@ public class Map implements Writable {
     // MODIFIES: list (this in subclasses)
     // EFFECTS: adds location to list in parameter
     //          can add the same location multiple times
-    public void addLocation(ArrayList<Location> list, Location location) {
+    public static void addLocation(ArrayList<Location> list, Location location) {
         list.add(location);
 
     }
@@ -131,28 +142,59 @@ public class Map implements Writable {
         return Math.round((6371 * haversineFormulaPart2) * 10000d) / 10000d;
     }
 
-
     @Override
     public JSONObject toJson() {
-        return null;
-    }
-
-    @Override
-    public JSONObject toJson(ArrayList<Location> list) {
         JSONObject json = new JSONObject();
+        json.put("tripFinished", tripFinished);
         json.put("city", city);
-        json.put("list", locationsToJson(list));
+        json.put("unvisited", list_unv());
+//        json.put("list2", list_vis());
         return json;
     }
 
-    protected JSONArray locationsToJson(ArrayList<Location> list) {
+    private JSONArray list_unv(){
         JSONArray jsonArray = new JSONArray();
-
-        for (Location location : list ) {
-            jsonArray.put(location.toJson());
+        for (Location unvis: unvisited){
+            jsonArray.put(unvis.toJson());
         }
-
         return jsonArray;
     }
+
+//    private JSONArray list_vis(){
+//        JSONArray jsonArray = new JSONArray();
+//        for (Location vis: visited){
+//            jsonArray.put(vis.toJson());
+//        }
+//        return jsonArray;
+//    }
+
+//    @Override
+//    public JSONObject toJson(ArrayList<Location> list) {
+//        return null;
+//    }
+
+
+//    @Override
+//    public JSONObject toJson() {
+//        return null;
+//    }
+//
+//    @Override
+//    public JSONObject toJson(ArrayList<Location> list) {
+//        JSONObject json = new JSONObject();
+//        json.put("city", city);
+//        json.put("list", locationsToJson(list));
+//        return json;
+//    }
+//
+//    protected JSONArray locationsToJson(ArrayList<Location> list) {
+//        JSONArray jsonArray = new JSONArray();
+//
+//        for (Location location : list ) {
+//            jsonArray.put(location.toJson());
+//        }
+//
+//        return jsonArray;
+//    }
 
 }

@@ -8,6 +8,7 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -39,12 +40,6 @@ public class MapFunctions extends ListFunctions {
     private static final String SAVE = "SAVE";
     private static final String LOAD = "LOAD";
 
-    private static final String SAVE_UNVISITED = "SAVE U";
-    private static final String LOAD_UNVISITED = "LOAD U";
-
-    private static final String SAVE_VISITED = "SAVE V";
-    private static final String LOAD_VISITED = "LOAD V";
-
     protected static Map travelMap;
     protected String cityName;
     static Scanner userInput;
@@ -60,7 +55,7 @@ public class MapFunctions extends ListFunctions {
     //          initializes two arraylists for abstraction
     public MapFunctions() throws FileNotFoundException {
         userInput = new Scanner(System.in);
-        travelMap = new VisitedUnvisitedLists();
+        travelMap = new Map("City");
         travelMap.setTripFinished(false);
 
         unvisited = new ArrayList<>();
@@ -87,7 +82,7 @@ public class MapFunctions extends ListFunctions {
         System.out.println("Please input the name of the city you are visiting.");
         this.cityName = userInput.nextLine();
         System.out.println("Creating new map for " + cityName + "\n");
-
+        travelMap.setCityName(cityName);
     }
 
     // EFFECTS: prints the initial menu of commands
@@ -96,12 +91,6 @@ public class MapFunctions extends ListFunctions {
 
         System.out.println("Enter " + UNVISITED + " to view/edit the list of unvisited locations");
         System.out.println("Enter " + VISITED + " to view/edit the list of visited locations");
-
-//        System.out.println("Enter " + SAVE_UNVISITED + " to save unvisited list.");
-//        System.out.println("Enter " + LOAD_UNVISITED + " to load unvisited list.");
-//
-//        System.out.println("Enter " + SAVE_VISITED + " to save visited list.");
-//        System.out.println("Enter " + LOAD_VISITED + " to save visited list.");
 
         System.out.println("Enter " + FIND_DISTANCE + " to find the distance between two locations.");
 
@@ -128,10 +117,10 @@ public class MapFunctions extends ListFunctions {
                     parseInputFindDistance();
                     break;
                 case SAVE:
-                    parseSave();
+                    saveMap();
                     break;
                 case LOAD:
-                    parseLoad();
+                    loadMap();
                     break;
                 case BACK:
                     printInstructions();
@@ -144,6 +133,27 @@ public class MapFunctions extends ListFunctions {
                     break;
             }
         }
+    }
+
+    protected void saveMap() {
+        try {
+            JsonWriter.open();
+            JsonWriter.write(travelMap);
+            JsonWriter.close();
+            System.out.println("Saved " + travelMap.getCity() + " map" + " to" + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    protected static void loadMap() {
+        try {
+            travelMap = JsonReader.read();
+            System.out.println("Loaded " + travelMap.getCity() + " map" + " from" + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+
     }
 
     // MODIFIES: this
@@ -274,47 +284,47 @@ public class MapFunctions extends ListFunctions {
         }
     }
 
-    private static void parseSave() {
-        System.out.println("Enter " + SAVE_UNVISITED + " to save your unvisited list");
-        System.out.println("Enter " + SAVE_VISITED + " to save your visited list");
+//    private static void parseSave() {
+//        System.out.println("Enter " + SAVE_UNVISITED + " to save your unvisited list");
+//        System.out.println("Enter " + SAVE_VISITED + " to save your visited list");
+//
+//        userInputSave();
+//    }
+//
+//    private static void userInputSave() {
+//        String str = getUserInputString();
+//        if (str.length() > 0) {
+//            switch (str) {
+//                case SAVE_UNVISITED:
+//                    saveMap(unvisited);
+//                    break; // TODO:
+//                case SAVE_VISITED:
+//                    saveMap(visited);
+//                    break; // TODO:
+//            }
+//        }
+//    }
 
-        userInputSave();
-    }
+//    private static void parseLoad() {
+//        System.out.println("Enter " + LOAD_UNVISITED + " to load your unvisited list");
+//        System.out.println("Enter " + LOAD_VISITED + " to load your visited list");
+//
+//        userInputLoad();
+//    }
 
-    private static void userInputSave() {
-        String str = getUserInputString();
-        if (str.length() > 0) {
-            switch (str) {
-                case SAVE_UNVISITED:
-                    saveMap(unvisited);
-                    break; // TODO:
-                case SAVE_VISITED:
-                    saveMap(visited);
-                    break; // TODO:
-            }
-        }
-    }
-
-    private static void parseLoad() {
-        System.out.println("Enter " + LOAD_UNVISITED + " to load your unvisited list");
-        System.out.println("Enter " + LOAD_VISITED + " to load your visited list");
-
-        userInputLoad();
-    }
-
-    private static void userInputLoad() {
-        String str = getUserInputString();
-        if (str.length() > 0) {
-            switch (str) {
-                case LOAD_UNVISITED:
-                    loadMap(unvisited);
-                    break; // TODO:
-                case LOAD_VISITED:
-                    loadMap(visited);
-                    break; // TODO:
-            }
-        }
-    }
+//    private static void userInputLoad() {
+//        String str = getUserInputString();
+//        if (str.length() > 0) {
+//            switch (str) {
+//                case LOAD_UNVISITED:
+//                    loadMap(unvisited);
+//                    break; // TODO:
+//                case LOAD_VISITED:
+//                    loadMap(visited);
+//                    break; // TODO:
+//            }
+//        }
+//    }
 
 
     // EFFECTS: takes user input for latitude and longitude of two locations and returns the distance between them
