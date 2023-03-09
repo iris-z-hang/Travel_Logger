@@ -150,7 +150,7 @@ public class Map implements Writable {
         json.put("tripFinished", tripFinished);
         json.put("city", city);
         json.put("unvisited", list_unv());
-        json.put("list2", list_vis());
+        json.put("visited", list_vis());
         return json;
     }
 

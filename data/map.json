@@ -1,15 +1,10 @@
 {
     "city": "V",
-    "list2": [{
-        "address": "23",
-        "latitude": 4,
-        "name": "ONE",
-        "longitude": 5
-    }],
+    "list2": [],
     "unvisited": [{
-        "address": "34",
-        "latitude": 6,
-        "name": "TWO",
+        "address": "1",
+        "latitude": 2,
+        "name": "ONE",
         "longitude": 3
     }],
     "tripFinished": false

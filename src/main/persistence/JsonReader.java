@@ -11,7 +11,7 @@ import model.Location;
 import model.Map;
 import org.json.*;
 
-import static model.Map.unvisited;
+import static ui.MapFunctions.unvisited;
 
 //import static ui.MapFunctions.unvisited;
 
@@ -45,17 +45,10 @@ public class JsonReader {
     }
 
     public static Map parseMap(JSONObject jsonObject) {
-//        JSONArray name = jsonObject.getJSONArray("list");
-        String name = jsonObject.getString("name");
-        Map map = new Map(name);
+        JSONArray name = jsonObject.getJSONArray("unvisited");
+        Map map = new Map("unvisited");
+
         addLocationsJSON(map, jsonObject);
-        // CONVERT NAME TO ARRAYLIST
-//        ArrayList<Object> newArrayList = toArrayList(name);
-        // List<Location> name = new ArrayList<>;
-//        Map map = new Map(name);
-//        addLocationsJSON(newArrayList, jsonObject, list);
-//        return newArrayList;
-        // TODO: Convert to arraylist
         return map;
     }
 
@@ -70,7 +63,7 @@ public class JsonReader {
     }
 
     public static void addLocationsJSON(Map map, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("locations");
+        JSONArray jsonArray = jsonObject.getJSONArray("unvisited");
         for (Object json : jsonArray) {
             JSONObject nextLocation = (JSONObject) json;
             addLocationJSON(map, nextLocation);
@@ -84,7 +77,7 @@ public class JsonReader {
         double longitude = jsonObject.getDouble("longitude");
 
         Location location = new Location(name, address, latitude, longitude);
-        Map.addLocation(unvisited, location);
+        map.addLocation(unvisited, location);
     }
 
 
