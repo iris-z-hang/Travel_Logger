@@ -9,11 +9,6 @@ import java.util.stream.Stream;
 import model.Location;
 import model.Map;
 import org.json.*;
-import ui.MapFunctions;
-
-//import static ui.MapFunctions.unvisited;
-//import static ui.MapFunctions.visited;
-
 
 // a reader that reads visited/unvisited lists from source file
 public class JsonReader {

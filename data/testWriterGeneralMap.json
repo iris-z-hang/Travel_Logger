@@ -1,0 +1,19 @@
+{
+    "city": "My map",
+    "visited": [],
+    "unvisited": [
+        {
+            "address": "ONE street",
+            "latitude": 1,
+            "name": "ONE",
+            "longitude": 1
+        },
+        {
+            "address": "TWO street",
+            "latitude": 2,
+            "name": "TWO",
+            "longitude": 2
+        }
+    ],
+    "tripFinished": false
+}

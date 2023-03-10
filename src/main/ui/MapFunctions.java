@@ -153,7 +153,7 @@ public class MapFunctions {
             jsonWriter.open();
             jsonWriter.write(travelMap);
             jsonWriter.close();
-            System.out.println("Saved " + travelMap.getCity() + " map" + " to" + JSON_STORE);
+            System.out.println("Saved map to" + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
@@ -260,8 +260,7 @@ public class MapFunctions {
     // EFFECTS: asks the user to input the location they want to add to a list and adds that location to the list
     protected void addLocation(ArrayList<Location> list) {
         System.out.println("Please input the following information about the location: ");
-        travelMap.addUnvisitedLocation(userInputNewLocation());
-//        Map.addLocation(list, userInputNewLocation());
+        travelMap.addLocation(list, userInputNewLocation());
         System.out.println("Location successfully added.");
         System.out.println("Enter " + BACK + " to return to the original screen.");
     }

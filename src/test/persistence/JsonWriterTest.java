@@ -36,7 +36,7 @@ public class JsonWriterTest extends JsonTest {
 
             JsonReader reader = new JsonReader("./data/testWriterEmptyMap.json");
             map = reader.read();
-            assertEquals("My map", map.getCity());
+            assertEquals("city name", map.getCity());
             assertEquals(0, map.getSize(map.getUnvisited()));
         } catch (IOException e) {
             fail("Exception should not have been thrown");
@@ -46,7 +46,7 @@ public class JsonWriterTest extends JsonTest {
     @Test
     void testWriterEmptyMapVisited() {
         try {
-            Map map = new Map("My map");
+            Map map = new Map("city name");
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyMap.json");
             writer.open();
             writer.write(map);
@@ -54,14 +54,14 @@ public class JsonWriterTest extends JsonTest {
 
             JsonReader reader = new JsonReader("./data/testWriterEmptyMap.json");
             map = reader.read();
-            assertEquals("My map", map.getCity());
+            assertEquals("city name", map.getCity());
             assertEquals(0, map.getSize(map.getVisited()));
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }
     }
     @Test
-    void testWriterGeneralWorkroomUnvisited() {
+    void testWriterGeneralMapUnvisited() {
         try {
             Map map = new Map("My map");
             Location location1 = new Location("ONE", "ONE street", 1, 1);
@@ -76,11 +76,11 @@ public class JsonWriterTest extends JsonTest {
 
             JsonReader reader = new JsonReader("./data/testWriterGeneralMap.json");
             map = reader.read();
-            assertEquals("My city", map.getCity());
+            assertEquals("city name", map.getCity());
             List<Location> locations = map.getLocations(map.getUnvisited());
             assertEquals(2, map.getSize(map.getUnvisited()));
-            checkLocation("ONE", "ONE Street", 1, 1, locations.get(0));
-            checkLocation("TWO", "TWO Street", 2, 2, locations.get(1));
+            checkLocation("ONE", "ONE street", 1, 1, locations.get(0));
+            checkLocation("TWO", "TWO street", 2, 2, locations.get(1));
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");
@@ -88,7 +88,7 @@ public class JsonWriterTest extends JsonTest {
     }
 
     @Test
-    void testWriterGeneralWorkroomVisited() {
+    void testWriterGeneralMapVisited() {
         try {
             Map map = new Map("My map");
             Location location1 = new Location("ONE", "ONE street", 1, 1);
@@ -103,11 +103,11 @@ public class JsonWriterTest extends JsonTest {
 
             JsonReader reader = new JsonReader("./data/testWriterGeneralMap.json");
             map = reader.read();
-            assertEquals("My city", map.getCity());
+            assertEquals("city name", map.getCity());
             List<Location> locations = map.getLocations(map.getVisited());
             assertEquals(2, map.getSize(map.getVisited()));
-            checkLocation("ONE", "ONE Street", 1, 1, locations.get(0));
-            checkLocation("TWO", "TWO Street", 2, 2, locations.get(1));
+            checkLocation("ONE", "ONE street", 1, 1, locations.get(0));
+            checkLocation("TWO", "TWO street", 2, 2, locations.get(1));
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");

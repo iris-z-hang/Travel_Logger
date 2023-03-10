@@ -1,0 +1,6 @@
+{
+    "city": "My map",
+    "visited": [],
+    "unvisited": [],
+    "tripFinished": false
+}

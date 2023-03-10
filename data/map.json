@@ -1,24 +1,16 @@
 {
-    "city": "city name",
+    "city": "tor",
     "visited": [{
-        "address": "2",
-        "latitude": 3,
-        "name": "TEO",
-        "longitude": 4
+        "address": "23",
+        "latitude": 5,
+        "name": "TWO",
+        "longitude": 6
     }],
-    "unvisited": [
-        {
-            "address": "2",
-            "latitude": 3,
-            "name": "ONE",
-            "longitude": 4
-        },
-        {
-            "address": "12",
-            "latitude": 4,
-            "name": "TEST",
-            "longitude": 5
-        }
-    ],
+    "unvisited": [{
+        "address": "1",
+        "latitude": 2,
+        "name": "ONE",
+        "longitude": 3
+    }],
     "tripFinished": false
 }

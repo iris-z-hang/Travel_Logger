@@ -17,6 +17,7 @@ public class JsonReaderTest extends JsonTest {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
         try {
             Map map = reader.read();
+            fail("IOException expected");
         } catch (IOException e) {
             // pass
         }
@@ -24,10 +25,10 @@ public class JsonReaderTest extends JsonTest {
 
     @Test
     void testReaderEmptyMapUnvisited() {
-        JsonReader reader = new JsonReader("./data/testReaderEmptyMap.json");
+        JsonReader reader = new JsonReader("./data/testWriterEmptyMap.json");
         try {
             Map map = reader.read();
-            assertEquals("Map name", map.getCity());
+            assertEquals("city name", map.getCity());
             assertEquals(0, map.getSize(map.getUnvisited()));
         } catch (IOException e) {
             fail("Couldn't read from file");
@@ -36,10 +37,10 @@ public class JsonReaderTest extends JsonTest {
 
     @Test
     void testReaderEmptyMapVisited() {
-        JsonReader reader = new JsonReader("./data/testReaderEmptyMap.json");
+        JsonReader reader = new JsonReader("./data/testWriterEmptyMap.json");
         try {
             Map map = reader.read();
-            assertEquals("Map name", map.getCity());
+            assertEquals("city name", map.getCity());
             assertEquals(0, map.getSize(map.getVisited()));
         } catch (IOException e) {
             fail("Couldn't read from file");
@@ -47,15 +48,15 @@ public class JsonReaderTest extends JsonTest {
     }
 
     @Test
-    void testReaderGeneralMapUnvisited() {
-        JsonReader reader = new JsonReader("./data/testReaderGeneralMap.json");
+    void testReaderGeneralMapUnvisited() throws IOException {
+        JsonReader reader = new JsonReader("./data/testWriterGeneralMap.json");
         try {
             Map map = reader.read();
-            assertEquals("Map name", map.getCity());
+            assertEquals("city name", map.getCity());
             List<Location> locations = map.getLocations(map.getUnvisited());
             assertEquals(2, locations.size());
-            checkLocation("ONE", "ONE Street", 1, 1, locations.get(0));
-            checkLocation("TWO", "TWO Street", 2, 2, locations.get(1));
+            checkLocation("ONE", "ONE street", 1, 1, locations.get(0));
+            checkLocation("TWO", "TWO street", 2, 2, locations.get(1));
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
