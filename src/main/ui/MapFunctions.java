@@ -16,35 +16,32 @@ import java.util.Scanner;
 public class MapFunctions {
     static final String JSON_STORE = "./data/map.json";
 
-    private static final String ADD_LOCATION_TO_VISITED = "ADD V";
-    private static final String ADD_LOCATION_TO_UNVISITED = "ADD U";
-    private static final String REMOVE_LOCATION_FROM_UNVISITED = "REMOVE U";
-    private static final String REMOVE_LOCATION_FROM_VISITED = "REMOVE V";
-    private static final String CHECK_VISITED = "CHECK V";
-    private static final String CHECK_UNVISITED = "CHECK U";
-    private static final String FIND_DISTANCE = "DISTANCE";
-    private static final String QUIT = "QUIT";
-    private static final String BACK = "BACK";
-    private static final String NEW_LOCATIONS = "NEW";
-    private static final String EXISTING_LOCATIONS_UNVISITED = "EXISTING U";
-    private static final String EXISTING_LOCATIONS_VISITED = "EXISTING V";
-    private static final String EXISTING_UNVISITED_VISITED = "EXISTING UV";
+    private final String ADD_LOCATION_TO_VISITED = "ADD V";
+    private final String ADD_LOCATION_TO_UNVISITED = "ADD U";
+    private final String REMOVE_LOCATION_FROM_UNVISITED = "REMOVE U";
+    private final String REMOVE_LOCATION_FROM_VISITED = "REMOVE V";
+    private final String CHECK_VISITED = "CHECK V";
+    private final String CHECK_UNVISITED = "CHECK U";
+    private final String FIND_DISTANCE = "DISTANCE";
+    private final String QUIT = "QUIT";
+    private final String BACK = "BACK";
+    private final String NEW_LOCATIONS = "NEW";
+    private final String EXISTING_LOCATIONS_UNVISITED = "EXISTING U";
+    private final String EXISTING_LOCATIONS_VISITED = "EXISTING V";
+    private final String EXISTING_UNVISITED_VISITED = "EXISTING UV";
 
-    private static final String UNVISITED = "UNVISITED";
-    private static final String VISITED = "VISITED";
-    private static final String MOVE_TO_UNVISITED = "MOVE TO U";
-    private static final String MOVE_TO_VISITED = "MOVE TO V";
-    private static final String INFO = "INFO";
+    private final String UNVISITED = "UNVISITED";
+    private final String VISITED = "VISITED";
+    private final String MOVE_TO_UNVISITED = "MOVE TO U";
+    private final String MOVE_TO_VISITED = "MOVE TO V";
+    private final String INFO = "INFO";
 
-    private static final String SAVE = "SAVE";
-    private static final String LOAD = "LOAD";
+    private final String SAVE = "SAVE";
+    private final String LOAD = "LOAD";
 
     protected Map travelMap;
     private String cityName;
     static Scanner userInput;
-
-//    private ArrayList<Location> unvisited;
-//    private ArrayList<Location> visited;
 
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -57,24 +54,9 @@ public class MapFunctions {
         travelMap = new Map("City");
         travelMap.setTripFinished(false);
 
-//        unvisited = new ArrayList<>();
-//        visited = new ArrayList<>();
-
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
     }
-//
-//    public static ArrayList<Location> getUnvisited() {
-//        return unvisited;
-//    }
-//
-//    public static ArrayList<Location> getVisited() {
-//        return visited;
-//    }
-//
-//    public static String getCityName() {
-//        return cityName;
-//    }
 
     // EFFECTS: accepts user input while TripFinished is false
     public void handleUserInput() {
@@ -116,7 +98,7 @@ public class MapFunctions {
     // EFFECTS: takes user input and performs appropriate actions which are: enter unvisited menu, enter visited menu,
     //          enter distance menu, return to original screen, and quit the program
     @SuppressWarnings("methodlength")
-    protected void parseInput(String str) {
+    private void parseInput(String str) {
         if (str.length() > 0) {
             switch (str) {
                 case UNVISITED:
@@ -181,7 +163,7 @@ public class MapFunctions {
 
     // EFFECTS: prints the locations on a list for the user
     //          gives option for further information on a specified location
-    protected void parseInputInfo(ArrayList<Location> list, String str) {
+    private void parseInputInfo(ArrayList<Location> list, String str) {
         System.out.println("Here are the locations: ");
 
         for (Location location: travelMap.getLocations(list)) {
@@ -194,7 +176,7 @@ public class MapFunctions {
 
     // EFFECTS: provides further information on a location in a list for the user if they type INFO
     //          information provided is name, address, latitude, longitude
-    protected void userInputInfo(ArrayList<Location> list) {
+    private void userInputInfo(ArrayList<Location> list) {
         String str = getUserInputString();
 
         if (str.length() > 0) {
@@ -258,7 +240,7 @@ public class MapFunctions {
 
     // MODIFIES: list (this in subclasses)
     // EFFECTS: asks the user to input the location they want to add to a list and adds that location to the list
-    protected void addLocation(ArrayList<Location> list) {
+    private void addLocation(ArrayList<Location> list) {
         System.out.println("Please input the following information about the location: ");
         travelMap.addLocation(list, userInputNewLocation());
         System.out.println("Location successfully added.");
@@ -309,7 +291,7 @@ public class MapFunctions {
     // MODIFIES: list (this in subclasses)
     // EFFECTS: asks the user to input the location they want to remove from the list
     //          if that location exists, removes location from list, else prints "location not found"
-    protected void removeLocation(ArrayList<Location> list) {
+    private void removeLocation(ArrayList<Location> list) {
         System.out.println("Enter the name of the location you want removed.");
         String removeName = getUserInputString();
         if (travelMap.removeLocation(list, travelMap.findLocationByName(list, removeName))) {
@@ -327,12 +309,16 @@ public class MapFunctions {
                 + "unvisited " + "locations");
         System.out.println("Enter " + EXISTING_LOCATIONS_VISITED + " to find the distance between two existing visited "
                 + "locations");
+        System.out.println("Enter " + EXISTING_UNVISITED_VISITED + " to find the distance between two existing visited "
+                + "locations");
         System.out.println("Enter " + BACK + " to return to the original screen.");
 
         userInputFindDistance();
     }
 
-    protected void move(ArrayList<Location> list1, ArrayList<Location> list2) {
+    // MODIFIES: this
+    // EFFECTS: moves location from one list to another
+    private void move(ArrayList<Location> list1, ArrayList<Location> list2) {
         System.out.println("Enter the name of the location you want to move.");
         String moveNameU = getUserInputString();
         if (travelMap.moveLocation(list1, list2, moveNameU)) {
@@ -369,18 +355,6 @@ public class MapFunctions {
         }
     }
 
-//    protected void move(ArrayList<Location> list1, ArrayList<Location> list2) {
-//        System.out.println("Enter the name of the location you want to move.");
-//        String moveNameU = getUserInputString();
-//        if (travelMap.moveLocation(list1, list2, moveNameU)) {
-//            System.out.println(moveNameU + " successfully moved.");
-//        } else {
-//            System.out.println("Location not found.");
-//        }
-//        System.out.println("Enter " + BACK + " to return to the original screen.");
-//    }
-
-
     // EFFECTS: takes user input for latitude and longitude of two locations and returns the distance between them
     private void newLocations() {
         System.out.println("Enter the latitude for the first location.");
@@ -401,7 +375,7 @@ public class MapFunctions {
     }
 
     // EFFECTS: takes user input for name, address, latitude, longitude, to create a new Location class
-    protected Location userInputNewLocation() {
+    private Location userInputNewLocation() {
         System.out.println("Please input the name of the location.");
         String locationName = getUserInputString();
         System.out.println("Please input the address of the location.");
@@ -415,7 +389,7 @@ public class MapFunctions {
     }
 
     // EFFECTS: finds the distance between two existing lists using the haversine formula
-    protected void existingLocations(ArrayList<Location> list1, ArrayList<Location> list2) {
+    private void existingLocations(ArrayList<Location> list1, ArrayList<Location> list2) {
         System.out.println("Enter the name of the first location.");
         String nameOne = getUserInputString();
         Location locationOne = travelMap.findLocationByName(list1, nameOne);
@@ -429,7 +403,7 @@ public class MapFunctions {
     }
 
     // EFFECTS: takes in user input
-    protected String getUserInputString() {
+    private String getUserInputString() {
         String str = "";
         if (userInput.hasNext()) {
             str = userInput.nextLine();
