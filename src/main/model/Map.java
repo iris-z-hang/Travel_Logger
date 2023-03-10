@@ -11,14 +11,13 @@ import ui.MapFunctions;
 public class Map implements Writable {
 
     private boolean tripFinished;
-    protected static String city;
+    protected String city;
 
-    public static ArrayList<Location> unvisited;
-    public static ArrayList<Location> visited;
+    protected ArrayList<Location> unvisited;
+    protected ArrayList<Location> visited;
 
     // EFFECTS: constructor for the class Map with city name and tripFinished set to false
     public Map(String city) {
-//        Map.city = city;
         this.city = city;
         tripFinished = false;
 
@@ -52,17 +51,59 @@ public class Map implements Writable {
         return list.size();
     }
 
+    // EFFECTS: returns the size of the unvisited list
+    public int getSizeUnvisited() {
+        return getSize(unvisited);
+    }
+
+    // EFFECTS: returns the size of the visited list
+    public int getSizeVisited() {
+        return getSize(visited);
+    }
+
     // EFFECTS: returns the list
     public ArrayList<Location> getLocations(ArrayList<Location> list) {
         return list;
     }
 
+    // EFFECTS: returns list of unvisited locations
+    public ArrayList<Location> getUnvisitedLocations() {
+        return getLocations(unvisited);
+    }
+
+    // EFFECTS: returns list of visited locations
+    public ArrayList<Location> getVisitedLocations() {
+        return getLocations(visited);
+    }
+
+    // EFFECTS: returns unvisited list
+    public ArrayList<Location> getUnvisited() {
+        return unvisited;
+    }
+
+    // EFFECTS: returns visited list
+    public ArrayList<Location> getVisited() {
+        return visited;
+    }
+
     // MODIFIES: list (this in subclasses)
     // EFFECTS: adds location to list in parameter
     //          can add the same location multiple times
-    public static void addLocation(ArrayList<Location> list, Location location) {
+    public void addLocation(ArrayList<Location> list, Location location) {
         list.add(location);
 
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds location to unvisited list, the same location can be added multiple times
+    public void addUnvisitedLocation(Location location) {
+        addLocation(unvisited, location);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds location to visited list, the same location can be added multiple times
+    public void addVisitedLocation(Location location) {
+        addLocation(visited, location);
     }
 
     // REQUIRES: list must not be empty
@@ -76,6 +117,18 @@ public class Map implements Writable {
             return true;
         }
         return false;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes location from unvisited list if exists and returns true, else returns false
+    public boolean removeUnvisitedLocation(Location location) {
+        return removeLocation(unvisited, location);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes visited location from visited list if exists and returns true, else returns false
+    public boolean removeVisitedLocation(Location location) {
+        return removeLocation(visited, location);
     }
 
     // REQUIRES: locations to move must be on their list
@@ -93,6 +146,20 @@ public class Map implements Writable {
         return false;
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes location from visited list and adds location to unvisited list
+    //          returns true if successful (location present in visited list) else false
+    public boolean moveVisitedToUnvisited(String name) {
+        return moveLocation(visited, unvisited, name);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes location from unvisited list and adds location to visited list
+    //          returns true if successful (location present in unvisited list) else false
+    public boolean moveUnvisitedToVisited(String name) {
+        return moveLocation(unvisited, visited, name);
+    }
+
     // REQUIRES: there is a location that matches name on unvisited list
     // EFFECTS: returns the location with name that matches the parameter name
     public Location findLocationByName(ArrayList<Location> list, String name) {
@@ -106,6 +173,18 @@ public class Map implements Writable {
             }
         }
         return list.get(index);
+    }
+
+    // REQUIRES: there is a location that matches name on unvisited list
+    // EFFECTS: returns the unvisited location with name that matches the parameter name
+    public Location findLocationByNameUnvisited(String name) {
+        return findLocationByName(unvisited, name);
+    }
+
+    // REQUIRES: there is a location that matches name on visited list
+    // EFFECTS: returns the visited location with name that matches the parameter name
+    public Location findLocationByNameVisited(String name) {
+        return findLocationByName(visited, name);
     }
 
     // EFFECTS: returns the location information which includes name, address, latitude, and longitude
@@ -122,6 +201,17 @@ public class Map implements Writable {
         }
         return info;
     }
+
+    // EFFECTS: returns the location information which includes name, address, latitude, and longitude for unvisited
+    public String getInformationUnvisited(String name) {
+        return getInformation(unvisited, name);
+    }
+
+    // EFFECTS: returns the location information which includes name, address, latitude, and longitude for visited
+    public String getInformationVisited(String name) {
+        return getInformation(visited, name);
+    }
+
 
     // EFFECTS: calculates distance between two locations using their longitude and latitude by the Haversine formula
     //          rounds answer to four decimal places
@@ -149,54 +239,28 @@ public class Map implements Writable {
         JSONObject json = new JSONObject();
         json.put("tripFinished", tripFinished);
         json.put("city", city);
-        json.put("unvisited", list_unv());
-        json.put("visited", list_vis());
+        json.put("unvisited", listUnvJSN());
+        json.put("visited", listVisJSN());
         return json;
     }
 
-    private JSONArray list_unv(){
+    // EFFECTS: returns locations in the unvisited list as a JSON array
+    private JSONArray listUnvJSN() {
         JSONArray jsonArray = new JSONArray();
-        for (Location unvis: MapFunctions.unvisited){
+        for (Location unvis: unvisited) {
             jsonArray.put(unvis.toJson());
         }
         return jsonArray;
     }
 
-    private JSONArray list_vis(){
+    // EFFECTS: returns locations in the visited list as a JSON array
+    private JSONArray listVisJSN() {
         JSONArray jsonArray = new JSONArray();
-        for (Location vis: MapFunctions.visited){
+        for (Location vis: visited) {
             jsonArray.put(vis.toJson());
         }
         return jsonArray;
     }
 
-//    @Override
-//    public JSONObject toJson(ArrayList<Location> list) {
-//        return null;
-//    }
-
-
-//    @Override
-//    public JSONObject toJson() {
-//        return null;
-//    }
-//
-//    @Override
-//    public JSONObject toJson(ArrayList<Location> list) {
-//        JSONObject json = new JSONObject();
-//        json.put("city", city);
-//        json.put("list", locationsToJson(list));
-//        return json;
-//    }
-//
-//    protected JSONArray locationsToJson(ArrayList<Location> list) {
-//        JSONArray jsonArray = new JSONArray();
-//
-//        for (Location location : list ) {
-//            jsonArray.put(location.toJson());
-//        }
-//
-//        return jsonArray;
-//    }
 
 }

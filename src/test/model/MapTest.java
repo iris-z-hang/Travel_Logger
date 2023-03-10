@@ -149,7 +149,7 @@ public class MapTest {
 
     @Test
     public void getInformationUnvisitedTestEmpty() {
-        Map testMap2 = new VisitedUnvisitedLists();
+        Map testMap2 = new Map("name");
         ArrayList<Location> unvisitedTest2 = new ArrayList<>();
 
         assertEquals("", testMap2.getInformation(unvisitedTest2, testLocation1.getName()));
@@ -157,7 +157,7 @@ public class MapTest {
 
     @Test
     public void getInformationVisitedTestEmpty() {
-        Map testMap2 = new VisitedUnvisitedLists();
+        Map testMap2 = new Map("name");
         ArrayList<Location> visitedTest2 = new ArrayList<>();
 
         assertEquals("", testMap2.getInformation(visitedTest2, testLocation1.getName()));

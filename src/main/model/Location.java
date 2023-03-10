@@ -4,7 +4,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 // represents a place or location that someone would visit
-public class Location extends VisitedUnvisitedLists implements Writable {
+public class Location implements Writable {
 
     private final String name;
     private final String address;
