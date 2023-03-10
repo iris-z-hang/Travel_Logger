@@ -22,4 +22,9 @@ public class LocationTest {
         assertEquals(43.667709, testLocation1.getLatitude());
         assertEquals(-79.394775, testLocation1.getLongitude());
     }
+
+    @Test
+    public void toStringTest() {
+        assertEquals("Royal Ontario Museum: 100 Queens Park, 43.667709, -79.394775", testLocation1.toString());
+    }
 }

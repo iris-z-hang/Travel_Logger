@@ -50,6 +50,12 @@ public class MapTest {
     }
 
     @Test
+    public void setCityNameTest() {
+        testMap.setCityName("Vancouver");
+        assertEquals("Vancouver", testMap.getCity());
+    }
+
+    @Test
     public void distanceTwoPointsTest() {
         assertEquals(1.5544, testMap.distanceTwoPoints(testLocation1, testLocation2));
     }
@@ -87,6 +93,16 @@ public class MapTest {
         assertTrue(testMap.removeLocation(visitedTest, testLocation1));
         assertEquals(0, testMap.getSize(visitedTest));
         assertFalse(testMap.removeLocation(visitedTest, testLocation3));
+    }
+
+    @Test
+    public void moveEmpty() {
+        Map testMap2 = new Map("city2");
+
+        ArrayList<Location> unvisitedTest2 = new ArrayList<>();
+        ArrayList<Location> visitedTest2 = new ArrayList<>();
+        assertFalse(testMap2.moveLocation(visitedTest2, unvisitedTest2, testLocation1.getName()));
+
     }
 
     @Test
