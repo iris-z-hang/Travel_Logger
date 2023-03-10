@@ -16,28 +16,28 @@ import java.util.Scanner;
 public class MapFunctions {
     static final String JSON_STORE = "./data/map.json";
 
-    private final String ADD_LOCATION_TO_VISITED = "ADD V";
-    private final String ADD_LOCATION_TO_UNVISITED = "ADD U";
-    private final String REMOVE_LOCATION_FROM_UNVISITED = "REMOVE U";
-    private final String REMOVE_LOCATION_FROM_VISITED = "REMOVE V";
-    private final String CHECK_VISITED = "CHECK V";
-    private final String CHECK_UNVISITED = "CHECK U";
-    private final String FIND_DISTANCE = "DISTANCE";
-    private final String QUIT = "QUIT";
-    private final String BACK = "BACK";
-    private final String NEW_LOCATIONS = "NEW";
-    private final String EXISTING_LOCATIONS_UNVISITED = "EXISTING U";
-    private final String EXISTING_LOCATIONS_VISITED = "EXISTING V";
-    private final String EXISTING_UNVISITED_VISITED = "EXISTING UV";
+    private static final String ADD_LOCATION_TO_VISITED = "ADD V";
+    private static final String ADD_LOCATION_TO_UNVISITED = "ADD U";
+    private static final String REMOVE_LOCATION_FROM_UNVISITED = "REMOVE U";
+    private static final String REMOVE_LOCATION_FROM_VISITED = "REMOVE V";
+    private static final String CHECK_VISITED = "CHECK V";
+    private static final String CHECK_UNVISITED = "CHECK U";
+    private static final String FIND_DISTANCE = "DISTANCE";
+    private static final String QUIT = "QUIT";
+    private static final String BACK = "BACK";
+    private static final String NEW_LOCATIONS = "NEW";
+    private static final String EXISTING_LOCATIONS_UNVISITED = "EXISTING U";
+    private static final String EXISTING_LOCATIONS_VISITED = "EXISTING V";
+    private static final String EXISTING_UNVISITED_VISITED = "EXISTING UV";
 
-    private final String UNVISITED = "UNVISITED";
-    private final String VISITED = "VISITED";
-    private final String MOVE_TO_UNVISITED = "MOVE TO U";
-    private final String MOVE_TO_VISITED = "MOVE TO V";
-    private final String INFO = "INFO";
+    private static final String UNVISITED = "UNVISITED";
+    private static final String VISITED = "VISITED";
+    private static final String MOVE_TO_UNVISITED = "MOVE TO U";
+    private static final String MOVE_TO_VISITED = "MOVE TO V";
+    private static final String INFO = "INFO";
 
-    private final String SAVE = "SAVE";
-    private final String LOAD = "LOAD";
+    private static final String SAVE = "SAVE";
+    private static final String LOAD = "LOAD";
 
     protected Map travelMap;
     private String cityName;
