@@ -1,23 +1,18 @@
 {
-    "city": "city name",
-    "visited": [{
-        "address": "23",
-        "latitude": 5,
-        "name": "TWO",
-        "longitude": 6
-    }],
+    "city": "t",
+    "visited": [],
     "unvisited": [
         {
-            "address": "1",
-            "latitude": 2,
+            "address": "12",
+            "latitude": 3,
             "name": "ONE",
-            "longitude": 3
+            "longitude": 4
         },
         {
-            "address": "56",
-            "latitude": 76,
-            "name": "THREE",
-            "longitude": 45
+            "address": "3",
+            "latitude": 4,
+            "name": "TWO",
+            "longitude": 5
         }
     ],
     "tripFinished": false

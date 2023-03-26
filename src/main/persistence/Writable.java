@@ -1,6 +1,5 @@
 package persistence;
 
-import model.Location;
 import org.json.JSONObject;
 
 import java.util.ArrayList;

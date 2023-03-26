@@ -39,7 +39,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // parses Map from JSON object and returns it
+    // EFFECTS: parses Map from JSON object and returns it
     public Map parseMap(JSONObject jsonObject) {
         JSONArray name = jsonObject.getJSONArray("unvisited");
         JSONArray name2 = jsonObject.getJSONArray("visited");
