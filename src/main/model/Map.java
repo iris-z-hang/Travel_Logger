@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
-import ui.MapFunctions;
+//import ui.MapFunctions;
 
 // represents a map of a city that contains locations
 public class Map implements Writable {

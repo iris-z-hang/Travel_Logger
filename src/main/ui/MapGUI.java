@@ -14,10 +14,10 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import static ui.MapFunctions.JSON_STORE;
-
 // represents application's main window frame
 class MapGUI extends JFrame implements ActionListener {
+
+    static final String JSON_STORE = "./data/mapTest.json";
 
     private JFrame mainFrame;
     private JPanel panel;
@@ -178,7 +178,7 @@ class MapGUI extends JFrame implements ActionListener {
                 Location userLocation = new Location(nameResponse, addressResponse, longitudeResponse,
                         latitudeResponse);
                 travelMap.addLocation(travelMap.getLocations(locationList), userLocation);
-                JOptionPane.showMessageDialog(panel,nameResponse + "successfully added.");
+                JOptionPane.showMessageDialog(panel,nameResponse + " successfully added.");
             }
         });
 
@@ -315,31 +315,25 @@ class MapGUI extends JFrame implements ActionListener {
         showNewDistanceButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nameResponse1;
-                String addressResponse1;
-                double longitudeResponse1;
-                double latitudeResponse1;
 
-                nameResponse1 = JOptionPane.showInputDialog("Name of Location");
-                addressResponse1 = JOptionPane.showInputDialog("Address of Location");
-                longitudeResponse1 = Double.parseDouble(JOptionPane.showInputDialog("Longitude of Location"));
-                latitudeResponse1 = Double.parseDouble(JOptionPane.showInputDialog("Latitude of Location"));
+                JOptionPane.showMessageDialog(panel, "Please input information for your first location.");
+                String nameResponse1 = JOptionPane.showInputDialog("Name of Location");
+                String addressResponse1 = JOptionPane.showInputDialog("Address of Location");
+                double longitudeResponse1 = Double.parseDouble(JOptionPane.showInputDialog("Longitude of Location"));
+                double latitudeResponse1 = Double.parseDouble(JOptionPane.showInputDialog("Latitude of Location"));
 
-                String nameResponse2;
-                String addressResponse2;
-                double longitudeResponse2;
-                double latitudeResponse2;
-
-                nameResponse2 = JOptionPane.showInputDialog("Name of Location");
-                addressResponse2 = JOptionPane.showInputDialog("Address of Location");
-                longitudeResponse2 = Double.parseDouble(JOptionPane.showInputDialog("Longitude of Location"));
-                latitudeResponse2 = Double.parseDouble(JOptionPane.showInputDialog("Latitude of Location"));
+                JOptionPane.showMessageDialog(panel, "Please input information for your second location.");
+                String nameResponse2 = JOptionPane.showInputDialog("Name of Location");
+                String addressResponse2 = JOptionPane.showInputDialog("Address of Location");
+                double longitudeResponse2 = Double.parseDouble(JOptionPane.showInputDialog("Longitude of Location"));
+                double latitudeResponse2 = Double.parseDouble(JOptionPane.showInputDialog("Latitude of Location"));
 
                 Location userLocation1 = new Location(nameResponse1, addressResponse1, longitudeResponse1,
                         latitudeResponse1);
                 Location userLocation2 = new Location(nameResponse2, addressResponse2, longitudeResponse2,
                         latitudeResponse2);
-                JOptionPane.showMessageDialog(panel, travelMap.distanceTwoPoints(userLocation1, userLocation2));
+                JOptionPane.showMessageDialog(panel,
+                        travelMap.distanceTwoPoints(userLocation1, userLocation2) + " KM");
             }
         });
 
