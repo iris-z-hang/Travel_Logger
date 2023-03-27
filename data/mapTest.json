@@ -1,0 +1,44 @@
+{
+    "city": "city name",
+    "visited": [
+        {
+            "address": "23",
+            "latitude": 34,
+            "name": "two",
+            "longitude": 456
+        },
+        {
+            "address": "23",
+            "latitude": 23,
+            "name": "four",
+            "longitude": 23
+        },
+        {
+            "address": "43",
+            "latitude": 23,
+            "name": "bye",
+            "longitude": 3
+        }
+    ],
+    "unvisited": [
+        {
+            "address": "23",
+            "latitude": 34,
+            "name": "one",
+            "longitude": 45
+        },
+        {
+            "address": "23",
+            "latitude": 23,
+            "name": "three",
+            "longitude": 23
+        },
+        {
+            "address": "12",
+            "latitude": 12,
+            "name": "hello",
+            "longitude": 21
+        }
+    ],
+    "tripFinished": false
+}

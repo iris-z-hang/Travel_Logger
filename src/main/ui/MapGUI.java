@@ -8,16 +8,19 @@ import persistence.JsonWriter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 // represents application's main window frame
 class MapGUI extends JFrame implements ActionListener {
 
-    private final String JSON_STORE = "./data/mapTest.json";
+    static final String JSON_STORE = "./data/mapTest.json";
 
     private JFrame mainFrame;
     private JPanel panel;
@@ -39,7 +42,7 @@ class MapGUI extends JFrame implements ActionListener {
     private JsonReader jsonReader;
 
 
-    public MapGUI() {
+    public MapGUI() throws IOException {
         super("Map App");
 
         travelMap = new Map("City");
@@ -56,7 +59,7 @@ class MapGUI extends JFrame implements ActionListener {
 
     }
 
-    public void initializeMainFrame() {
+    public void initializeMainFrame() throws IOException {
         panel = new JPanel();
         mainFrame = new JFrame();
 
@@ -72,7 +75,15 @@ class MapGUI extends JFrame implements ActionListener {
         mainFrame.setTitle("Travel Logger");
         mainFrame.pack();
         mainFrame.setVisible(true);
-        mainFrame.setMinimumSize(new Dimension(600, 400));
+        mainFrame.setMinimumSize(new Dimension(700, 1000));
+
+        BufferedImage myPicture = ImageIO.read(new File("./data/Political-World-Map-3360.jpg"));
+        Image newImage = myPicture.getScaledInstance(400, 250, Image.SCALE_DEFAULT);
+        JLabel picLabel = new JLabel(new ImageIcon(newImage));
+
+        JLabel welcomeLabel = new JLabel("Welcome to Travel Logger!", SwingConstants.CENTER);
+        panel.add(welcomeLabel);
+        panel.add(picLabel);
     }
 
     public void initializeMainButtons() {
@@ -188,7 +199,7 @@ class MapGUI extends JFrame implements ActionListener {
     }
 
     public JButton addLocationButtonU() {
-        JButton showAddLocationButtonU = new JButton("Add LocationU");
+        JButton showAddLocationButtonU = new JButton("Add Location");
         showAddLocationButtonU.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -208,7 +219,7 @@ class MapGUI extends JFrame implements ActionListener {
     }
 
     public JButton addLocationButtonV() {
-        JButton showAddLocationButtonV = new JButton("Add LocationV");
+        JButton showAddLocationButtonV = new JButton("Add Location");
         showAddLocationButtonV.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -440,7 +451,13 @@ class MapGUI extends JFrame implements ActionListener {
 
 
     public static void main(String[] args) {
-        new MapGUI();
+        try {
+            new MapGUI();
+        } catch (FileNotFoundException e) {
+            System.out.println("The file is not found.");
+        } catch (IOException i) {
+            System.out.println("IO EXCEPTION");
+        }
 
     }
 

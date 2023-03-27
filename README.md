@@ -27,3 +27,14 @@ https://github.students.cs.ubc.ca/CPSC210/LongFormProblemSolutions/tree/main/Fit
 
 The data persistence package was based on the JsonSerializationDemo found at
 https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+### Instructions for Grader
+- When you first run the program, you will have to maximize the resulting window to see the options. 
+- To add multiple X's to a Y, or locations to the map, first choose either the visited or unvisited list. 
+  Then choose Add Location. Type in the name (String), address (String), longitude (double), and latitude (double). 
+- To look at the list of locations you have added for either the unvisited or visited list, click on View Location List.
+
+- The visual component is a world map that is displayed on the top on the main page of the application. You will see it
+  when the program is first run or if you hit Go Back.
+
+- To save or load the file, click on Save or Load on the main page.
