@@ -17,7 +17,7 @@ import javax.swing.*;
 // represents application's main window frame
 class MapGUI extends JFrame implements ActionListener {
 
-    static final String JSON_STORE = "./data/mapTest.json";
+    private final String JSON_STORE = "./data/mapTest.json";
 
     private JFrame mainFrame;
     private JPanel panel;
@@ -32,7 +32,7 @@ class MapGUI extends JFrame implements ActionListener {
     private JPanel visitedPanel;
     private JPanel distancePanel;
 
-    private Map travelMap;
+    protected Map travelMap;
     private String cityName;
 
     private JsonWriter jsonWriter;
@@ -42,16 +42,17 @@ class MapGUI extends JFrame implements ActionListener {
     public MapGUI() {
         super("Map App");
 
-        travelMap = new Map(cityName);
+        travelMap = new Map("City");
+        travelMap.setTripFinished(false);
+
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
 
         initializeMainFrame();
         initializeMainButtons();
         initializeListButtons();
         initializeDistanceButtons();
         buttonActions();
-
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
 
     }
 
@@ -84,22 +85,22 @@ class MapGUI extends JFrame implements ActionListener {
         panel.add(unvisitedButton);
         panel.add(visitedButton);
         panel.add(distanceButton);
-        panel.add(loadButton);
-        panel.add(saveButton);
+        panel.add(loadButton());
+        panel.add(saveButton());
         panel.add(quitButton());
     }
 
     public void initializeListButtons() {
-        unvisitedPanel.add(addLocationButton(travelMap.getUnvisited()));
-        unvisitedPanel.add(removeLocationButton(travelMap.getUnvisited()));
-        unvisitedPanel.add(moveLocationButton(travelMap.getUnvisited(), travelMap.getVisited()));
-        unvisitedPanel.add(checkLocationButton(travelMap.getUnvisited()));
+        unvisitedPanel.add(addLocationButtonU());
+        unvisitedPanel.add(removeLocationButtonU());
+        unvisitedPanel.add(moveLocationButtonU());
+        unvisitedPanel.add(checkLocationButtonU());
         unvisitedPanel.add(backButton());
 
-        visitedPanel.add(addLocationButton(travelMap.getVisited()));
-        visitedPanel.add(removeLocationButton(travelMap.getVisited()));
-        visitedPanel.add(moveLocationButton(travelMap.getVisited(), travelMap.getUnvisited()));
-        visitedPanel.add(checkLocationButton(travelMap.getVisited()));
+        visitedPanel.add(addLocationButtonV());
+        visitedPanel.add(removeLocationButtonV());
+        visitedPanel.add(moveLocationButtonV());
+        visitedPanel.add(checkLocationButtonV());
         visitedPanel.add(backButton());
     }
 
@@ -118,31 +119,57 @@ class MapGUI extends JFrame implements ActionListener {
 
         distanceButton.addActionListener(this);
         distanceButton.setActionCommand("Distance");
-
-        loadButton.addActionListener(this);
-        loadButton.setActionCommand("Load");
-
-        saveButton.addActionListener(this);
-        saveButton.setActionCommand("Save");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Unvisited")) {
-            loadListPanel(unvisitedPanel, travelMap.getUnvisited());
+            loadListPanel(unvisitedPanel);
         } else if (e.getActionCommand().equals("Visited")) {
-            loadListPanel(visitedPanel, travelMap.getVisited());
+            loadListPanel(visitedPanel);
         } else if (e.getActionCommand().equals("Move")) {
             loadMovePanel(unvisitedPanel, travelMap.getUnvisited(), travelMap.getVisited());
         } else if (e.getActionCommand().equals("Move")) {
             loadMovePanel(visitedPanel, travelMap.getVisited(), travelMap.getUnvisited());
         } else if (e.getActionCommand().equals("Distance")) {
             loadDistancePanel();
-        } else if (e.getActionCommand().equals("Save")) {
-            saveMap();
-        } else if (e.getActionCommand().equals("Load")) {
-            loadMap();
         }
+    }
+
+    public JButton saveButton() {
+        JButton showSaveButton = new JButton("Save");
+        showSaveButton.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    jsonWriter.open();
+                    jsonWriter.write(travelMap);
+                    jsonWriter.close();
+                    JOptionPane.showMessageDialog(panel,"Saved map to" + JSON_STORE);
+                } catch (FileNotFoundException f) {
+                    JOptionPane.showMessageDialog(panel,"Unable to write to file: " + JSON_STORE);
+                }
+            }
+        });
+
+        return showSaveButton;
+    }
+
+    public JButton loadButton() {
+        JButton showLoadButton = new JButton("Load");
+        showLoadButton.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    travelMap = jsonReader.read();
+                    JOptionPane.showMessageDialog(panel,"Loaded previous map from" + JSON_STORE);
+                } catch (IOException g) {
+                    JOptionPane.showMessageDialog(panel,"Unable to read from file: " + JSON_STORE);
+                }
+            }
+        });
+
+        return showLoadButton;
     }
 
     public JButton backButton() {
@@ -160,41 +187,55 @@ class MapGUI extends JFrame implements ActionListener {
         return showBackButton;
     }
 
-    public JButton addLocationButton(ArrayList<Location> locationList) {
-        JButton showAddLocationButton = new JButton("Add Location");
-        showAddLocationButton.addActionListener(new AbstractAction() {
+    public JButton addLocationButtonU() {
+        JButton showAddLocationButtonU = new JButton("Add LocationU");
+        showAddLocationButtonU.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nameResponse;
-                String addressResponse;
-                double longitudeResponse;
-                double latitudeResponse;
-
-                nameResponse = JOptionPane.showInputDialog("Name of Location");
-                addressResponse = JOptionPane.showInputDialog("Address of Location");
-                longitudeResponse = Double.parseDouble(JOptionPane.showInputDialog("Longitude of Location"));
-                latitudeResponse = Double.parseDouble(JOptionPane.showInputDialog("Latitude of Location"));
+                String nameResponse = JOptionPane.showInputDialog("Name of Location");
+                String addressResponse = JOptionPane.showInputDialog("Address of Location");
+                double longitudeResponse = Double.parseDouble(JOptionPane.showInputDialog("Longitude of Location"));
+                double latitudeResponse = Double.parseDouble(JOptionPane.showInputDialog("Latitude of Location"));
 
                 Location userLocation = new Location(nameResponse, addressResponse, longitudeResponse,
                         latitudeResponse);
-                travelMap.addLocation(travelMap.getLocations(locationList), userLocation);
+                travelMap.addLocation(travelMap.getUnvisited(), userLocation);
                 JOptionPane.showMessageDialog(panel,nameResponse + " successfully added.");
             }
         });
 
-        return showAddLocationButton;
+        return showAddLocationButtonU;
     }
 
-    public JButton removeLocationButton(ArrayList<Location> locationList) {
-        JButton showRemoveLocationButton = new JButton("Remove Location");
-        showRemoveLocationButton.addActionListener(new AbstractAction() {
+    public JButton addLocationButtonV() {
+        JButton showAddLocationButtonV = new JButton("Add LocationV");
+        showAddLocationButtonV.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String removeName;
-                removeName = JOptionPane.showInputDialog("Name of Location to Remove");
+                String nameResponse = JOptionPane.showInputDialog("Name of Location");
+                String addressResponse = JOptionPane.showInputDialog("Address of Location");
+                double longitudeResponse = Double.parseDouble(JOptionPane.showInputDialog("Longitude of Location"));
+                double latitudeResponse = Double.parseDouble(JOptionPane.showInputDialog("Latitude of Location"));
 
-                if (travelMap.removeLocation(travelMap.getLocations(locationList),
-                        travelMap.findLocationByName(travelMap.getLocations(locationList), removeName))) {
+                Location userLocation = new Location(nameResponse, addressResponse, longitudeResponse,
+                        latitudeResponse);
+                travelMap.addLocation(travelMap.getVisited(), userLocation);
+                JOptionPane.showMessageDialog(panel,nameResponse + " successfully added.");
+            }
+        });
+
+        return showAddLocationButtonV;
+    }
+
+    public JButton removeLocationButtonU() {
+        JButton showRemoveLocationButtonU = new JButton("Remove Location");
+        showRemoveLocationButtonU.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String removeName = JOptionPane.showInputDialog("Name of Location to Remove");
+
+                if (travelMap.removeLocation(travelMap.getUnvisited(),
+                        travelMap.findLocationByName(travelMap.getUnvisited(), removeName))) {
                     JOptionPane.showMessageDialog(panel,removeName + " successfully removed.");
                 } else {
                     JOptionPane.showMessageDialog(panel,"Location not found.");
@@ -202,19 +243,36 @@ class MapGUI extends JFrame implements ActionListener {
             }
         });
 
-        return showRemoveLocationButton;
+        return showRemoveLocationButtonU;
     }
 
-    public JButton moveLocationButton(ArrayList<Location> locationList1, ArrayList<Location> locationList2) {
-        JButton showMoveLocationButton = new JButton("Move Location");
-        showMoveLocationButton.addActionListener(new AbstractAction() {
+    public JButton removeLocationButtonV() {
+        JButton showRemoveLocationButtonV = new JButton("Remove Location");
+        showRemoveLocationButtonV.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String moveName;
-                moveName = JOptionPane.showInputDialog("Name of Location to Move");
+                String removeName = JOptionPane.showInputDialog("Name of Location to Remove");
 
-                if (travelMap.moveLocation(travelMap.getLocations(locationList1),
-                        travelMap.getLocations(locationList2), moveName)) {
+                if (travelMap.removeLocation(travelMap.getVisited(),
+                        travelMap.findLocationByName(travelMap.getVisited(), removeName))) {
+                    JOptionPane.showMessageDialog(panel,removeName + " successfully removed.");
+                } else {
+                    JOptionPane.showMessageDialog(panel,"Location not found.");
+                }
+            }
+        });
+
+        return showRemoveLocationButtonV;
+    }
+
+    public JButton moveLocationButtonU() {
+        JButton showMoveLocationButtonU = new JButton("Move Location");
+        showMoveLocationButtonU.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String moveName = JOptionPane.showInputDialog("Name of Location to Move");
+
+                if (travelMap.moveLocation(travelMap.getUnvisited(), travelMap.getVisited(), moveName)) {
                     JOptionPane.showMessageDialog(panel,moveName + " successfully moved.");
                 } else {
                     JOptionPane.showMessageDialog(panel,"Location not found.");
@@ -222,23 +280,54 @@ class MapGUI extends JFrame implements ActionListener {
             }
         });
 
-        return showMoveLocationButton;
+        return showMoveLocationButtonU;
     }
 
-    public JButton checkLocationButton(ArrayList<Location> locationList) {
-        JButton showCheckLocationButton = new JButton("View Location List");
-        showCheckLocationButton.addActionListener(new AbstractAction() {
+    public JButton moveLocationButtonV() {
+        JButton showMoveLocationButtonV = new JButton("Move Location");
+        showMoveLocationButtonV.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Object[] locationArray = travelMap.getLocations(locationList).toArray();
-                JOptionPane.showMessageDialog(panel,new JList(locationArray));
+                String moveName = JOptionPane.showInputDialog("Name of Location to Move");
+
+                if (travelMap.moveLocation(travelMap.getVisited(), travelMap.getUnvisited(), moveName)) {
+                    JOptionPane.showMessageDialog(panel,moveName + " successfully moved.");
+                } else {
+                    JOptionPane.showMessageDialog(panel,"Location not found.");
+                }
             }
         });
 
-        return showCheckLocationButton;
+        return showMoveLocationButtonV;
     }
 
-    public void loadListPanel(JPanel p, ArrayList<Location> locationList) {
+    public JButton checkLocationButtonU() {
+        JButton showCheckLocationButtonU = new JButton("View Location List");
+        showCheckLocationButtonU.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object[] locationArray = travelMap.getUnvisited().toArray();
+                JOptionPane.showMessageDialog(panel, new JList(locationArray));
+            }
+        });
+
+        return showCheckLocationButtonU;
+    }
+
+    public JButton checkLocationButtonV() {
+        JButton showCheckLocationButtonV = new JButton("View Location List");
+        showCheckLocationButtonV.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object[] locationArray = travelMap.getVisited().toArray();
+                JOptionPane.showMessageDialog(panel, new JList(locationArray));
+            }
+        });
+
+        return showCheckLocationButtonV;
+    }
+
+    public void loadListPanel(JPanel p) {
         mainFrame.add(p, BorderLayout.CENTER);
 
         p.setBorder(BorderFactory.createBevelBorder(2));
@@ -246,6 +335,7 @@ class MapGUI extends JFrame implements ActionListener {
 
         p.setVisible(true);
         panel.setVisible(false);
+        distancePanel.setVisible(false);
     }
 
     public void loadMovePanel(JPanel p, ArrayList<Location> locationList1, ArrayList<Location> locationList2) {
@@ -256,27 +346,8 @@ class MapGUI extends JFrame implements ActionListener {
 
         p.setVisible(true);
         panel.setVisible(false);
+        distancePanel.setVisible(false);
 
-    }
-
-    public void saveMap() {
-        try {
-            jsonWriter.open();
-            jsonWriter.write(travelMap);
-            jsonWriter.close();
-            JOptionPane.showMessageDialog(panel,"Saved map to" + JSON_STORE);
-        } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(panel,"Unable to write to file: " + JSON_STORE);
-        }
-    }
-
-    public void loadMap() {
-        try {
-            travelMap = jsonReader.read();
-            JOptionPane.showMessageDialog(panel,"Loaded previous map from" + JSON_STORE);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(panel,"Unable to read from file: " + JSON_STORE);
-        }
     }
 
     public JButton quitButton() {
@@ -293,10 +364,6 @@ class MapGUI extends JFrame implements ActionListener {
         return showQuitButton;
 
     }
-
-    // TODO: load and save do not work anymore
-
-// --------------------------------------------------------------------------------------------------------------------
 
     public void loadDistancePanel() {
         mainFrame.add(distancePanel, BorderLayout.CENTER);
