@@ -41,7 +41,7 @@ class MapGUI extends JFrame implements ActionListener {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-
+    // EFFECTS: constructs new MapGUI class with a new map, jsonWriter/jsonReader, and initializes mainframe, buttons
     public MapGUI() throws IOException {
         super("Map App");
 
@@ -59,6 +59,8 @@ class MapGUI extends JFrame implements ActionListener {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the main frame, and the panels in the application
     public void initializeMainFrame() throws IOException {
         panel = new JPanel();
         mainFrame = new JFrame();
@@ -86,6 +88,8 @@ class MapGUI extends JFrame implements ActionListener {
         panel.add(picLabel);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the buttons on the main frame
     public void initializeMainButtons() {
         unvisitedButton = new JButton("Unvisited Locations");
         visitedButton = new JButton("Visited Locations");
@@ -101,6 +105,8 @@ class MapGUI extends JFrame implements ActionListener {
         panel.add(quitButton());
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the buttons on the unvisited and visited panels
     public void initializeListButtons() {
         unvisitedPanel.add(addLocationButtonU());
         unvisitedPanel.add(removeLocationButtonU());
@@ -115,12 +121,16 @@ class MapGUI extends JFrame implements ActionListener {
         visitedPanel.add(backButton());
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the buttons on the distance panel
     public void initializeDistanceButtons() {
         distancePanel.add(newDistanceButton());
         distancePanel.add(existingDistanceButton());
         distancePanel.add(backButton());
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets commands for buttons available in the main panel
     public void buttonActions() {
         unvisitedButton.addActionListener(this);
         unvisitedButton.setActionCommand("Unvisited");
@@ -132,6 +142,8 @@ class MapGUI extends JFrame implements ActionListener {
         distanceButton.setActionCommand("Distance");
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the main panel's button responses
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Unvisited")) {
@@ -147,6 +159,8 @@ class MapGUI extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates save button and sets the action to save the application state
     public JButton saveButton() {
         JButton showSaveButton = new JButton("Save");
         showSaveButton.addActionListener(new AbstractAction() {
@@ -166,6 +180,8 @@ class MapGUI extends JFrame implements ActionListener {
         return showSaveButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the load button to load a previous state
     public JButton loadButton() {
         JButton showLoadButton = new JButton("Load");
         showLoadButton.addActionListener(new AbstractAction() {
@@ -183,6 +199,8 @@ class MapGUI extends JFrame implements ActionListener {
         return showLoadButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the back button to return to the main panel
     public JButton backButton() {
         JButton showBackButton = new JButton("Go Back");
         showBackButton.addActionListener(new AbstractAction() {
@@ -198,6 +216,8 @@ class MapGUI extends JFrame implements ActionListener {
         return showBackButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the add button for the unvisited list to add new locations to that list
     public JButton addLocationButtonU() {
         JButton showAddLocationButtonU = new JButton("Add Location");
         showAddLocationButtonU.addActionListener(new AbstractAction() {
@@ -218,6 +238,8 @@ class MapGUI extends JFrame implements ActionListener {
         return showAddLocationButtonU;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the add button for the visited list to add new locations to that list
     public JButton addLocationButtonV() {
         JButton showAddLocationButtonV = new JButton("Add Location");
         showAddLocationButtonV.addActionListener(new AbstractAction() {
@@ -238,6 +260,9 @@ class MapGUI extends JFrame implements ActionListener {
         return showAddLocationButtonV;
     }
 
+    // REQUIRES: unvisited list must have at least one element
+    // MODIFIES: this
+    // EFFECTS: initializes the remove button for the unvisited list to remove a location from that list
     public JButton removeLocationButtonU() {
         JButton showRemoveLocationButtonU = new JButton("Remove Location");
         showRemoveLocationButtonU.addActionListener(new AbstractAction() {
@@ -257,6 +282,9 @@ class MapGUI extends JFrame implements ActionListener {
         return showRemoveLocationButtonU;
     }
 
+    // REQUIRES: visited list must have at least one element
+    // MODIFIES: this
+    // EFFECTS: initializes the remove button for the visited list to remove a location from that list
     public JButton removeLocationButtonV() {
         JButton showRemoveLocationButtonV = new JButton("Remove Location");
         showRemoveLocationButtonV.addActionListener(new AbstractAction() {
@@ -276,6 +304,8 @@ class MapGUI extends JFrame implements ActionListener {
         return showRemoveLocationButtonV;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes move button to move a location from unvisited list to visited
     public JButton moveLocationButtonU() {
         JButton showMoveLocationButtonU = new JButton("Move Location");
         showMoveLocationButtonU.addActionListener(new AbstractAction() {
@@ -294,6 +324,8 @@ class MapGUI extends JFrame implements ActionListener {
         return showMoveLocationButtonU;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes move button to move a location from visited list to unvisited
     public JButton moveLocationButtonV() {
         JButton showMoveLocationButtonV = new JButton("Move Location");
         showMoveLocationButtonV.addActionListener(new AbstractAction() {
@@ -312,6 +344,8 @@ class MapGUI extends JFrame implements ActionListener {
         return showMoveLocationButtonV;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes check location button to display the unvisited list to the user
     public JButton checkLocationButtonU() {
         JButton showCheckLocationButtonU = new JButton("View Location List");
         showCheckLocationButtonU.addActionListener(new AbstractAction() {
@@ -325,6 +359,8 @@ class MapGUI extends JFrame implements ActionListener {
         return showCheckLocationButtonU;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes check location button to display the visited list to the user
     public JButton checkLocationButtonV() {
         JButton showCheckLocationButtonV = new JButton("View Location List");
         showCheckLocationButtonV.addActionListener(new AbstractAction() {
@@ -338,6 +374,8 @@ class MapGUI extends JFrame implements ActionListener {
         return showCheckLocationButtonV;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the panel that represents both the visited and unvisited lists
     public void loadListPanel(JPanel p) {
         mainFrame.add(p, BorderLayout.CENTER);
 
@@ -349,6 +387,8 @@ class MapGUI extends JFrame implements ActionListener {
         distancePanel.setVisible(false);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the move location panel
     public void loadMovePanel(JPanel p, ArrayList<Location> locationList1, ArrayList<Location> locationList2) {
         mainFrame.add(p, BorderLayout.CENTER);
 
@@ -361,6 +401,8 @@ class MapGUI extends JFrame implements ActionListener {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes quit button to end the trip and exit the application
     public JButton quitButton() {
         JButton showQuitButton = new JButton("Quit");
         showQuitButton.addActionListener(new AbstractAction() {
@@ -376,6 +418,8 @@ class MapGUI extends JFrame implements ActionListener {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes distance panel
     public void loadDistancePanel() {
         mainFrame.add(distancePanel, BorderLayout.CENTER);
 
@@ -388,6 +432,8 @@ class MapGUI extends JFrame implements ActionListener {
         visitedPanel.setVisible(false);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes new distance button to find distance between two new locations
     public JButton newDistanceButton() {
         JButton showNewDistanceButton = new JButton("New Locations");
         showNewDistanceButton.addActionListener(new AbstractAction() {
@@ -395,20 +441,16 @@ class MapGUI extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent e) {
 
                 JOptionPane.showMessageDialog(panel, "Please input information for your first location.");
-                String nameResponse1 = JOptionPane.showInputDialog("Name of Location");
-                String addressResponse1 = JOptionPane.showInputDialog("Address of Location");
                 double longitudeResponse1 = Double.parseDouble(JOptionPane.showInputDialog("Longitude of Location"));
                 double latitudeResponse1 = Double.parseDouble(JOptionPane.showInputDialog("Latitude of Location"));
 
                 JOptionPane.showMessageDialog(panel, "Please input information for your second location.");
-                String nameResponse2 = JOptionPane.showInputDialog("Name of Location");
-                String addressResponse2 = JOptionPane.showInputDialog("Address of Location");
                 double longitudeResponse2 = Double.parseDouble(JOptionPane.showInputDialog("Longitude of Location"));
                 double latitudeResponse2 = Double.parseDouble(JOptionPane.showInputDialog("Latitude of Location"));
 
-                Location userLocation1 = new Location(nameResponse1, addressResponse1, longitudeResponse1,
+                Location userLocation1 = new Location(null, null, longitudeResponse1,
                         latitudeResponse1);
-                Location userLocation2 = new Location(nameResponse2, addressResponse2, longitudeResponse2,
+                Location userLocation2 = new Location(null, null, longitudeResponse2,
                         latitudeResponse2);
                 JOptionPane.showMessageDialog(panel,
                         travelMap.distanceTwoPoints(userLocation1, userLocation2) + " KM");
@@ -418,6 +460,8 @@ class MapGUI extends JFrame implements ActionListener {
         return showNewDistanceButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes new distance button to find distance between two locations on either list
     public JButton existingDistanceButton() {
         JButton showExistingDistanceButton = new JButton("Existing Locations");
         showExistingDistanceButton.addActionListener(new AbstractAction() {
