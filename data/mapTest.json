@@ -38,6 +38,12 @@
             "latitude": 12,
             "name": "hello",
             "longitude": 21
+        },
+        {
+            "address": "57",
+            "latitude": 43,
+            "name": "test",
+            "longitude": 23
         }
     ],
     "tripFinished": false

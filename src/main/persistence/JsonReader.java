@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+import model.Event;
+import model.EventLog;
 import model.Location;
 import model.Map;
 import org.json.*;

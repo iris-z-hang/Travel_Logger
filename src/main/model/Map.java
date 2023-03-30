@@ -71,6 +71,7 @@ public class Map implements Writable {
     //          can add the same location multiple times
     public void addLocation(ArrayList<Location> list, Location location) {
         list.add(location);
+        EventLog.getInstance().logEvent(new Event("Adding location to list."));
 
     }
 
@@ -82,9 +83,11 @@ public class Map implements Writable {
         if (list.contains(location)) {
             index = list.indexOf(location);
             list.remove(index);
+            EventLog.getInstance().logEvent(new Event("Removing location from list."));
             return true;
         }
         return false;
+
     }
 
 
@@ -97,6 +100,7 @@ public class Map implements Writable {
             if (locationName.equals(name)) {
                 list2.add(location);
                 list1.remove(location);
+                EventLog.getInstance().logEvent(new Event("Moving location to other list."));
                 return true;
             }
         }
@@ -150,6 +154,8 @@ public class Map implements Writable {
                 * Math.cos(latitude1) * Math.cos(latitude2);
 
         double haversineFormulaPart2 = 2 * Math.asin(Math.sqrt(haversineFormulaPart1));
+        EventLog.getInstance().logEvent(new Event("Calculating the distance between two locations."));
+
 
         return Math.round((6371 * haversineFormulaPart2) * 10000d) / 10000d;
     }

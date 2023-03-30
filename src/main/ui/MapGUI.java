@@ -1,5 +1,6 @@
 package ui;
 
+import model.EventLog;
 import model.Location;
 import model.Map;
 import persistence.JsonReader;
@@ -86,6 +87,8 @@ class MapGUI extends JFrame implements ActionListener {
         JLabel welcomeLabel = new JLabel("Welcome to Travel Logger!", SwingConstants.CENTER);
         panel.add(welcomeLabel);
         panel.add(picLabel);
+        panel.repaint();
+        panel.revalidate();
     }
 
     // MODIFIES: this
@@ -410,6 +413,11 @@ class MapGUI extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 travelMap.setTripFinished(true);
                 JOptionPane.showMessageDialog(panel,"Goodbye.");
+
+                for (model.Event event : model.EventLog.getInstance()) {
+                    System.out.println(event);
+                }
+
                 System.exit(0);
             }
         });
@@ -417,6 +425,7 @@ class MapGUI extends JFrame implements ActionListener {
         return showQuitButton;
 
     }
+
 
     // MODIFIES: this
     // EFFECTS: initializes distance panel
