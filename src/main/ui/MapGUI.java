@@ -86,6 +86,8 @@ class MapGUI extends JFrame implements ActionListener {
         JLabel welcomeLabel = new JLabel("Welcome to Travel Logger!", SwingConstants.CENTER);
         panel.add(welcomeLabel);
         panel.add(picLabel);
+        panel.repaint();
+        panel.revalidate();
     }
 
     // MODIFIES: this
