@@ -426,7 +426,6 @@ class MapGUI extends JFrame implements ActionListener {
 
     }
 
-
     // MODIFIES: this
     // EFFECTS: initializes distance panel
     public void loadDistancePanel() {
