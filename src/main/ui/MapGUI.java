@@ -57,7 +57,6 @@ class MapGUI extends JFrame implements ActionListener {
         initializeListButtons();
         initializeDistanceButtons();
         buttonActions();
-
     }
 
     // MODIFIES: this
@@ -510,7 +509,6 @@ class MapGUI extends JFrame implements ActionListener {
         } catch (IOException i) {
             System.out.println("IO EXCEPTION");
         }
-
     }
 
 }

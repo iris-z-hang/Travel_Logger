@@ -38,3 +38,29 @@ https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
   when the program is first run or if you hit Go Back.
 
 - To save or load the file, click on Save or Load on the main page.
+
+### Phase 4: Task 2
+### Representative sample of events
+Sun Apr 09 15:20:03 PDT 2023
+Adding location to list.
+Sun Apr 09 15:20:10 PDT 2023
+Moving location to other list.
+Sun Apr 09 15:20:16 PDT 2023
+Adding location to list.
+Sun Apr 09 15:20:21 PDT 2023
+Removing location from list.
+Sun Apr 09 15:20:26 PDT 2023
+Adding location to list.
+Sun Apr 09 15:20:32 PDT 2023
+Calculating the distance between two locations.
+
+
+### Phase 4: Task 3
+### For the Future
+In the future, I would like the refactor my program to utilize the composite pattern. With the composite pattern, I
+could have the Composite as a list of locations and have my unvisited and visited lists extend that. I would then only 
+have one list to maintain instead of two with the exact same items and the exact same methods. This would aid in 
+the reduction of duplicate code which is present in my program. This would also be beneficial for further additions to
+the functionality of my program. I would also like to figure out a way to reduce the duplication in my GUI class.
+
+
