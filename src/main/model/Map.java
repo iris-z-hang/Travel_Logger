@@ -90,7 +90,6 @@ public class Map implements Writable {
 
     }
 
-
     // REQUIRES: locations to move must be on their list
     // MODIFIES: list1 (this in subclasses), list2 (this in subclasses)
     // EFFECTS: moves a location from one list to another

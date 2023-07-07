@@ -17,7 +17,6 @@ public class Location implements Writable {
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
-
     }
 
     //EFFECTS: returns name of location
